@@ -110,6 +110,13 @@ enum Scale{
     Logarithm,
 };
 
+enum AxesType {
+    Axes2D, Axes3D, ColorBar
+};
+
+enum AxesLimMode{
+    Auto, Maxnual
+};
 
 /**
  * @brief Get the maximum valued element from vector
@@ -317,14 +324,7 @@ public:
 
     Vector<double> make_tick(double minval, double maxval);
 
-    enum AxesType {
-        Axes2D, Axes3D, ColorBar
-    };
     AxesType m_axType;
-
-    enum AxesLimMode{
-        Auto, Maxnual,
-    };
 
     // -*- styles -
     bool m_boxed; // Axes on/off :: boxFlag
@@ -1220,6 +1220,80 @@ private:
 // -*----------------------------------------------------------------*-
 // -*- ::patch                                                      -*-
 // -*----------------------------------------------------------------*-
+class PatchBase: public DrawableBase, public std::enable_shared_from_this<PatchBase>{
+public:
+    AxesType axesType;
+    Matrix<int> faces;
+    Matrix<double> vertices;
+    Matrix<double> xdata;
+    Matrix<double> ydata;
+    Matrix<double> zdata;
+    Tensor<float> cdata;
+
+    // shading value: <colorspec> | "none" | "flat" | "interp"
+    std::string edgeColor;
+    std::string faceColor;
+    std::string lineStyle; // "-" | "--" | ":" | "-." | "none"
+    float lineWidth;
+
+    // -
+    PatchBase(const Axes axes)
+    : DrawableBase(axes)
+    , axesType(AxesType::Axes2D)
+    , edgeColor("k")
+    , faceColor("r")
+    , lineStyle("-")
+    , lineWidth(1.f)
+    {}
+
+    // -
+    void clear();
+    void draw();
+    Patch bar(const Vector<double>& yvec, float width=0.8);
+    Patch bar(const Vector<double>& xvec, const Vector<double>& yvec, float width=0.8);
+
+    // -
+    Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Vector<double>& cvec // Matrix<double>???
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Vector<double>& cvec
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<double>& cten
+    );
+
+    Patch set(std::string key, std::string val);
+    Patch set(std::string key, float val);
+
+    Tensor<float> index_to_trucolor(const Vector<double> indexcolor);
+    void config();
+
+private:
+    void draw2d();
+    void draw3d();
+    std::mutex m_data_mtx;
+
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::surface                                                    -*-
