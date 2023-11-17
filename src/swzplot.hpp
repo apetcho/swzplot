@@ -93,23 +93,33 @@ enum Scale{
  * @param vec 
  * @return T 
  */
-template<typename T>
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
 T max(const std::vector<T>& vec){
     return *std::max_element(vec.begin(), vec.end());
 }
 
-template<typename T>
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
 T min(const std::vector<T>& vec){
     return *std::min_element(vec.begin(), vec.end());
 }
 
-template<typename T>
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
 T max(const std::vector<std::vector<T>>& mat){
     auto result = std::numeric_limits<double>::min();
     for(auto vec: mat){
         result = std::max(result, max(vec));
     }
 
+    return static_cast<T>(result);
+}
+
+// -*-
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+T min(const std::vector<std::vector<T>>& mat){
+    auto result = std::numeric_limits<double>::max();
+    for(auto vec: mat){
+        result = std::min(result, min(vec));
+    }
     return static_cast<T>(result);
 }
 
