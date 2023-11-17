@@ -98,6 +98,11 @@ T max(const std::vector<T>& vec){
     return *std::max_element(vec.begin(), vec.end());
 }
 
+template<typename T>
+T min(const std::vector<T>& vec){
+    return *std::min_element(vec.begin(), vec.end());
+}
+
 //! @note: Array
 //! @note: Matrix
 
