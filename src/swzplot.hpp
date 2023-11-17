@@ -103,6 +103,16 @@ T min(const std::vector<T>& vec){
     return *std::min_element(vec.begin(), vec.end());
 }
 
+template<typename T>
+T max(const std::vector<std::vector<T>>& mat){
+    auto result = std::numeric_limits<double>::min();
+    for(auto vec: mat){
+        result = std::max(result, max(vec));
+    }
+
+    return static_cast<T>(result);
+}
+
 //! @note: Array
 //! @note: Matrix
 
