@@ -10,6 +10,7 @@
 #include<valarray>
 #include<iostream>
 #include<variant>
+#include<optional>
 #include<chrono>
 #include<vector>
 #include<string>
@@ -193,8 +194,126 @@ public:
 // std::string rgb_to_colorspec(Vector<float> rgb);
 
 // -*----------------------------------------------------------------*-
+// -*- Utility classes and functionalities                          -*-
+// -*----------------------------------------------------------------*-
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+struct Position {
+    T x;
+    T y;
+    std::optional<T> z;
+
+    Position() = default;
+    explicit Position(T x, T y): x{x}, y{y}, z(std::nullopt){}
+    explicit Position(T x, T y, T z): x{x}, y{y}, z{z}{}
+    ~Position() = default;
+};
+
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+struct DataLim{
+    T minval;
+    T maxval;
+
+    DataLim() = default;
+    explicit DataLim(T min, T max): minval(min), maxval(max){}
+    ~DataLim() = default;
+};
+
+template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+struct BBox{
+    T left;
+    T bottom;
+    T width;
+    T height;
+
+    BBox() = default;
+    explicit BBox(T left, T bottom, T width, T height)
+    : left{left}, bottom{bottom}, width{width}, height{height}
+    {}
+    ~BBox() = default;
+};
+
+// -*----------------------------------------------------------------*-
 // -*- ::axes                                                       -*-
 // -*----------------------------------------------------------------*-
+class AxesBase: public std::enable_shared_from_this<AxesBase>{
+private:
+    std::mutex m_childer_mtx;
+    Layer m_layer;
+    Axes m_colorbar_ax;
+
+public:
+    AxesBase(Layer layer);
+    ~AxesBase(){};
+    Layer gcl(){ return this->m_layer; }
+
+    // -*- 
+    float cta0;
+    float phi0;
+    float cta;
+    float phi;
+    // -*-
+    double xmouse;
+    double ymouse;
+    bool mouse; // Capture the mouse actions
+    int xbuttonDown;
+    int ybuttonDown;
+    float ctaButtonDown;
+    float phiButtonDown;
+    bool (*mouse_callback)(int button, int state, int x, int y);
+
+    // double xmin;
+    // double xmax;
+    
+    double ymin;
+    double ymax;
+    double zmin;
+    double zmax;
+
+    void reset_limits();
+    void config();
+    // - set property -
+    Axes set(const std::string& key, const std::string& value);
+    Axes colorbar();
+
+    void ptext(float x, float y, const std::string& text);
+    void ptext3(float x, float y, float z, const std::string& text);
+    void ptext3c(float x, float y, float z, const std::string& text);
+
+    bool mouse(int button, int state, int x, int y);
+    bool motion(int x, int y);
+
+    enum AxesType {
+        Axes2D, Axes3D, ColorBar
+    };
+
+    enum AxesMode{
+        Auto, Maxnual,
+    };
+
+    AxesType axType;
+
+    // -*- styles -
+    bool box;
+
+private:
+    int window_height();
+    int window_width();
+    void draw2d();
+    void draw3d();
+    void draw_colorbar();
+    // -
+    double coord2D_to_xaxis(double x);
+    double coord2D_to_yaxis(double y);
+    double coord3D_to_xaxis(double x);
+    double coord3D_to_yaxis(double y);
+    double coord3D_to_zaxis(double z);
+
+public:
+    // - get shared_pointer sharing the current instance of this AxesBase object
+    Axes share(){
+        return shared_from_this();
+    }
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::color                                                      -*-
