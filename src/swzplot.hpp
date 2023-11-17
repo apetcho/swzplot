@@ -74,6 +74,11 @@ public:
 // -*- ::utils                                                      -*-
 // -*----------------------------------------------------------------*-
 //! @note: math
+enum Scale{
+    Linear,
+    Logarithm,
+};
+
 //! @note: Array
 //! @note: Matrix
 
