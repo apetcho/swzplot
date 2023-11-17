@@ -1476,7 +1476,9 @@ public:
 // -*----------------------------------------------------------------*-
 // -*- ::glut                                                       -*-
 // -*----------------------------------------------------------------*-
-
+void initilalize(int &argc, char **argv);
+void register_figure(const Figure fig);
+void set_window_title(int window, std::string name);
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
