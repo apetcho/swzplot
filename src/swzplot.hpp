@@ -164,8 +164,7 @@ template<typename T>
 using Matrix = Vector<std::vector<T>>;
 
 //! @note: Tensor
-template<typename T>
-using Tensor = Matrix<std::vector<T>>;
+using Colormap = Matrix<std::vector<float>>;
 
 template<typename T, std::enable_if<std::is_floating_point_v<T>>>
 Vector<T> linspace(T minval, T maxval, size_t count=10){
@@ -465,7 +464,7 @@ public:
     // - Surface & contour
     Surface surface(const Matrix<double>& zmat);
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
-    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(const Matrix<double>& zmat, const Colormap& cten);
     Surface surface(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -481,7 +480,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface surface(
@@ -499,11 +498,11 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface pcolor(const Matrix<double>& cmat);
-    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(const Colormap& cten);
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -512,7 +511,7 @@ public:
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Surface pcolor(
         const Matrix<double>& xmat,
@@ -522,7 +521,7 @@ public:
     Surface pcolor(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     // -*-
@@ -571,7 +570,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -588,7 +587,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<double>& cten
+        const Colormap& cten
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -618,8 +617,6 @@ private:
         return shared_from_this();
     }
 };
-
-
 
 // -*----------------------------------------------------------------*-
 // -*- ::layer                                                      -*-
@@ -673,21 +670,21 @@ public:
 
     // -*-
     // - set axis limit (2D & 3D)
-    void set_axis(double xmin, double xmax, double ymin, double ymax);
-    void set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    void axis(double xmin, double xmax, double ymin, double ymax);
+    void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
-    void set_axis(std::string onoff);
-    void set_axis(bool onoff);
+    void axis(std::string onoff);
+    void axis(bool onoff);
     // - toggle grid visibility: "on" | "off" | true | false
-    void set_grid(std::string onoff);
-    void set_grid(bool onoff);
+    void grid(std::string onoff);
+    void grid(bool onoff);
     // - toggle ticklabel visibility: true | false
-    void set_ticklabel(bool onoff);
+    void ticklabel(bool onoff);
     // - title
-    void set_title(std::string label);
+    void title(std::string label);
     // - [x|y|z]label
-    void set_xlabel(std::string label);
-    void set_ylabel(std::string label);
+    void xlabel(std::string label);
+    void ylabel(std::string label);
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
     void capture_mouse(bool flag);
@@ -738,7 +735,7 @@ public:
     // - Surface & contour
     Surface surface(const Matrix<double>& zmat);
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
-    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(const Matrix<double>& zmat, const Colormap& cten);
     Surface surface(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -754,7 +751,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface surface(
@@ -772,11 +769,11 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface pcolor(const Matrix<double>& cmat);
-    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(const Colormap& cten);
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -785,7 +782,7 @@ public:
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Surface pcolor(
         const Matrix<double>& xmat,
@@ -795,7 +792,7 @@ public:
     Surface pcolor(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     // -*-
@@ -832,7 +829,7 @@ public:
     );
 
     // - shading:
-    void set_shading(std::string arg);
+    void shading(std::string arg);
 
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
@@ -844,7 +841,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -861,7 +858,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<double>& cten
+        const Colormap& cten
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -1003,7 +1000,7 @@ public:
     // - Surface & contour
     Surface surface(const Matrix<double>& zmat);
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
-    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(const Matrix<double>& zmat, const Colormap& cten);
     Surface surface(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -1019,7 +1016,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface surface(
@@ -1037,11 +1034,11 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface pcolor(const Matrix<double>& cmat);
-    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(const Colormap& cten);
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -1050,7 +1047,7 @@ public:
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Surface pcolor(
         const Matrix<double>& xmat,
@@ -1060,7 +1057,7 @@ public:
     Surface pcolor(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     // -*-
@@ -1109,7 +1106,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -1126,7 +1123,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<double>& cten
+        const Colormap& cten
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -1228,7 +1225,7 @@ public:
     Matrix<double> xdata;
     Matrix<double> ydata;
     Matrix<double> zdata;
-    Tensor<float> cdata;
+    Colormap cdata;
 
     // shading value: <colorspec> | "none" | "flat" | "interp"
     std::string edgeColor;
@@ -1262,7 +1259,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -1279,13 +1276,13 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<double>& cten
+        const Colormap& cten
     );
 
     Patch set(std::string key, std::string val);
     Patch set(std::string key, float val);
 
-    Tensor<float> index_to_trucolor(const Vector<double> indexcolor);
+    Colormap index_to_trucolor(const Vector<double> indexcolor);
     void config();
 
 private:
@@ -1307,7 +1304,7 @@ public:
     Matrix<double> ydata;
     Matrix<double> zdata;
     Matrix<double> cdataIndex;
-    Tensor<float> cdata;
+    Colormap cdata;
     Vector<double> vdata;   // V
     std::string faceColor;  // "none" | "flat"
     std::string edgeColor;  // "none" | "flat"
@@ -1336,7 +1333,7 @@ public:
     // - Surface & contour
     Surface surface(const Matrix<double>& zmat);
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
-    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(const Matrix<double>& zmat, const Colormap& cten);
     Surface surface(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -1352,7 +1349,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface surface(
@@ -1370,11 +1367,11 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     Surface pcolor(const Matrix<double>& cmat);
-    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(const Colormap& cten);
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
@@ -1383,7 +1380,7 @@ public:
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
     Surface pcolor(
         const Matrix<double>& xmat,
@@ -1393,7 +1390,7 @@ public:
     Surface pcolor(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Tensor<float>& cten
+        const Colormap& cten
     );
 
     // -*-
@@ -1479,6 +1476,219 @@ public:
 void initilalize(int &argc, char **argv);
 void register_figure(const Figure fig);
 void set_window_title(int window, std::string name);
+
+// -*----------------------------------------------------------------*-
+// -*- SWZPLOT PUBLIC API                                           -*-
+// -*----------------------------------------------------------------*-
+Figure figure();
+Figure figure(int id);
+Figure figure(std::string name);
+
+Figure gcf();
+Axes subplot(unsigned int m, unsigned int n, unsigned int p);
+
+//! @todo: legend(...)
+Canvas canvas(std::string name="plot", bool visible=true);
+Axes gca();
+Matrix<double> peaks(int n);
+Vector<double> linspace(double minval, double maxval, size_t count);
+
+template<typename T>
+void set(const std::string key);
+void set(const std::string key);
+template<typename T>
+void set(float key);
+void set(float key);
+template<typename T>
+void set(std::string key, std::string val);
+void set(std::string key, std::string val);
+template<typename T>
+void set(std::string key, float val);
+void set(std::string key, float val);
+
+// - set axis limit (2D & 3D)
+void axis(double xmin, double xmax, double ymin, double ymax);
+void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+// - toggle axis visibility: "on" | "off" | true | false
+void axis(std::string onoff);
+void axis(bool onoff);
+// - toggle grid visibility: "on" | "off" | true | false
+void grid(std::string onoff);
+void grid(bool onoff);
+// - toggle ticklabel visibility: true | false
+void ticklabel(bool onoff);
+// - title
+void title(std::string label);
+// - [x|y|z]label
+void xlabel(std::string label);
+void ylabel(std::string label);
+//! @todo: Axes zlabel(std::string label);
+// - Capture mouse events
+void capture_mouse(bool flag);
+
+// - draw vertex
+void vertex(double x, double y);
+void vertex(double x, double y, double z);
+
+// - plot data
+Line plot(const Vector<double>& yvec);
+Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
+Line plot(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& zvec
+);
+
+// - log-scale plot
+Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
+Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
+Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
+
+// - vertex
+void vertex(double x, double y, double dx, double dy);
+void errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec
+);
+void errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec, const Vector<double>& dyvec
+);
+
+// ----
+// - Surface & contour
+Surface surface(const Matrix<double>& zmat);
+Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
+Surface surface(const Matrix<double>& zmat, const Colormap& cten);
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+);
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Matrix<float>& cmat
+);
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Colormap& cten
+);
+
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+);
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Matrix<float>& cmat
+);
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Colormap& cten
+);
+
+Surface pcolor(const Matrix<double>& cmat);
+Surface pcolor(const Colormap& cten);
+Surface pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& cvec
+);
+Surface pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Colormap& cten
+);
+Surface pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& cmat
+);
+Surface pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Colormap& cten
+);
+
+// -*-
+Surface contour(const Matrix<double>& zmat);
+Surface contour(const Matrix<double>& zmat, unsigned int n);
+Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+);
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, unsigned int n
+);
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Vector<double>& values
+);
+
+Surface mesh(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+);
+Surface surf(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+);
+
+// - shading:
+void shading(std::string arg);
+
+// -
+Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Vector<double>& cvec // Matrix<double>???
+);
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Colormap& cten
+);
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+);
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Vector<double>& cvec
+);
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Colormap& cten
+);
+
+Patch bar(const Vector<double>& ydata);
+Patch bar(const Vector<double>& ydata, float width);
+Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
+Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
+
+//! @todo: add font information
+Text text(double x, double y, const std::string message);
+
+Axes colorbar();
+void grey();
+void jet();
+void hsv();
+void cool();
+void spring();
+void summer();
+void autumn();
+void winter();
+
+void print(std::string filename="out.eps");
+void savefig(std::string filename="out.eps");
+
+void append(Line line, std::pair<double, double> point2d);
+void append(Axes axes, std::pair<double, double> point2d);
+void append(Canvas canvas, std::pair<double, double> point2d);
+void append(Figure fig, std::pair<double, double> point2d);
+void append(Line line, double x, double y);
+void append(Axes axes, double x, double y);
+void append(Canvas canvas, double x, double y);
+void append(Figure fig, double x, double y);
+void append(Line line, Position<double> point2d);
+void append(Axes axes, Position<double> point2d);
+void append(Canvas canvas, Position<double> point2d);
+void append(Figure fig, Position<double> point2d);
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
