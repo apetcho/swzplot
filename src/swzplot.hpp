@@ -1461,7 +1461,17 @@ private:
 // -*----------------------------------------------------------------*-
 // -*- ::text                                                       -*-
 // -*----------------------------------------------------------------*-
+class TextBase: public DrawableBase, public std::enable_shared_from_this<TextBase>{
+public:
+    std::string message; // String
+    Position<float> position;
+    void draw();
 
+    TextBase(const Axes axes): DrawableBase(axes){}
+    Text text(double x, double y, const std::string message);
+    void clear();
+    void config();
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::glut                                                       -*-
