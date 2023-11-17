@@ -9,6 +9,7 @@
 #include<exception>
 #include<valarray>
 #include<iostream>
+#include<variant>
 #include<chrono>
 #include<vector>
 #include<string>
@@ -151,6 +152,45 @@ Matrix<double> peaks(size_t num);
 // -*----------------------------------------------------------------*-
 // -*- ::color                                                      -*-
 // -*----------------------------------------------------------------*-
+// -*-
+class Color{
+public:
+    enum class ColorEnum{
+        // - basic
+        Black, Red, Blue, Green, Cyan, Magenta, Yellow, White,
+        // - dark color
+        DarkRed, DarkBlue, DarkGreen, DarkCyan, DarkMagenta, DarkYellow,
+        // - light color
+        LightRed, LightBlue, LightGreen, LightCyan, LightMagenta, LightYellow,
+        // - universal color
+        UniRed, UniBlue, UniGreen, UniCyan, UniMagenta, UniYellow,
+        UniSkyBlue, UniPink, UniOrange, UniPurple, UniBrown,
+    };
+
+    struct Rgb{
+        float r;
+        float g;
+        float b;
+    };
+private:
+    std::variant<std::string, ColorEnum> m_value;
+    
+public:
+    static std::map<ColorEnum, std::pair<std::string, std::string>> colors;
+    static std::map<ColorEnum, Rgb> rgbcolors;
+    // -*-
+    Color(const std::string& colorspec);
+    Color(float r, float g, float b);
+    ~Color() = default;
+
+    Color::Rgb rgb();
+    std::string colorspec();
+    Vector<float> to_vector();
+};
+
+// -*-
+// Vector<float> colorspec_to_rgb(const std::string colorspec);
+// std::string rgb_to_colorspec(Vector<float> rgb);
 
 // -*----------------------------------------------------------------*-
 // -*- ::axes                                                       -*-
