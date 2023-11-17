@@ -1298,6 +1298,165 @@ private:
 // -*----------------------------------------------------------------*-
 // -*- ::surface                                                    -*-
 // -*----------------------------------------------------------------*-
+//! @todo: Change Tensor to Colormap
+//! @note: According to the previous definition Colormap = Matrix<Vector<float>>;
+//! @note: It would be better to do this: Colormap = Vector<Color>;
+class SurfaceBase: public DrawableBase, public std::enable_shared_from_this<SurfaceBase>{
+public:
+    Matrix<double> xdata;
+    Matrix<double> ydata;
+    Matrix<double> zdata;
+    Matrix<double> cdataIndex;
+    Tensor<float> cdata;
+    Vector<double> vdata;   // V
+    std::string faceColor;  // "none" | "flat"
+    std::string edgeColor;  // "none" | "flat"
+    std::string lineStyle;  // "-" | "--" | ":" | "-." | "none"
+    float lineWidth;
+    int numContour;
+    AxesType axesType;
+
+    // -*-
+    SurfaceBase(const Axes axes)
+    : DrawableBase(axes)
+    , vdata()
+    , faceColor("flat")
+    , edgeColor("b")
+    , lineStyle("-")
+    , lineWidth(0.5f)
+    , numContour(10)
+    , axesType(AxesType::Axes2D)
+    {}
+
+    // -
+    void clear();
+    void draw();
+
+    Surface shading(std::string arg);
+    // - Surface & contour
+    Surface surface(const Matrix<double>& zmat);
+    Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
+    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface pcolor(const Matrix<double>& cmat);
+    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& cvec
+    );
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Tensor<float>& cten
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& cmat
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+
+    // -*-
+    Surface contour(const Matrix<double>& zmat);
+    Surface contour(const Matrix<double>& zmat, unsigned int n);
+    Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        unsigned int n
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Vector<double>& values
+    );
+
+    Surface mesh(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surf(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+
+    Surface set(std::string key, std::string val);
+    Surface set(std::string key, float val);
+    void config();
+
+private:
+    void draw2d();
+    void draw3d();
+    void contourc(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Vector<double>& values,
+        Matrix<double>& cmat
+    );
+    void draw_contour();
+
+    std::mutex m_data_mtx;
+
+    // -*-
+    struct Contour{
+        double x;
+        double y;
+        int xi;
+        int yi;
+        int xy;
+        int done;
+    };
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::text                                                       -*-
