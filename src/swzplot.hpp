@@ -1,14 +1,20 @@
 #ifndef SWZPLOT_H
 #define SWZPLOT_H
 
+
+#include<type_traits>
+#include<functional>
+#include<algorithm>
+#include<stdexcept>
+#include<exception>
+#include<valarray>
 #include<iostream>
+#include<chrono>
+#include<vector>
+#include<string>
 #include<memory>
 #include<thread>
 #include<mutex>
-#include<chrono>
-#include<vector>
-#include<valarray>
-#include<string>
 #include<cmath>
 #include<list>
 #include<map>
@@ -78,6 +84,19 @@ enum Scale{
     Linear,
     Logarithm,
 };
+
+
+/**
+ * @brief Get the maximum valued element from vector
+ * 
+ * @tparam T 
+ * @param vec 
+ * @return T 
+ */
+template<typename T>
+T max(const std::vector<T>& vec){
+    return *std::max_element(vec.begin(), vec.end());
+}
 
 //! @note: Array
 //! @note: Matrix
