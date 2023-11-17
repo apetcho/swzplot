@@ -20,3 +20,6 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/apetcho/freeglut.git
 )
 FetchContent_MakeAvailable(freeglut)
+
+# -*-
+add_subdirectory(src)
