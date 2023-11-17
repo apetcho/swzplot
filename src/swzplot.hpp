@@ -52,6 +52,25 @@ class FigureBase;
 using Figure = std::shared_ptr<FigureBase>;
 using FigureDict = std::map<int, Figure>;
 
+// -*-------------------------------*-
+// -*- Other forward declarations; -*-
+// -*-------------------------------*-
+//! @note: LineBase is a DrawableBase
+class LineBase;
+using Line = std::shared_ptr<LineBase>;
+
+//! @note: PatchBase is a DrawableBase
+class PatchBase;
+using Patch = std::shared_ptr<PatchBase>;
+
+//! @note: SurfaceBase is a DrawableBase
+class SurfaceBase;
+using Surface = std::shared_ptr<SurfaceBase>;
+
+//! @note: TextBase is a DrawableBase
+class TextBase;
+using Text = std::shared_ptr<TextBase>;
+
 // -*----------------------------*-
 // -*- drawing_t_t ==> Drawable -*-
 // -*----------------------------*-
@@ -133,6 +152,10 @@ using Vector = std::vector<T>;
 template<typename T>
 using Matrix = Vector<std::vector<T>>;
 
+//! @note: Tensor
+template<typename T>
+using Tensor = Matrix<std::vector<T>>;
+
 template<typename T, std::enable_if<std::is_floating_point_v<T>>>
 Vector<T> linspace(T minval, T maxval, size_t count=10){
     if(count==0){ return Vector<T>{}; }
@@ -196,7 +219,7 @@ public:
 // -*----------------------------------------------------------------*-
 // -*- Utility classes and functionalities                          -*-
 // -*----------------------------------------------------------------*-
-template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+template<typename T>
 struct Position {
     T x;
     T y;
@@ -208,7 +231,7 @@ struct Position {
     ~Position() = default;
 };
 
-template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+template<typename T>
 struct DataLim{
     T minval;
     T maxval;
@@ -218,7 +241,7 @@ struct DataLim{
     ~DataLim() = default;
 };
 
-template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
+template<typename T>
 struct BBox{
     T left;
     T bottom;
@@ -246,28 +269,33 @@ public:
     ~AxesBase(){};
     Layer gcl(){ return this->m_layer; }
 
+    // -*- START OF PROTECTED API -*-
     // -*- 
-    float cta0;
-    float phi0;
-    float cta;
-    float phi;
+    float m_cta0;
+    float m_phi0;
+    float m_cta;
+    float m_phi;
     // -*-
-    double xmouse;
-    double ymouse;
-    bool mouse; // Capture the mouse actions
-    int xbuttonDown;
-    int ybuttonDown;
-    float ctaButtonDown;
-    float phiButtonDown;
+    // double xmouse;
+    // double ymouse;
+    Position<double> m_xymouse;
+    bool m_mouse; // Capture the mouse actions
+    // int xbuttonDown;
+    // int ybuttonDown;
+    Position<int> m_xybutton;
+    float m_ctaButtonDown;
+    float m_phiButtonDown;
     bool (*mouse_callback)(int button, int state, int x, int y);
 
     // double xmin;
     // double xmax;
-    
-    double ymin;
-    double ymax;
-    double zmin;
-    double zmax;
+    DataLim<double> m_xdatalim;
+    // double ymin;
+    // double ymax;
+    DataLim<double> m_ydatalim;
+    // double zmin;
+    // double zmax;
+    DataLim<double> m_zdatalim;
 
     void reset_limits();
     void config();
@@ -282,18 +310,289 @@ public:
     bool mouse(int button, int state, int x, int y);
     bool motion(int x, int y);
 
+    Vector<double> make_tick(double minval, double maxval);
+
     enum AxesType {
         Axes2D, Axes3D, ColorBar
     };
+    AxesType m_axType;
 
-    enum AxesMode{
+    enum AxesLimMode{
         Auto, Maxnual,
     };
 
-    AxesType axType;
-
     // -*- styles -
-    bool box;
+    bool m_boxed; // Axes on/off :: boxFlag
+    float m_linewidth;
+    std::string m_tickDir; // "in" | "out"
+    bool m_is_visible;
+    bool m_xgrid; // xgridFlag
+    bool m_ygrid; // ygridFlag
+    bool m_zgrid; // zgridFlag
+
+    // General information
+    DrawableList m_children;  // container for children drawings
+    Drawable m_co;            // currently active drawing object
+    bool m_selected;          // Axes have been clicked by the user
+    BBox<float> m_axBBox;     // ::position
+    BBox<float> m_viewBBox;   // ::viewport3d
+
+    // -*- Scale and axes
+    std::string m_xAxisLocation;  // "top" | "bottom"
+    std::string m_yAxisLocation;  // "left"| "right" 
+
+    DataLim<double> m_xlim;       // x-axis limit
+    DataLim<double> m_ylim;       // y-axis limit
+    DataLim<double> m_zlim;       // z-axis limit
+    AxesLimMode m_xlimMode;
+    AxesLimMode m_ylimMode;
+    AxesLimMode m_zlimMode;
+    Scale m_xscale;
+    Scale m_yscale;
+    Scale m_zscale;
+    Vector<double> m_xticks;
+    Vector<double> m_yticks;
+    Vector<double> m_zticks;
+    bool m_ticklabel;         // ticklabelFlag
+
+    // -
+    Position<float> m_cameraPosition;
+    Position<float> m_cameraTarget;
+    Position<float> m_cameraUpVector;
+
+    // -*- Label
+    std::string m_title;
+    std::string m_xlabel;
+    std::string m_ylabel;
+    std::string m_zlabl;
+    DataLim<double> m_clim;
+
+    void draw();
+
+    // -*- END OF PROTECTED API -*-
+
+    // -*------------------------------*-
+    // -*- Interface (i.e public API) -*-
+    // -*------------------------------*-
+    // - set axis limit (2D & 3D)
+    Axes axis(double xmin, double xmax, double ymin, double ymax);
+    Axes axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    // - toggle axis visibility: "on" | "off" | true | false
+    Axes axis(std::string onoff);
+    Axes axis(bool onoff);
+    // - toggle grid visibility: "on" | "off" | true | false
+    Axes grid(std::string onoff);
+    Axes grid(bool onoff);
+    // - toggle ticklabel visibility: true | false
+    Axes ticklabel(bool onoff);
+    // - title
+    Axes title(std::string label);
+    // - [x|y|z]label
+    Axes xlabel(std::string label);
+    Axes ylabel(std::string label);
+    //! @todo: Axes zlabel(std::string label);
+    // - Capture mouse events
+    Axes capture_mouse(bool flag);
+
+    //! @todo: implement this here
+    template<typename T>
+    std::shared_ptr<T> add();
+
+    //! @todo: implement this here
+    template<typename T>
+    std::shared_ptr<T> gco();
+
+    //! @note: clear the figure|axes
+    //! @todo: implement this here
+    Axes clear();
+    // - set color of axes
+    void color(float r, float g, float b);
+    //! @note: It will better our utility classes here for colormap operations
+    // - set the colormap of the children's axes
+    Vector<float> colormap(std::string color, float target);
+    void colormap(std::string color);
+    void colormap(const Matrix<float>& colors);
+
+    // - set colormaps
+    void grey(){ this->colormap("gray"); }
+    void jet(){ this->colormap("jet"); }
+    void hsv(){ this->colormap("hsv"); }
+    void cool(){ this->colormap("cool"); }
+    void spring(){ this->colormap("spring"); }
+    void summer(){ this->colormap("summer"); }
+    void autumn(){ this->colormap("autumn"); }
+    void winter(){ this->colormap("winter"); }
+
+    Vector<float> map_to_color(double x);
+
+    // - draw vertex
+    void vertex(double x, double y);
+    void vertex(double x, double y, double z);
+
+    // - plot data
+    Line plot(const Vector<double>& yvec);
+    Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line plot(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& zvec
+    );
+
+    // - log-scale plot
+    Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
+
+    // - vertex
+    void vertex(double x, double y, double dx, double dy);
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec
+    );
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec,
+        const Vector<double>& dyvec
+    );
+
+    // - Surface & contour
+    Surface surface(const Matrix<double>& zmat);
+    Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
+    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface pcolor(const Matrix<double>& cmat);
+    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& cvec
+    );
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Tensor<float>& cten
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& cmat
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+
+    // -*-
+    Surface contour(const Matrix<double>& zmat);
+    Surface contour(const Matrix<double>& zmat, unsigned int n);
+    Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        unsigned int n
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Vector<double>& values
+    );
+
+    Surface mesh(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surf(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+
+    // - shading:
+    void shading(std::string arg);
+
+    // -
+    Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Vector<double>& cvec // Matrix<double>???
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Vector<double>& cvec
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<double>& cten
+    );
+
+    Patch bar(const Vector<double>& ydata);
+    Patch bar(const Vector<double>& ydata, float width);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
+
+    //! @todo: add font information
+    Text text(double x, double y, const std::string message);
 
 private:
     int window_height();
@@ -308,7 +607,7 @@ private:
     double coord3D_to_yaxis(double y);
     double coord3D_to_zaxis(double z);
 
-public:
+// public:
     // - get shared_pointer sharing the current instance of this AxesBase object
     Axes share(){
         return shared_from_this();
