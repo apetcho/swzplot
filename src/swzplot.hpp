@@ -619,17 +619,529 @@ private:
     }
 };
 
-// -*----------------------------------------------------------------*-
-// -*- ::color                                                      -*-
-// -*----------------------------------------------------------------*-
 
-// -*----------------------------------------------------------------*-
-// -*- ::figure                                                     -*-
-// -*----------------------------------------------------------------*-
 
 // -*----------------------------------------------------------------*-
 // -*- ::layer                                                      -*-
 // -*----------------------------------------------------------------*-
+class CanvasBase: public std::enable_shared_from_this<CanvasBase>{
+private:
+    Axes m_ax;
+    Axes m_selected_axes;
+    bool m_visible;
+    Position<float> m_xyButtonDown;
+
+public:
+    // -
+    std::chrono::steady_clock::time_point timeCliked;
+    std::string name;       // or simply ::name
+    Figure figure;          // 
+    AxesDict axesDict;      // axes
+
+    // -
+    CanvasBase(const Figure fig, const std::string& name, bool visible)
+    : m_visible{visible}, name{name}, figure{fig}
+    {}
+
+    // -
+    void draw();
+    Axes subplot(unsigned int m, unsigned int n, unsigned p);
+    Axes gca();
+    Figure gcf();
+    Canvas clear();
+    void toggle_visibility();
+    void set_visibility(bool flag);
+    bool is_visible(){ return this->m_visible; }
+    bool mouse(int button, int state, int x, int y);
+    bool motion(int x, int y);
+
+    // -*----------------------------*-
+    // -*- Interface i.e public API -*-
+    // -*----------------------------*-
+    template<typename T>
+    void set(const std::string key);
+    void set(const std::string key);
+    template<typename T>
+    void set(float key);
+    void set(float key);
+    template<typename T>
+    void set(std::string key, std::string val);
+    void set(std::string key, std::string val);
+    template<typename T>
+    void set(std::string key, float val);
+    void set(std::string key, float val);
+
+    // -*-
+    // - set axis limit (2D & 3D)
+    void axis(double xmin, double xmax, double ymin, double ymax);
+    void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    // - toggle axis visibility: "on" | "off" | true | false
+    void axis(std::string onoff);
+    void axis(bool onoff);
+    // - toggle grid visibility: "on" | "off" | true | false
+    void grid(std::string onoff);
+    void grid(bool onoff);
+    // - toggle ticklabel visibility: true | false
+    void ticklabel(bool onoff);
+    // - title
+    void title(std::string label);
+    // - [x|y|z]label
+    void xlabel(std::string label);
+    void ylabel(std::string label);
+    //! @todo: Axes zlabel(std::string label);
+    // - Capture mouse events
+    void capture_mouse(bool flag);
+
+    Axes colorbar();
+    void grey();
+    void jet();
+    void hsv();
+    void cool();
+    void spring();
+    void summer();
+    void autumn();
+    void winter();
+
+    // - draw vertex
+    void vertex(double x, double y);
+    void vertex(double x, double y, double z);
+
+    // - plot data
+    Line plot(const Vector<double>& yvec);
+    Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line plot(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& zvec
+    );
+
+    // - log-scale plot
+    Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
+
+    // - vertex
+    void vertex(double x, double y, double dx, double dy);
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec
+    );
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec,
+        const Vector<double>& dyvec
+    );
+
+    // ----
+    // - Surface & contour
+    Surface surface(const Matrix<double>& zmat);
+    Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
+    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface pcolor(const Matrix<double>& cmat);
+    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& cvec
+    );
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Tensor<float>& cten
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& cmat
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+
+    // -*-
+    Surface contour(const Matrix<double>& zmat);
+    Surface contour(const Matrix<double>& zmat, unsigned int n);
+    Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        unsigned int n
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Vector<double>& values
+    );
+
+    Surface mesh(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surf(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+
+    // - shading:
+    void shading(std::string arg);
+
+    // -
+    Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Vector<double>& cvec // Matrix<double>???
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Vector<double>& cvec
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<double>& cten
+    );
+
+    Patch bar(const Vector<double>& ydata);
+    Patch bar(const Vector<double>& ydata, float width);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
+
+    //! @todo: add font information
+    Text text(double x, double y, const std::string message);
+
+private:
+    Canvas share(){
+        return shared_from_this();
+    }
+};
+
+// -*----------------------------------------------------------------*-
+// -*- ::figure                                                     -*-
+// -*----------------------------------------------------------------*-
+class FigureBase: public std::enable_shared_from_this<FigureBase>{
+private:
+    CanvasDict m_canvasDict;
+
+public:
+    // user defined event callbak
+    void (*keyboard_callack)(unsigned char, int, int);
+    // -
+    int window_width;
+    int window_height;
+    Position<int> xyPassive;
+    std::string window_name;    // figname
+    int window_num;
+    BBox<int> windowBBox;   // position[4]
+    Canvas current_canvas;  // cl
+    Canvas selected_canvas;
+
+    FigureBase(std::string name="plot", bool visible=true);
+    ~FigureBase() = default;
+
+    // -
+    void set_window_name(); // set_figure_name()
+    // -
+    Canvas canvas(std::string name="default", bool visible=true);
+    Canvas get_current_canvas();
+    Figure clear();
+    void draw();
+    void draw_all(); // draw_layer_list
+
+    // - callback
+    void reshape(int width, int height);
+    void mouse(int button, int state, int x, int y);
+    void passivemotion(int x, int y);
+    void keyboard(char key, int x, int y);
+
+    Figure gcf(){ return this->share(); }
+    Axes gca();
+    Axes subplot(unsigned int m, unsigned int n, unsigned int p);
+
+    // -*----------------------------*-
+    // -*- Interface i.e public API -*-
+    // -*----------------------------*-
+    template<typename T>
+    void set(const std::string key);
+    void set(const std::string key);
+    template<typename T>
+    void set(float key);
+    void set(float key);
+    template<typename T>
+    void set(std::string key, std::string val);
+    void set(std::string key, std::string val);
+    template<typename T>
+    void set(std::string key, float val);
+    void set(std::string key, float val);
+
+    // -*-
+    // - set axis limit (2D & 3D)
+    void axis(double xmin, double xmax, double ymin, double ymax);
+    void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    // - toggle axis visibility: "on" | "off" | true | false
+    void axis(std::string onoff);
+    void axis(bool onoff);
+    // - toggle grid visibility: "on" | "off" | true | false
+    void grid(std::string onoff);
+    void grid(bool onoff);
+    // - toggle ticklabel visibility: true | false
+    void ticklabel(bool onoff);
+    // - title
+    void title(std::string label);
+    // - [x|y|z]label
+    void xlabel(std::string label);
+    void ylabel(std::string label);
+    //! @todo: Axes zlabel(std::string label);
+    // - Capture mouse events
+    void capture_mouse(bool flag);
+
+    Axes colorbar();
+    void grey();
+    void jet();
+    void hsv();
+    void cool();
+    void spring();
+    void summer();
+    void autumn();
+    void winter();
+
+    // - draw vertex
+    void vertex(double x, double y);
+    void vertex(double x, double y, double z);
+
+    // - plot data
+    Line plot(const Vector<double>& yvec);
+    Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line plot(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& zvec
+    );
+
+    // - log-scale plot
+    Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
+    Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
+
+    // - vertex
+    void vertex(double x, double y, double dx, double dy);
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec
+    );
+    void errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& dxvec,
+        const Vector<double>& dyvec
+    );
+
+    // ----
+    // - Surface & contour
+    Surface surface(const Matrix<double>& zmat);
+    Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
+    Surface surface(const Matrix<double>& zmat, const Tensor<float>& cten);
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Matrix<float>& cmat
+    );
+    Surface surface(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<float>& cten
+    );
+
+    Surface pcolor(const Matrix<double>& cmat);
+    Surface pcolor(const Tensor<float>& cten);
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& cvec
+    );
+    Surface pcolor(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Tensor<float>& cten
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& cmat
+    );
+    Surface pcolor(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+
+    // -*-
+    Surface contour(const Matrix<double>& zmat);
+    Surface contour(const Matrix<double>& zmat, unsigned int n);
+    Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        unsigned int n
+    );
+    Surface contour(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat,
+        const Vector<double>& values
+    );
+
+    Surface mesh(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+    Surface surf(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Matrix<double>& zmat
+    );
+
+    // - shading:
+    void shading(std::string arg);
+
+    // -
+    Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Vector<double>& cvec // Matrix<double>???
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Tensor<float>& cten
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Vector<double>& cvec
+    );
+    Patch patch(
+        const Matrix<double>& xmat,
+        const Matrix<double>& ymat,
+        const Matrix<double>& zmat,
+        const Tensor<double>& cten
+    );
+
+    Patch bar(const Vector<double>& ydata);
+    Patch bar(const Vector<double>& ydata, float width);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
+    Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
+
+    //! @todo: add font information
+    Text text(double x, double y, const std::string message);
+
+private:
+    Figure share(){
+        return shared_from_this();
+    }
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::line                                                       -*-
