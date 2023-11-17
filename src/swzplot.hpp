@@ -380,24 +380,24 @@ public:
     // -*- Interface (i.e public API) -*-
     // -*------------------------------*-
     // - set axis limit (2D & 3D)
-    Axes axis(double xmin, double xmax, double ymin, double ymax);
-    Axes axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    Axes set_axis(double xmin, double xmax, double ymin, double ymax);
+    Axes set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
-    Axes axis(std::string onoff);
-    Axes axis(bool onoff);
+    Axes set_axis(std::string onoff);
+    Axes set_axis(bool onoff);
     // - toggle grid visibility: "on" | "off" | true | false
-    Axes grid(std::string onoff);
-    Axes grid(bool onoff);
+    Axes set_grid(std::string onoff);
+    Axes set_grid(bool onoff);
     // - toggle ticklabel visibility: true | false
-    Axes ticklabel(bool onoff);
+    Axes set_ticklabel(bool onoff);
     // - title
-    Axes title(std::string label);
+    Axes set_title(std::string label);
     // - [x|y|z]label
-    Axes xlabel(std::string label);
-    Axes ylabel(std::string label);
+    Axes set_xlabel(std::string label);
+    Axes set_ylabel(std::string label);
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
-    Axes capture_mouse(bool flag);
+    Axes set_capture_mouse(bool flag);
 
     //! @todo: implement this here
     template<typename T>
@@ -411,22 +411,22 @@ public:
     //! @todo: implement this here
     Axes clear();
     // - set color of axes
-    void color(float r, float g, float b);
+    void set_color(float r, float g, float b);
     //! @note: It will better our utility classes here for colormap operations
     // - set the colormap of the children's axes
-    Vector<float> colormap(std::string color, float target);
-    void colormap(std::string color);
-    void colormap(const Matrix<float>& colors);
+    Vector<float> set_colormap(std::string color, float target);
+    void set_colormap(std::string color);
+    void set_colormap(const Matrix<float>& colors);
 
     // - set colormaps
-    void grey(){ this->colormap("gray"); }
-    void jet(){ this->colormap("jet"); }
-    void hsv(){ this->colormap("hsv"); }
-    void cool(){ this->colormap("cool"); }
-    void spring(){ this->colormap("spring"); }
-    void summer(){ this->colormap("summer"); }
-    void autumn(){ this->colormap("autumn"); }
-    void winter(){ this->colormap("winter"); }
+    void grey(){ this->set_colormap("gray"); }
+    void jet(){ this->set_colormap("jet"); }
+    void hsv(){ this->set_colormap("hsv"); }
+    void cool(){ this->set_colormap("cool"); }
+    void spring(){ this->set_colormap("spring"); }
+    void summer(){ this->set_colormap("summer"); }
+    void autumn(){ this->set_colormap("autumn"); }
+    void winter(){ this->set_colormap("winter"); }
 
     Vector<float> map_to_color(double x);
 
@@ -559,7 +559,7 @@ public:
     );
 
     // - shading:
-    void shading(std::string arg);
+    void set_shading(std::string arg);
 
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
@@ -673,21 +673,21 @@ public:
 
     // -*-
     // - set axis limit (2D & 3D)
-    void axis(double xmin, double xmax, double ymin, double ymax);
-    void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    void set_axis(double xmin, double xmax, double ymin, double ymax);
+    void set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
-    void axis(std::string onoff);
-    void axis(bool onoff);
+    void set_axis(std::string onoff);
+    void set_axis(bool onoff);
     // - toggle grid visibility: "on" | "off" | true | false
-    void grid(std::string onoff);
-    void grid(bool onoff);
+    void set_grid(std::string onoff);
+    void set_grid(bool onoff);
     // - toggle ticklabel visibility: true | false
-    void ticklabel(bool onoff);
+    void set_ticklabel(bool onoff);
     // - title
-    void title(std::string label);
+    void set_title(std::string label);
     // - [x|y|z]label
-    void xlabel(std::string label);
-    void ylabel(std::string label);
+    void set_xlabel(std::string label);
+    void set_ylabel(std::string label);
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
     void capture_mouse(bool flag);
@@ -832,7 +832,7 @@ public:
     );
 
     // - shading:
-    void shading(std::string arg);
+    void set_shading(std::string arg);
 
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
@@ -938,21 +938,21 @@ public:
 
     // -*-
     // - set axis limit (2D & 3D)
-    void axis(double xmin, double xmax, double ymin, double ymax);
-    void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    void set_axis(double xmin, double xmax, double ymin, double ymax);
+    void set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
-    void axis(std::string onoff);
-    void axis(bool onoff);
+    void set_axis(std::string onoff);
+    void set_axis(bool onoff);
     // - toggle grid visibility: "on" | "off" | true | false
-    void grid(std::string onoff);
-    void grid(bool onoff);
+    void set_grid(std::string onoff);
+    void set_grid(bool onoff);
     // - toggle ticklabel visibility: true | false
-    void ticklabel(bool onoff);
+    void set_ticklabel(bool onoff);
     // - title
-    void title(std::string label);
+    void set_title(std::string label);
     // - [x|y|z]label
-    void xlabel(std::string label);
-    void ylabel(std::string label);
+    void set_xlabel(std::string label);
+    void set_ylabel(std::string label);
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
     void capture_mouse(bool flag);
@@ -1097,7 +1097,7 @@ public:
     );
 
     // - shading:
-    void shading(std::string arg);
+    void set_shading(std::string arg);
 
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
@@ -1146,6 +1146,76 @@ private:
 // -*----------------------------------------------------------------*-
 // -*- ::line                                                       -*-
 // -*----------------------------------------------------------------*-
+class LineBase: public DrawableBase, public std::enable_shared_from_this<LineBase>{
+public:
+    // -
+    bool errorbarFlag;
+
+    void clear();
+    void set_color(float r, float g, float b);
+
+    // -*-
+    unsigned int maxCapacity;
+    bool stopAtMax;
+    Vector<double> xdata;
+    Vector<double> ydata;
+    Vector<double> zdata;
+    std::string color;
+    std::string lineStyle;  // "-" | "--" | ":" | "-." "none"
+    float lineWidth;
+    // marker: "none" | "." | "+" | "x" | "d" | "^" | "v" | "o" | "*" | "s"
+    std::string marker;
+    float markerSize;
+    std::string markerEdgeColor;
+    std::string markerFaceColor;
+    bool visible;
+
+    // -
+    LineBase(const Axes axes);
+    Figure gcf();
+
+    void draw();
+    void config();
+
+    Line set_capacity(unsigned int);
+    Line stop_at_max(bool flag=true);
+
+    // -*-
+    Line vertex(double x, double y);
+    Line line(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line plot(const Vector<double>& yvec);
+    Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line plot(const Vector<double>& xvec, const Vector<double>& yvec, const Vector<double>& zvec);
+    Line plot(const std::valarray<double>& xvec, const std::valarray<double>& yvec);
+
+    Line semilogx(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line semilogy(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line loglog(const Vector<double>& xvec, const Vector<double>& yvec);
+
+    Line vertex(double x, double y, double dx, double dy);
+    Line errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& evec
+    );
+    Line errorbar(
+        const Vector<double>& xvec,
+        const Vector<double>& yvec,
+        const Vector<double>& exvec,
+        const Vector<double>& eyvec
+    );
+
+    // -
+    Line vertex(double x, double y, double z);
+    Line set(float linewidth);
+    Line set(std::string key); // set property
+    Line set(std::string key, std::string val);
+    Line set(std::string key, float val);
+
+private:
+    std::pair<double, double> minmax(const Vector<double>& data, Scale scale);
+    std::mutex m_data_mtx;
+};
 
 // -*----------------------------------------------------------------*-
 // -*- ::patch                                                      -*-
