@@ -123,8 +123,27 @@ T min(const std::vector<std::vector<T>>& mat){
     return static_cast<T>(result);
 }
 
-//! @note: Array
+//! @note: Vector
+template<typename T>
+using Vector = std::vector<T>;
+
 //! @note: Matrix
+template<typename T>
+using Matrix = Vector<std::vector<T>>;
+
+template<typename T, std::enable_if<std::is_floating_point_v<T>>>
+Vector<T> linspace(T minval, T maxval, size_t count=10){
+    if(count==0){ return Vector<T>{}; }
+    if(count==1){ return Vector<T>{minval}; }
+    if(count==2){ return Vector<T>{minval, maxval}; }
+    Vector<T> result{};
+    auto dx = (maxval - minval)/(count-1);
+    for(size_t i=0; i < count; ++i){
+        auto value = minval + dx*i;
+        result.push_back(value);
+    }
+    return result;
+}
 
 // -*----------------------------------------------------------------*-
 // -*- ::color                                                      -*-
