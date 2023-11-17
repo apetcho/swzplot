@@ -40,9 +40,13 @@ using AxesDict = std::map<int, Axes>;
 // -*- layer_t_t ==> LayerBase -*-
 // -*---------------------------*-
 //! @todo: documentation
-class LayerBase;
-using Layer = std::shared_ptr<LayerBase>;
-using LayerDict = std::map<std::string, Layer>;
+//! @note: renaming
+//      - LayerBase ==> CanvasBase
+//      - Layer     ==> Canvas
+//      - LayerDict ==> CanvasDict
+class CanvasBase;
+using Canvas = std::shared_ptr<CanvasBase>;
+using CanvasDict = std::map<std::string, Canvas>;
 
 // -*-----------------------------*-
 // -*- figure_t_t ==> FigureBase -*-
@@ -261,13 +265,14 @@ struct BBox{
 class AxesBase: public std::enable_shared_from_this<AxesBase>{
 private:
     std::mutex m_childer_mtx;
-    Layer m_layer;
+    Canvas m_canvas;
     Axes m_colorbar_ax;
 
 public:
-    AxesBase(Layer layer);
+    AxesBase(Canvas layer);
     ~AxesBase(){};
-    Layer gcl(){ return this->m_layer; }
+    // Canvas gcl(){ return this->m_canvas; }
+    Canvas canvas(){ return this->m_canvas; }
 
     // -*- START OF PROTECTED API -*-
     // -*- 
