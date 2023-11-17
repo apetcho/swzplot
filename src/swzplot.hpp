@@ -1490,7 +1490,6 @@ Axes subplot(unsigned int m, unsigned int n, unsigned int p);
 //! @todo: legend(...)
 Canvas canvas(std::string name="plot", bool visible=true);
 Axes gca();
-Matrix<double> peaks(int n);
 Vector<double> linspace(double minval, double maxval, size_t count);
 
 template<typename T>
