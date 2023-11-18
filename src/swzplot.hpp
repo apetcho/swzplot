@@ -1,6 +1,11 @@
+/// \file swzplot.hpp
+/// Includes swzplot plottling library header file.
+//
+// Copyright (c) 2023 Eyram K. Apetcho
+// Distributed under MIT License
+//
 #ifndef SWZPLOT_H
 #define SWZPLOT_H
-
 
 #include<type_traits>
 #include<functional>
@@ -187,8 +192,12 @@ Matrix<double> peaks(size_t num);
 // -*- ::color                                                      -*-
 // -*----------------------------------------------------------------*-
 // -*-
+/** \class Color
+ * @brief Define color representation used in swzplot
+ * 
+ */
 class Color{
-public:
+private:
     enum class ColorEnum{
         // - basic
         Black, Red, Blue, Green, Cyan, Magenta, Yellow, White,
@@ -202,22 +211,20 @@ public:
     };
 
     struct Rgb{
-        float r;
-        float g;
-        float b;
+        float r, g, b;
     };
-private:
-    std::variant<std::string, ColorEnum> m_value;
     
+    std::variant<std::string, ColorEnum> m_value;
+    std::map<ColorEnum, std::pair<std::string, std::string>> m_colorspec;
+    std::map<ColorEnum, Rgb> m_rgbcolors;
+    void init_colors();
 public:
-    static std::map<ColorEnum, std::pair<std::string, std::string>> colors;
-    static std::map<ColorEnum, Rgb> rgbcolors;
     // -*-
     Color(const std::string& colorspec);
     Color(float r, float g, float b);
     ~Color() = default;
 
-    Color::Rgb rgb();
+    void rgb(float& r, float& g, float& b);
     std::string colorspec();
     Vector<float> to_vector();
 };
