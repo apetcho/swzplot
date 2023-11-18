@@ -1,4 +1,5 @@
 #include "swzplot.hpp"
+#include<cctype>
 
 // -*----------------------------------------------------------------*-
 // -*- namespace::swzplot                                           -*-
@@ -81,6 +82,28 @@ void Color::init_colors(){
     this->m_rgbcolors[ColorEnum::UniBrown] = {.r=0.4f, .g=0.2f, .b=0.f };
 }
 
+// -*-
+static std::string tolower(const std::string& name){
+    std::string color(name);
+    std::string result = "";
+    std::string::iterator ptr = color.begin();
+    while(ptr != color.end()){
+        result += std::tolower(*ptr);
+        ptr++;
+    }
+    return result;
+}
+
+static std::string tolower(const char* name){
+    std::string color(name);
+    std::string result = "";
+    std::string::iterator ptr = color.begin();
+    while(ptr != color.end()){
+        result += std::tolower(*ptr);
+        ptr++;
+    }
+    return result;
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
