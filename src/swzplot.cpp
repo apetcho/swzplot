@@ -499,6 +499,11 @@ void CanvasBase::axis(double xmin, double xmax, double ymin, double ymax, double
     this->gca()->axis(xmin, xmax, ymin, ymax, zmin, zmax);
 }
 
+// -*-
+void CanvasBase::axis(std::string onoff){
+    this->gca()->axis(onoff);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
