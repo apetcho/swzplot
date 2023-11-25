@@ -1027,6 +1027,14 @@ Surface FigureBase::pcolor(
     return this->gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cdata);
 }
 
+// -*-
+Surface FigureBase::pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& cmat
+){
+    return this->gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
