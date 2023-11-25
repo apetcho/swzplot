@@ -1006,6 +1006,10 @@ Surface FigureBase::pcolor(const Matrix<double>& cmat){
     return this->gca()->add<SurfaceBase>()->pcolor(cmat);
 }
 
+// -*-
+Surface FigureBase::pcolor(const Colormap& cdata){
+    return this->gca()->add<SurfaceBase>()->pcolor(cdata);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
