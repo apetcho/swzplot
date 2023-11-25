@@ -230,6 +230,11 @@ Surface AxesBase::surface(const Matrix<double>& zmat, const Matrix<double>& cmat
     return this->add<SurfaceBase>()->surface(zmat, cmat);
 }
 
+// -*-
+Surface AxesBase::surface(const Matrix<double>& zmat, const Colormap& cdata){
+    return this->add<SurfaceBase>()->surface(zmat, cdata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
