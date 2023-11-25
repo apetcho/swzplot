@@ -101,6 +101,19 @@ Color::Color(const std::string& colorspec){
     }
 }
 
+// -*-
+Color::Color(float r, float g, float b){
+    this->init_colors();
+    this->m_rgb = Rgb(r, g, b);
+    auto ans = this->find_color_enum_by_rgb();
+    this->m_colorEnum = ans.value_or(ColorEnum::Black);
+    auto spec = this->m_colorspecs.find(this->m_colorEnum);
+    if(spec == this->m_colorspecs.end()){
+        this->m_colorspec = "black";
+    }else{
+        this->m_colorspec = spec->second.first;
+    }
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

@@ -250,7 +250,7 @@ private:
         }
     };
     
-    std::variant<std::string, ColorEnum> m_value;
+    //std::variant<std::string, ColorEnum> m_value;
     std::map<ColorEnum, std::pair<std::string, std::string>> m_colorspecs;
     std::map<ColorEnum, Rgb> m_rgbcolors;
 
