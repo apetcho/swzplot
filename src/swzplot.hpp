@@ -1144,7 +1144,10 @@ public:
 
     // -*-
     // - set axis limit (2D & 3D)
-    void set_axis(double xmin, double xmax, double ymin, double ymax);
+    void set_axis(double xmin, double xmax, double ymin, double ymax){
+        this->gca()->axis(xmin, xmax, ymin, ymax);
+    }
+
     void set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
     void set_axis(std::string onoff);
