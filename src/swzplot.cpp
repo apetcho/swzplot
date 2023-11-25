@@ -529,6 +529,11 @@ void CanvasBase::title(std::string label){
     this->gca()->title(label);
 }
 
+// -*-
+void CanvasBase::xlabel(std::string label){
+    this->gca()->xlabel(label);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
