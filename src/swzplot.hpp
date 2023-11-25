@@ -1199,7 +1199,7 @@ public:
         return this->gca()->colorbar();
     }
 
-    void grey();
+    void gray(){ this->gca()->gray(); }
     void jet();
     void hsv();
     void cool();
