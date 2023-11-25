@@ -1103,6 +1103,11 @@ void FigureBase::shading(std::string arg){
     this->gca()->gco<SurfaceBase>()->shading(arg);
 }
 
+// -*-
+Patch FigureBase::patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
+    return this->gca()->add<PatchBase>()->patch(xmat, ymat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
