@@ -322,6 +322,15 @@ Surface AxesBase::pcolor(
     return this->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
 }
 
+// -*-
+Surface AxesBase::pcolor(
+    const Matrix<double>& xmat,
+    const Matrix<double>& ymat,
+    const Colormap& cdata
+){
+    return this->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
