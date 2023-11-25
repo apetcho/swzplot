@@ -489,6 +489,11 @@ void CanvasBase::set(std::string key, float val){
     this->gca()->gco<LineBase>()->set(key, val);
 }
 
+// -*-
+void CanvasBase::axis(double xmin, double xmax, double ymin, double ymax){
+    this->gca()->axis(xmin, xmax, ymin, ymax);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-

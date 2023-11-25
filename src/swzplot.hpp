@@ -496,24 +496,24 @@ public:
     // -*- Interface (i.e public API) -*-
     // -*------------------------------*-
     // - set axis limit (2D & 3D)
-    Axes set_axis(double xmin, double xmax, double ymin, double ymax);
-    Axes set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+    Axes axis(double xmin, double xmax, double ymin, double ymax);
+    Axes axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
-    Axes set_axis(std::string onoff);
-    Axes set_axis(bool onoff=true);
+    Axes axis(std::string onoff);
+    Axes axis(bool onoff=true);
     // - toggle grid visibility: "on" | "off" | true | false
-    Axes set_grid(std::string onoff);
-    Axes set_grid(bool onoff=true);
+    Axes grid(std::string onoff);
+    Axes grid(bool onoff=true);
     // - toggle ticklabel visibility: true | false
-    Axes set_ticklabel(bool onoff=true);
+    Axes ticklabel(bool onoff=true);
     // - title
-    Axes set_title(std::string label);
+    Axes title(std::string label);
     // - [x|y|z]label
-    Axes set_xlabel(std::string label);
-    Axes set_ylabel(std::string label);
+    Axes xlabel(std::string label);
+    Axes ylabel(std::string label);
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
-    Axes set_capture_mouse(bool flag);
+    Axes capture_mouse(bool flag);
 
     // Add a new child drawing to the axes. The added type must inherit
     // DrawableBase
@@ -549,22 +549,22 @@ public:
     }
 
     // - set color of axes
-    void set_color(float r, float g, float b);
+    void color(float r, float g, float b);
     //! @note: It will better our utility classes here for colormap operations
     // - set the colormap of the children's axes
     Vector<float> set_colormap(std::string color, float target);
-    void set_colormap(std::string color);
-    void set_colormap(const Matrix<float>& colors);
+    void colormap(std::string color);
+    void colormap(const Matrix<float>& colors);
 
     // - set colormaps
-    void grey(){ this->set_colormap("gray"); }
-    void jet(){ this->set_colormap("jet"); }
-    void hsv(){ this->set_colormap("hsv"); }
-    void cool(){ this->set_colormap("cool"); }
-    void spring(){ this->set_colormap("spring"); }
-    void summer(){ this->set_colormap("summer"); }
-    void autumn(){ this->set_colormap("autumn"); }
-    void winter(){ this->set_colormap("winter"); }
+    void grey(){ this->colormap("gray"); }
+    void jet(){ this->colormap("jet"); }
+    void hsv(){ this->colormap("hsv"); }
+    void cool(){ this->colormap("cool"); }
+    void spring(){ this->colormap("spring"); }
+    void summer(){ this->colormap("summer"); }
+    void autumn(){ this->colormap("autumn"); }
+    void winter(){ this->colormap("winter"); }
 
     Vector<float> map_to_color(double x);
 
