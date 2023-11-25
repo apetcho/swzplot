@@ -198,6 +198,11 @@ Line AxesBase::loglog(const Vector<double>& xdata, const Vector<double>& ydata){
     return this->add<LineBase>()->loglog(xdata, ydata);
 }
 
+// -*-
+void AxesBase::vertex(double x, double y, double dx, double dy){
+    this->gco<LineBase>()->vertex(x, y, dx, dy);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
