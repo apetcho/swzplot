@@ -1378,6 +1378,8 @@ public:
 
     //! @todo: add font information
     Text text(double x, double y, const std::string message);
+    void print(const std::string filename="out.eps");
+    void savefig(const std::string filename="out.eps");
 
 private:
     Figure share(){

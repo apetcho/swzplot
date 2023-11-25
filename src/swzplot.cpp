@@ -1168,6 +1168,11 @@ Patch FigureBase::bar(const Vector<double>& xdata, const Vector<double>& ydata, 
     return this->gca()->add<PatchBase>()->bar(xdata, ydata, width);
 }
 
+// -*-
+Text FigureBase::text(double x, double y, const std::string message){
+    return this->gca()->add<TextBase>()->text(x, y, message);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
