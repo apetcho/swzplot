@@ -371,6 +371,15 @@ Surface AxesBase::contour(
     return this->add<SurfaceBase>()->contour(xvec, yvec, zmat, values);
 }
 
+// -*-
+Surface AxesBase::mesh(
+    const Vector<double>& xvec,
+    const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return this->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
