@@ -592,6 +592,14 @@ void CanvasBase::vertex(double x, double y, double dx, double dy){
     this->gca()->gco<LineBase>()->vertex(x, y, dx, dy);
 }
 
+// -*-
+void CanvasBase::errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec
+){
+    this->gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
