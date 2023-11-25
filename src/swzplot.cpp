@@ -854,6 +854,11 @@ void FigureBase::set_window_name(const std::string& name){
     }
 }
 
+// -*-
+void FigureBase::set(const std::string key){
+    this->gca()->gco<LineBase>()->set(key);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
