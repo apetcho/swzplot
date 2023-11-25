@@ -724,6 +724,11 @@ Surface CanvasBase::contour(const Matrix<double>& zmat, unsigned int n){
     return this->gca()->add<SurfaceBase>()->contour(zmat, n);
 }
 
+// -*-
+Surface CanvasBase::contour(const Matrix<double>& zmat, const Vector<double>& values){
+    return this->gca()->add<SurfaceBase>()->contour(zmat, values);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
