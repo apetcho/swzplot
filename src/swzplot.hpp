@@ -1245,7 +1245,7 @@ public:
     // - Surface & contour
     Surface surface(const Matrix<double>& zmat);
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
-    Surface surface(const Matrix<double>& zmat, const Colormap& cten);
+    Surface surface(const Matrix<double>& zmat, const Colormap& cdata);
     Surface surface(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
