@@ -768,7 +768,12 @@ public:
     Axes gca(){
         return this->m_ca ? this->m_ca : this->subplot(1,1,1);
     }
-    Figure gcf();
+
+    // -*-
+    Figure gcf(){
+        return this->m_figure;
+    }
+
     Canvas clear();
     void toggle_visibility();
     void set_visibility(bool flag);
