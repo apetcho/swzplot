@@ -1166,7 +1166,10 @@ public:
         this->gca()->grid(onoff);
     }
 
-    void grid(bool onoff);
+    void grid(bool onoff){
+        this->gca()->grid(onoff);
+    }
+
     // - toggle ticklabel visibility: true | false
     void ticklabel(bool onoff);
     // - title
