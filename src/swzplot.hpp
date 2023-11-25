@@ -1825,7 +1825,10 @@ void vertex(double x, double y, double z){
 }
 
 // - plot data
-Line plot(const Vector<double>& yvec);
+Line plot(const Vector<double>& yvec){
+    return gca()->add<LineBase>()->plot(yvec);
+}
+
 Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
 Line plot(
     const Vector<double>& xvec, const Vector<double>& yvec,
