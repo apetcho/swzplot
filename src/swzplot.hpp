@@ -1117,7 +1117,8 @@ public:
     // -*- Interface i.e public API -*-
     // -*----------------------------*-
     template<typename T>
-    void set(const std::string key);
+    void set(const std::string key){ this->gca()->gco<T>()->set(key); }
+
     void set(const std::string key);
     template<typename T>
     void set(float key);
