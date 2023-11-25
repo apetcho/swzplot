@@ -509,6 +509,10 @@ void CanvasBase::axis(bool onoff){
     this->gca()->axis(onoff);
 }
 
+// -*-
+void CanvasBase::grid(std::string onoff){
+    this->gca()->grid(onoff);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
