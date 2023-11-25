@@ -1302,7 +1302,7 @@ public:
     Surface pcolor(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Colormap& cten
+        const Colormap& cdata
     );
 
     // -*-
