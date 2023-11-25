@@ -864,6 +864,11 @@ void FigureBase::set(float key){
     this->gca()->gco<LineBase>()->set(key);
 }
 
+// -*-
+void FigureBase::set(std::string key, std::string val){
+    this->gca()->gco<LineBase>()->set(key, val);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
