@@ -1730,11 +1730,15 @@ namespace glut{
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC API                                           -*-
 // -*----------------------------------------------------------------*-
+extern Figure currentFigure;
 Figure figure();
 Figure figure(int id);
 Figure figure(std::string name);
 
-Figure gcf();
+Figure gcf(){
+    return currentFigure ? currentFigure : figure(0);
+}
+
 Axes subplot(unsigned int m, unsigned int n, unsigned int p);
 
 //! @todo: legend(...)
