@@ -462,6 +462,11 @@ Patch AxesBase::bar(const Vector<double>& xdata, const Vector<double>& ydata, fl
     return this->add<PatchBase>()->bar(xdata, ydata, width);
 }
 
+// -*-
+Text AxesBase::text(double x, double y, const std::string message){
+    return this->add<TextBase>()->text(x, y, message);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
