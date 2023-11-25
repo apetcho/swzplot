@@ -212,6 +212,14 @@ void AxesBase::errorbar(
     this->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
 }
 
+// -*-
+void AxesBase::errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec, const Vector<double>& dyvec
+){
+    this->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
