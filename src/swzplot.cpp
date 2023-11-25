@@ -938,6 +938,11 @@ void FigureBase::errorbar(
     this->gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
 }
 
+// -*-
+Surface FigureBase::surface(const Matrix<double>& zmat){
+    return this->gca()->add<SurfaceBase>()->surface(zmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
