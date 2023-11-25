@@ -131,6 +131,13 @@ std::string Color::colorspec(){
     return stream.str(); 
 }
 
+// -*-
+std::string Color::colorspec(float r, float g, float b){
+    std::ostringstream stream;
+    stream << "(" << r << " " << g << " " << b << ")";
+    return stream.str(); 
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
