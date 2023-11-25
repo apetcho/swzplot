@@ -796,6 +796,7 @@ public:
     }
 
     void set(const std::string key);
+
     template<typename T>
     void set(float key);
     void set(float key);
