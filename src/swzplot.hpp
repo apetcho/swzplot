@@ -774,7 +774,13 @@ public:
         return this->m_figure;
     }
 
-    Canvas clear();
+    // -*-
+    Canvas clear(){
+        this->m_ca.reset();
+        this->m_axesDict.clear();
+        return this->share();
+    }
+
     void toggle_visibility();
     void set_visibility(bool flag);
     bool is_visible(){ return this->m_visible; }
