@@ -159,6 +159,10 @@ void AxesBase::vertex(double x, double y){
     this->gco<Line>()->vertex(x, y);
 }
 
+// -*-
+void AxesBase::vertex(double x, double y, double z){
+    this->gco<Line>()->vertex(x, y, z);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

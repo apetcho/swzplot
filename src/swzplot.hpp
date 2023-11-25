@@ -1300,7 +1300,8 @@ public:
 
     // -*-
     Line vertex(double x, double y);
-    // Line vertex(double x, double y, double z); // ????
+    //! @note: Added the vertex(double, double, double)
+    Line vertex(double x, double y, double z); // ????
     Line line(const Vector<double>& xvec, const Vector<double>& yvec);
     Line plot(const Vector<double>& yvec);
     Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
