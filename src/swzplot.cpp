@@ -600,6 +600,14 @@ void CanvasBase::errorbar(
     this->gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
 }
 
+// -*-
+void CanvasBase::errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec, const Vector<double>& dyvec
+){
+    this->gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
