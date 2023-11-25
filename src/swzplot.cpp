@@ -235,6 +235,15 @@ Surface AxesBase::surface(const Matrix<double>& zmat, const Colormap& cdata){
     return this->add<SurfaceBase>()->surface(zmat, cdata);
 }
 
+// -*-
+Surface AxesBase::surface(
+    const Vector<double>& xvec,
+    const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return this->add<SurfaceBase>()->surface(xvec, yvec, zmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
