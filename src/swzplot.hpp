@@ -1157,7 +1157,10 @@ public:
         this->gca()->axis(onoff);
     }
 
-    void axis(bool onoff);
+    void axis(bool onoff){
+        this->gca()->axis(onoff);
+    }
+
     // - toggle grid visibility: "on" | "off" | true | false
     void set_grid(std::string onoff);
     void set_grid(bool onoff);
