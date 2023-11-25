@@ -1206,7 +1206,7 @@ public:
     void cool(){ this->gca()->cool(); }
     void spring(){ this->gca()->spring(); }
     void summer(){ this->gca()->summer(); }
-    void autumn();
+    void autumn(){ this->gca()->autumn(); }
     void winter();
 
     // - draw vertex
