@@ -389,6 +389,12 @@ Surface AxesBase::surf(
     return this->add<SurfaceBase>()->surf(xvec, yvec, zmat);
 }
 
+// -*-
+void AxesBase::shading(std::string arg){
+    this->gco<SurfaceBase>()->shading(arg);
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
