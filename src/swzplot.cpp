@@ -331,6 +331,10 @@ Surface AxesBase::pcolor(
     return this->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
 }
 
+// -*-
+Surface AxesBase::contour(const Matrix<double>& zmat){
+    return this->add<SurfaceBase>()->contour(zmat);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
