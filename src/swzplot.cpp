@@ -824,6 +824,11 @@ Patch CanvasBase::bar(const Vector<double>& ydata){
     return this->gca()->add<PatchBase>()->bar(ydata);
 }
 
+// -*-
+Patch CanvasBase::bar(const Vector<double>& ydata, float width){
+    return this->gca()->add<PatchBase>()->bar(ydata, width);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
