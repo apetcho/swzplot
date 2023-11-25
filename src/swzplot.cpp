@@ -474,6 +474,11 @@ void CanvasBase::set(const std::string key){
     this->gca()->gco<LineBase>()->set(key);
 }
 
+// -*-
+void CanvasBase::set(float key){
+    this->gca()->gco<LineBase>()->set(key);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
