@@ -1748,7 +1748,8 @@ Canvas canvas(std::string name="plot", bool visible=true){
     return gcf()->canvas(name, visible);
 }
 
-Axes gca();
+Axes gca(){ return gcf()->get_current_canvas()->gca(); }
+
 Vector<double> linspace(double minval, double maxval, size_t count);
 
 template<typename T>
