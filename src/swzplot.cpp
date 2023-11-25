@@ -442,6 +442,11 @@ Patch AxesBase::patch(
     return this->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
 
+// -*-
+Patch AxesBase::bar(const Vector<double>& ydata){
+    return this->add<PatchBase>()->bar(ydata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
