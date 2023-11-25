@@ -874,6 +874,11 @@ void FigureBase::set(std::string key, float val){
     this->gca()->gco<LineBase>()->set(key, val);
 }
 
+// -*-
+void FigureBase::vertex(double x, double y){
+    this->gca()->gco<LineBase>()->vertex(x, y);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
