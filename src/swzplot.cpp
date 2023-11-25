@@ -417,6 +417,15 @@ Patch AxesBase::patch(
     return this->add<PatchBase>()->patch(xmat, ymat, cdata);
 }
 
+// -*-
+Patch AxesBase::patch(
+    const Matrix<double>& xmat,
+    const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+){
+    return this->add<PatchBase>()->patch(xmat, ymat, zmat);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
