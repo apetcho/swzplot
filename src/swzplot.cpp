@@ -774,6 +774,11 @@ void CanvasBase::shading(std::string arg){
     this->gca()->gco<SurfaceBase>()->shading(arg);
 }
 
+// -*-
+Patch CanvasBase::patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
+    return this->gca()->add<PatchBase>()->patch(xmat, ymat);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
