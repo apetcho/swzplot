@@ -879,6 +879,11 @@ void FigureBase::vertex(double x, double y){
     this->gca()->gco<LineBase>()->vertex(x, y);
 }
 
+// -*-
+void FigureBase::vertex(double x, double y, double z){
+    this->gca()->gco<LineBase>()->vertex(x, y, z);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
