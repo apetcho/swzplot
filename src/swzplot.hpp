@@ -1018,7 +1018,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Vector<double>& cvec // Matrix<double>???
+        const Vector<double>& cvec
     );
     Patch patch(
         const Matrix<double>& xmat,
