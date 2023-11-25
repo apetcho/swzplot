@@ -1205,7 +1205,7 @@ public:
     void hot(){ this->gca()->hot(); }
     void cool(){ this->gca()->cool(); }
     void spring(){ this->gca()->spring(); }
-    void summer();
+    void summer(){ this->gca()->summer(); }
     void autumn();
     void winter();
 
