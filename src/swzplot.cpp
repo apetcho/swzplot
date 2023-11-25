@@ -1140,6 +1140,14 @@ Patch FigureBase::patch(
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cvec);
 }
 
+// -*-
+Patch FigureBase::patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return this->gca()->add<PatchBase>(xmat, ymat, zmat, cdata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
