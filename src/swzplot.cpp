@@ -295,6 +295,14 @@ Surface AxesBase::pcolor(const Colormap& cdata){
     return this->add<SurfaceBase>()->pcolor(cdata);
 }
 
+// -*-
+Surface AxesBase::pcolor(
+    const Vector<double>& xvec,
+    const Vector<double>& yvec,
+    const Matrix<double>& cvec
+){
+    return this->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
