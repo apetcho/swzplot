@@ -236,6 +236,10 @@ private:
     struct Rgb{
         float r, g, b;
 
+        Rgb(): r(0.f), g(0.f), b(0.f){}
+        Rgb(float red, float green, float blue)
+        : r(red), g(green), b(blue){}
+
         bool operator==(const Rgb& other){
             bool ans = (
                 this->r==other.r &&
@@ -250,10 +254,9 @@ private:
     std::map<ColorEnum, std::pair<std::string, std::string>> m_colorspecs;
     std::map<ColorEnum, Rgb> m_rgbcolors;
 
-    static std::string defaultSpec;
-
     std::string m_colorspec;
     Rgb m_rgb;
+    ColorEnum m_colorEnum;
 
     std::optional<ColorEnum> find_color_enum_by_spec(){
         std::optional<ColorEnum> result = std::nullopt;

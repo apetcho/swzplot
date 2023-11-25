@@ -8,7 +8,6 @@ namespace swzplot{
 // -*---------*-
 // -*- Color -*-
 // -*---------*-
-std::string Color::defaultSpec = "black";
 
 void Color::init_colors(){
     this->m_colorspecs = {};
@@ -48,44 +47,59 @@ void Color::init_colors(){
 
     // -*-
     this->m_rgbcolors = {};
-    this->m_rgbcolors[ColorEnum::Black] = {.r=0.f, .g=0.f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::Red] = {.r=1.f, .g=0.f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::Blue] = {.r=0.f, .g=0.f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::Green] = {.r=0.f, .g=1.f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::Cyan] = {.r=0.f, .g=1.f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::Magenta] = {.r=1.f, .g=0.f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::Yellow] = {.r=1.f, .g=1.f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::White] = {.r=1.f, .g=1.f, .b=1.f };
+    this->m_rgbcolors[ColorEnum::Black] = Rgb(0.f, 0.f, 0.f);
+    this->m_rgbcolors[ColorEnum::Red] = Rgb(1.f, 0.f, 0.f);
+    this->m_rgbcolors[ColorEnum::Blue] = Rgb(0.f, 0.f, 1.f);
+    this->m_rgbcolors[ColorEnum::Green] = Rgb(0.f, 1.f, 0.f);
+    this->m_rgbcolors[ColorEnum::Cyan] = Rgb(0.f,1.f,1.f);
+    this->m_rgbcolors[ColorEnum::Magenta] = Rgb(1.f,0.f, 1.f);
+    this->m_rgbcolors[ColorEnum::Yellow] = Rgb(1.f, 1.f, 0.f);
+    this->m_rgbcolors[ColorEnum::White] = Rgb(1.f, 1.f,1.f);
 
     float h = 0.6f;
-    this->m_rgbcolors[ColorEnum::DarkRed] = {.r=h, .g=0.f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::DarkBlue] = {.r=0.f, .g=0.f, .b=h };
-    this->m_rgbcolors[ColorEnum::DarkGreen] = {.r=0.f, .g=h, .b=0.f };
-    this->m_rgbcolors[ColorEnum::DarkCyan] = {.r=0.f, .g=h, .b=h };
-    this->m_rgbcolors[ColorEnum::DarkMagenta] = {.r=h, .g=0.f, .b=h };
-    this->m_rgbcolors[ColorEnum::DarkYellow] = {.r=h, .g=h, .b=0.f };
+    this->m_rgbcolors[ColorEnum::DarkRed] = Rgb(h, 0.f, 0.f);
+    this->m_rgbcolors[ColorEnum::DarkBlue] = Rgb(0.f, 0.f, h);
+    this->m_rgbcolors[ColorEnum::DarkGreen] = Rgb(0.f, h, 0.f);
+    this->m_rgbcolors[ColorEnum::DarkCyan] = Rgb(0.f, h, h);
+    this->m_rgbcolors[ColorEnum::DarkMagenta] = Rgb(h, 0.f, h);
+    this->m_rgbcolors[ColorEnum::DarkYellow] = Rgb(h, h, 0.f);
 
     h = 0.5f;
-    this->m_rgbcolors[ColorEnum::LightRed] = {.r=1.f, .g=h, .b=h };
-    this->m_rgbcolors[ColorEnum::LightBlue] = {.r=h, .g=h, .b=1.f };
-    this->m_rgbcolors[ColorEnum::LightGreen] = {.r=h, .g=1.f, .b=h };
-    this->m_rgbcolors[ColorEnum::LightCyan] = {.r=h, .g=1.f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::LightMagenta] = {.r=1.f, .g=h, .b=1.f };
-    this->m_rgbcolors[ColorEnum::LightYellow] = {.r=1.f, .g=1.f, .b=h };
+    this->m_rgbcolors[ColorEnum::LightRed] = Rgb(1.f, h, h);
+    this->m_rgbcolors[ColorEnum::LightBlue] = Rgb(h, h, 1.f);
+    this->m_rgbcolors[ColorEnum::LightGreen] = Rgb(h, 1.f, h);
+    this->m_rgbcolors[ColorEnum::LightCyan] = Rgb(h, 1.f, 1.f);
+    this->m_rgbcolors[ColorEnum::LightMagenta] = Rgb(1.f, h, 1.f);
+    this->m_rgbcolors[ColorEnum::LightYellow] = Rgb(1.f, 1.f, h);
 
-    this->m_rgbcolors[ColorEnum::UniRed] = {.r=1.f, .g=0.2f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::UniBlue] = {.r=0.f, .g=0.25f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::UniGreen] = {.r=0.2f, .g=0.6f, .b=0.4f };
-    this->m_rgbcolors[ColorEnum::UniYellow] = {.r=1.f, .g=1.f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::UniCyan] = {.r=0.4f, .g=0.8f, .b=1.f };
-    this->m_rgbcolors[ColorEnum::UniPink] = {.r=1.f, .g=0.6f, .b=0.6f };
-    this->m_rgbcolors[ColorEnum::UniOrange] = {.r=1.f, .g=0.6f, .b=0.f };
-    this->m_rgbcolors[ColorEnum::UniPurple] = {.r=0.6f, .g=0.f, .b=0.4f };
-    this->m_rgbcolors[ColorEnum::UniBrown] = {.r=0.4f, .g=0.2f, .b=0.f };
+    this->m_rgbcolors[ColorEnum::UniRed] = Rgb(1.f, 0.2f, 0.f);
+    this->m_rgbcolors[ColorEnum::UniBlue] = Rgb(0.f, 0.25f, 1.f);
+    this->m_rgbcolors[ColorEnum::UniGreen] = Rgb(0.2f, 0.6f, 0.4f);
+    this->m_rgbcolors[ColorEnum::UniYellow] = Rgb(1.f, 1.f, 1.f);
+    this->m_rgbcolors[ColorEnum::UniCyan] = Rgb(0.4f, 0.8f, 1.f);
+    this->m_rgbcolors[ColorEnum::UniPink] = Rgb(1.f, 0.6f, 0.6f);
+    this->m_rgbcolors[ColorEnum::UniOrange] = Rgb(1.f, 0.6f, 0.f);
+    this->m_rgbcolors[ColorEnum::UniPurple] = Rgb(0.6f, 0.f, 0.4f);
+    this->m_rgbcolors[ColorEnum::UniBrown] = Rgb(0.4f, 0.2f, 0.f);
 }
 
 
-// 
+// -*-
+Color::Color(const std::string& colorspec){
+    this->init_colors();
+    this->m_colorspec = colorspec;
+    this->m_rgb = {};
+    auto ans = this->find_color_enum_by_spec();
+    this->m_colorEnum = ans.value_or(ColorEnum::Black);
+    auto rgb = this->m_rgbcolors.find(this->m_colorEnum);
+    if(rgb == this->m_rgbcolors.end()){
+        this->m_rgb = Rgb{};
+    }else{
+        this->m_rgb.r = rgb->second.r;
+        this->m_rgb.g = rgb->second.g;
+        this->m_rgb.b = rgb->second.b;
+    }
+}
 
 
 // -*----------------------------------------------------------------*-
