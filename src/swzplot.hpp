@@ -188,6 +188,29 @@ Vector<T> linspace(T minval, T maxval, size_t count=10){
 // -*-
 Matrix<double> peaks(size_t num);
 
+// -*-
+// -*-
+static std::string tolower(const std::string& name){
+    std::string color(name);
+    std::string result = "";
+    std::string::iterator ptr = color.begin();
+    while(ptr != color.end()){
+        result += std::tolower(*ptr);
+        ptr++;
+    }
+    return result;
+}
+
+static std::string tolower(const char* name){
+    std::string color(name);
+    std::string result = "";
+    std::string::iterator ptr = color.begin();
+    while(ptr != color.end()){
+        result += std::tolower(*ptr);
+        ptr++;
+    }
+    return result;
+}
 // -*----------------------------------------------------------------*-
 // -*- ::color                                                      -*-
 // -*----------------------------------------------------------------*-
@@ -215,8 +238,23 @@ private:
     };
     
     std::variant<std::string, ColorEnum> m_value;
-    std::map<ColorEnum, std::pair<std::string, std::string>> m_colorspec;
+    std::map<ColorEnum, std::pair<std::string, std::string>> m_colorspecs;
     std::map<ColorEnum, Rgb> m_rgbcolors;
+
+    static std::string defaultSpec;
+
+    std::string m_colorspec;
+    std::optional<ColorEnum> find_color_enum_by_spec(){
+        std::optional<ColorEnum> result = std::nullopt;
+        auto spec = tolower(this->m_colorspec);
+        for(auto entry: this->m_colorspecs){
+            if(entry.second.first == spec || entry.second.second==spec){
+                result = entry.first;
+            }
+        }
+        return result;
+    }
+
     void init_colors();
 public:
     // -*-

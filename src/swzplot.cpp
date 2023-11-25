@@ -8,41 +8,43 @@ namespace swzplot{
 // -*---------*-
 // -*- Color -*-
 // -*---------*-
+std::string Color::defaultSpec = "black";
+
 void Color::init_colors(){
-    this->m_colorspec = {};
+    this->m_colorspecs = {};
     // - basic color
-    this->m_colorspec[ColorEnum::Black] = {"k", "black"};
-    this->m_colorspec[ColorEnum::Red] = {"r", "red"};
-    this->m_colorspec[ColorEnum::Blue] = {"b", "blue"};
-    this->m_colorspec[ColorEnum::Green] = {"g", "green"};
-    this->m_colorspec[ColorEnum::Cyan] = {"c", "cyan"};
-    this->m_colorspec[ColorEnum::Magenta] = {"m", "magenta"};
-    this->m_colorspec[ColorEnum::Yellow] = {"y", "yellow"};
-    this->m_colorspec[ColorEnum::White] = {"w", "white"};
+    this->m_colorspecs[ColorEnum::Black] = {"k", "black"};
+    this->m_colorspecs[ColorEnum::Red] = {"r", "red"};
+    this->m_colorspecs[ColorEnum::Blue] = {"b", "blue"};
+    this->m_colorspecs[ColorEnum::Green] = {"g", "green"};
+    this->m_colorspecs[ColorEnum::Cyan] = {"c", "cyan"};
+    this->m_colorspecs[ColorEnum::Magenta] = {"m", "magenta"};
+    this->m_colorspecs[ColorEnum::Yellow] = {"y", "yellow"};
+    this->m_colorspecs[ColorEnum::White] = {"w", "white"};
     // - dark color
-    this->m_colorspec[ColorEnum::DarkRed] = {"dr", "darkred"};
-    this->m_colorspec[ColorEnum::DarkBlue] = {"db", "darkblue"};
-    this->m_colorspec[ColorEnum::DarkGreen] = {"dg", "darkgreen"};
-    this->m_colorspec[ColorEnum::DarkCyan] = {"dc", "darkcyan"};
-    this->m_colorspec[ColorEnum::DarkMagenta] = {"dm", "darkmagenta"};
-    this->m_colorspec[ColorEnum::DarkYellow] = {"dy", "darkyellow"};
+    this->m_colorspecs[ColorEnum::DarkRed] = {"dr", "darkred"};
+    this->m_colorspecs[ColorEnum::DarkBlue] = {"db", "darkblue"};
+    this->m_colorspecs[ColorEnum::DarkGreen] = {"dg", "darkgreen"};
+    this->m_colorspecs[ColorEnum::DarkCyan] = {"dc", "darkcyan"};
+    this->m_colorspecs[ColorEnum::DarkMagenta] = {"dm", "darkmagenta"};
+    this->m_colorspecs[ColorEnum::DarkYellow] = {"dy", "darkyellow"};
     // - light color
-    this->m_colorspec[ColorEnum::LightRed] = {"lr", "lightblue"};
-    this->m_colorspec[ColorEnum::LightBlue] = {"lb", "lightblue"};
-    this->m_colorspec[ColorEnum::LightGreen] = {"lg", "lightgreen"};
-    this->m_colorspec[ColorEnum::LightCyan] = {"lc", "lightcyan"};
-    this->m_colorspec[ColorEnum::LightMagenta] = {"lm", "lightmagenta"};
-    this->m_colorspec[ColorEnum::LightYellow] = {"ly", "lightyellow"};
+    this->m_colorspecs[ColorEnum::LightRed] = {"lr", "lightblue"};
+    this->m_colorspecs[ColorEnum::LightBlue] = {"lb", "lightblue"};
+    this->m_colorspecs[ColorEnum::LightGreen] = {"lg", "lightgreen"};
+    this->m_colorspecs[ColorEnum::LightCyan] = {"lc", "lightcyan"};
+    this->m_colorspecs[ColorEnum::LightMagenta] = {"lm", "lightmagenta"};
+    this->m_colorspecs[ColorEnum::LightYellow] = {"ly", "lightyellow"};
     // - universal color
-    this->m_colorspec[ColorEnum::UniRed] = {"ur", "universalred"};
-    this->m_colorspec[ColorEnum::UniBlue] = {"ub", "universalblue"};
-    this->m_colorspec[ColorEnum::UniGreen] = {"ug", "universalgreen"};
-    this->m_colorspec[ColorEnum::UniYellow] = {"uy", "universalyellow"};
-    this->m_colorspec[ColorEnum::UniCyan] = {"uc", "skyblue"};
-    this->m_colorspec[ColorEnum::UniOrange] = {"uo", "universalorange"};
-    this->m_colorspec[ColorEnum::UniPink] = {"up", "pink"};
-    this->m_colorspec[ColorEnum::UniMagenta] = {"um", "purple"};
-    this->m_colorspec[ColorEnum::UniBrown] = {"ubr", "brown"};
+    this->m_colorspecs[ColorEnum::UniRed] = {"ur", "universalred"};
+    this->m_colorspecs[ColorEnum::UniBlue] = {"ub", "universalblue"};
+    this->m_colorspecs[ColorEnum::UniGreen] = {"ug", "universalgreen"};
+    this->m_colorspecs[ColorEnum::UniYellow] = {"uy", "universalyellow"};
+    this->m_colorspecs[ColorEnum::UniCyan] = {"uc", "skyblue"};
+    this->m_colorspecs[ColorEnum::UniOrange] = {"uo", "universalorange"};
+    this->m_colorspecs[ColorEnum::UniPink] = {"up", "pink"};
+    this->m_colorspecs[ColorEnum::UniMagenta] = {"um", "purple"};
+    this->m_colorspecs[ColorEnum::UniBrown] = {"ubr", "brown"};
 
     // -*-
     this->m_rgbcolors = {};
@@ -82,28 +84,9 @@ void Color::init_colors(){
     this->m_rgbcolors[ColorEnum::UniBrown] = {.r=0.4f, .g=0.2f, .b=0.f };
 }
 
-// -*-
-static std::string tolower(const std::string& name){
-    std::string color(name);
-    std::string result = "";
-    std::string::iterator ptr = color.begin();
-    while(ptr != color.end()){
-        result += std::tolower(*ptr);
-        ptr++;
-    }
-    return result;
-}
 
-static std::string tolower(const char* name){
-    std::string color(name);
-    std::string result = "";
-    std::string::iterator ptr = color.begin();
-    while(ptr != color.end()){
-        result += std::tolower(*ptr);
-        ptr++;
-    }
-    return result;
-}
+// 
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
