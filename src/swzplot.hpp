@@ -803,8 +803,12 @@ public:
     }
 
     void set(float key);
+
     template<typename T>
-    void set(std::string key, std::string val);
+    void set(std::string key, std::string val){
+        this->gca()->gco<T>()->set(key, val);
+    }
+
     void set(std::string key, std::string val);
     template<typename T>
     void set(std::string key, float val);
