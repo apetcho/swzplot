@@ -515,7 +515,8 @@ public:
     // - Capture mouse events
     Axes set_capture_mouse(bool flag);
 
-    //! @todo: implement this here
+    // Add a new child drawing to the axes. The added type must inherit
+    // DrawableBase
     template<typename T>
     std::shared_ptr<T> add(){
         std::shared_ptr<T> ptr(new T(this->share()));
@@ -526,9 +527,17 @@ public:
         return ptr;
     }
 
-    //! @todo: implement this here
+    // Ge the current drawing object. If the type of object requested is
+    // incompatible with the currently selected object, or if no object has
+    // yet been created, a new one will be create, added and returned.
     template<typename T>
-    std::shared_ptr<T> gco();
+    std::shared_ptr<T> gco(){
+        if(!this->m_co){
+            return this->add<T>();
+        }
+        std::shared_ptr<T> ptr = std::dynamic_pointer_cast<T, DrawableBase>(this->m_co);
+        return ptr ? ptr : this->add<T>();
+    }
 
     //! @note: clear the figure|axes
     //! @todo: implement this here
