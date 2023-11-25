@@ -1744,7 +1744,10 @@ Axes subplot(unsigned int m, unsigned int n, unsigned int k){
 }
 
 //! @todo: legend(...)
-Canvas canvas(std::string name="plot", bool visible=true);
+Canvas canvas(std::string name="plot", bool visible=true){
+    return gcf()->canvas(name, visible);
+}
+
 Axes gca();
 Vector<double> linspace(double minval, double maxval, size_t count);
 
