@@ -169,6 +169,11 @@ Line AxesBase::plot(const Vector<double>& ydata){
     return this->add<LineBase>()->plot(ydata);
 }
 
+// -*-
+Line AxesBase::plot(const Vector<double>& xdata, const Vector<double>& ydata){
+    return this->add<LineBase>()->plot(xdata, ydata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
