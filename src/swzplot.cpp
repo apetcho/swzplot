@@ -769,6 +769,10 @@ Surface CanvasBase::surf(
     return this->gca()->add<SurfaceBase>()->surf(xvec, yvec, zmat);
 }
 
+// -*-
+void CanvasBase::shading(std::string arg){
+    this->gca()->gco<SurfaceBase>()->shading(arg);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
