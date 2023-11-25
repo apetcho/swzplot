@@ -848,7 +848,10 @@ public:
         this->gca()->gray();
     }
 
-    void jet();
+    void jet(){
+        this->gca()->jet();
+    }
+
     void hsv();
     void cool();
     void spring();
