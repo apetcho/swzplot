@@ -341,6 +341,11 @@ Surface AxesBase::contour(const Matrix<double>& zmat, unsigned int n){
     return this->add<SurfaceBase>()->contour(zmat, n);
 }
 
+// -*-
+Surface AxesBase::contour(const Matrix<double>& zmat, const Vector<double>& values){
+    return this->add<SurfaceBase>()->contour(zmat, values);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
