@@ -1781,7 +1781,10 @@ void set(std::string key, float val){
     gca()->gco<T>()->set(key, val);
 }
 
-void set(std::string key, float val);
+// -*-
+void set(std::string key, float val){
+    gca()->gco<LineBase>()->set(key, val);
+}
 
 // - set axis limit (2D & 3D)
 void axis(double xmin, double xmax, double ymin, double ymax);
