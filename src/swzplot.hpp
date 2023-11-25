@@ -541,7 +541,13 @@ public:
 
     //! @note: clear the figure|axes
     //! @todo: implement this here
-    Axes clear();
+    Axes clear(){
+        std::unique_lock<std::mutex> lock(this->m_children_mtx);
+        this->m_co.reset();
+        this->m_children.clear();
+        return this->share();
+    }
+
     // - set color of axes
     void set_color(float r, float g, float b);
     //! @note: It will better our utility classes here for colormap operations
