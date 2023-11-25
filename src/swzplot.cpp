@@ -138,6 +138,20 @@ std::string Color::colorspec(float r, float g, float b){
     return stream.str(); 
 }
 
+// -*-
+std::string Color::colorspec(std::vector<float> rgb){
+    if(rgb.size() != 3){
+        throw std::runtime_error("Invalid argument to Color::colorspec()");
+    }
+    auto r = rgb[0];
+    auto g = rgb[1];
+    auto b = rgb[2];
+    std::ostringstream stream;
+    stream << "(" << r << " " << g << " " << b << ")";
+    return stream.str(); 
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
