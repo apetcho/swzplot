@@ -1801,7 +1801,7 @@ void axis(std::string onoff){ gca()->axis(onoff); }
 void axis(bool onoff){gca()->axis(onoff); }
 
 // - toggle grid visibility: "on" | "off" | true | false
-void grid(std::string onoff);
+void grid(std::string onoff){ gca()->grid(onoff); }
 void grid(bool onoff);
 // - toggle ticklabel visibility: true | false
 void ticklabel(bool onoff);
