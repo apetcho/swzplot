@@ -235,6 +235,15 @@ private:
 
     struct Rgb{
         float r, g, b;
+
+        bool operator==(const Rgb& other){
+            bool ans = (
+                this->r==other.r &&
+                this->g==other.g &&
+                this->b==other.b
+            );
+            return ans;
+        }
     };
     
     std::variant<std::string, ColorEnum> m_value;
@@ -244,11 +253,23 @@ private:
     static std::string defaultSpec;
 
     std::string m_colorspec;
+    Rgb m_rgb;
+
     std::optional<ColorEnum> find_color_enum_by_spec(){
         std::optional<ColorEnum> result = std::nullopt;
         auto spec = tolower(this->m_colorspec);
         for(auto entry: this->m_colorspecs){
             if(entry.second.first == spec || entry.second.second==spec){
+                result = entry.first;
+            }
+        }
+        return result;
+    }
+
+    std::optional<ColorEnum> find_color_enum_by_rgb(){
+        std::optional<ColorEnum> result = std::nullopt;
+        for(auto entry: this->m_rgbcolors){
+            if(entry.second == this->m_rgb){
                 result = entry.first;
             }
         }
