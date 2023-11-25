@@ -706,6 +706,14 @@ Surface CanvasBase::pcolor(
     return this->gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
 }
 
+// -*-
+Surface CanvasBase::pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Colormap& cdata
+){
+    return this->gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
