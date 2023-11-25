@@ -1120,8 +1120,12 @@ public:
     void set(const std::string key){ this->gca()->gco<T>()->set(key); }
 
     void set(const std::string key);
+
     template<typename T>
-    void set(float key);
+    void set(float key){
+        this->gca()->gco<T>()->set(key);
+    }
+    
     void set(float key);
     template<typename T>
     void set(std::string key, std::string val);
