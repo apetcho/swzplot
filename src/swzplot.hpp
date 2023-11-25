@@ -1739,7 +1739,9 @@ Figure gcf(){
     return currentFigure ? currentFigure : figure(0);
 }
 
-Axes subplot(unsigned int m, unsigned int n, unsigned int p);
+Axes subplot(unsigned int m, unsigned int n, unsigned int k){
+    return gcf()->get_current_canvas()->subplot(m, n, k);
+}
 
 //! @todo: legend(...)
 Canvas canvas(std::string name="plot", bool visible=true);
