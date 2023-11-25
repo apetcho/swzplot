@@ -795,6 +795,14 @@ Patch CanvasBase::patch(
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
 }
 
+// -*-
+Patch CanvasBase::patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+){
+    return this->gca()->add<PatchBase>()->patch(xmat, ymat, zmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
