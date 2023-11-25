@@ -1162,12 +1162,15 @@ public:
     }
 
     // - toggle grid visibility: "on" | "off" | true | false
-    void set_grid(std::string onoff);
-    void set_grid(bool onoff);
+    void grid(std::string onoff){
+        this->gca()->grid(onoff);
+    }
+
+    void grid(bool onoff);
     // - toggle ticklabel visibility: true | false
-    void set_ticklabel(bool onoff);
+    void ticklabel(bool onoff);
     // - title
-    void set_title(std::string label);
+    void title(std::string label);
     // - [x|y|z]label
     void set_xlabel(std::string label);
     void set_ylabel(std::string label);
