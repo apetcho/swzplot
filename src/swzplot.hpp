@@ -1108,7 +1108,7 @@ public:
     void keyboard(char key, int x, int y);
 
     Figure gcf(){ return this->share(); }
-    Axes gca();
+    Axes gca(){ return this->get_current_canvas()->gca(); }
     Axes subplot(unsigned int m, unsigned int n, unsigned int p);
 
     // -*----------------------------*-
