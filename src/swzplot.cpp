@@ -845,5 +845,15 @@ Text CanvasBase::text(double x, double y, const std::string message){
 }
 
 // -*----------------------------------------------------------------*-
+// -*- swzplot::FigureBase                                          -*-
+// -*----------------------------------------------------------------*-
+void FigureBase::set_window_name(const std::string& name){
+    this->m_window_name = name;
+    if(this->m_window_num){
+        glut::set_window_title(this->m_window_num, name);
+    }
+}
+
+// -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-

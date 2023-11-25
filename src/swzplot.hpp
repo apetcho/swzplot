@@ -1068,20 +1068,21 @@ public:
     // user defined event callbak
     void (*keyboard_callack)(unsigned char, int, int);
     // -
-    int window_width;
-    int window_height;
-    Position<int> xyPassive;
-    std::string window_name;    // figname
-    int window_num;
-    BBox<int> windowBBox;   // position[4]
-    Canvas current_canvas;  // cl
-    Canvas selected_canvas;
+    int m_window_width;
+    int m_window_height;
+    Position<int> m_xyPassive;
+    std::string m_window_name;    // figname
+    int m_window_num;
+    BBox<int> m_windowBBox;   // position[4]
+    Canvas m_current_canvas;  // cl
+    Canvas m_selected_canvas;
 
     FigureBase(std::string name="plot", bool visible=true);
     ~FigureBase() = default;
 
     // -
-    void set_window_name(); // set_figure_name()
+    //! @note: ??? set_figure_name()
+    void set_window_name(const std::string& name);
     // -
     Canvas canvas(std::string name="default", bool visible=true);
     Canvas get_current_canvas();
@@ -1656,9 +1657,11 @@ public:
 // -*----------------------------------------------------------------*-
 // -*- ::glut                                                       -*-
 // -*----------------------------------------------------------------*-
-void initilalize(int &argc, char **argv);
-void register_figure(const Figure fig);
-void set_window_title(int window, std::string name);
+namespace glut{
+    void initilalize(int &argc, char **argv);
+    void register_figure(const Figure fig);
+    void set_window_title(int window, std::string name);
+}
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC API                                           -*-
