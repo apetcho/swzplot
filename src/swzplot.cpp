@@ -1090,6 +1090,14 @@ Surface FigureBase::mesh(
     return this->gca()->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
 }
 
+// -*-
+Surface FigureBase::surf(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return this->gca()->add<SurfaceBase>()->surf(xvec, yvec, zmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
