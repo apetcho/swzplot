@@ -710,7 +710,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Colormap& cten
+        const Colormap& cdata
     );
     Patch patch(
         const Matrix<double>& xmat,

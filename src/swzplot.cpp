@@ -408,6 +408,15 @@ Patch AxesBase::patch(
     return this->add<PatchBase>()->patch(xmat, ymat, cvec);
 }
 
+// -*-
+Patch AxesBase::patch(
+    const Matrix<double>& xmat,
+    const Matrix<double>& ymat,
+    const Colormap& cdata
+){
+    return this->add<PatchBase>()->patch(xmat, ymat, cdata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
