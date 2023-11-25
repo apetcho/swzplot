@@ -1818,7 +1818,8 @@ void ylabel(std::string label){ gca()->ylabel(label); }
 void capture_mouse(bool flag){ gca()->capture_mouse(flag); }
 
 // - draw vertex
-void vertex(double x, double y);
+void vertex(double x, double y){ gca()->gco<LineBase>()->vertex(x, y); }
+
 void vertex(double x, double y, double z);
 
 // - plot data
