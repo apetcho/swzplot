@@ -1074,6 +1074,14 @@ Surface FigureBase::contour(
     return this->gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, n);
 }
 
+// -*-
+Surface FigureBase::contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Vector<double>& values
+){
+    return this->gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, values);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
