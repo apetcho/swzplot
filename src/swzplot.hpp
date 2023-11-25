@@ -1811,7 +1811,8 @@ void title(std::string label){ gca()->title(label); }
 // - [x|y|z]label
 void xlabel(std::string label){ gca()->xlabel(label); }
 
-void ylabel(std::string label);
+void ylabel(std::string label){ gca()->ylabel(label); }
+
 //! @todo: Axes zlabel(std::string label);
 // - Capture mouse events
 void capture_mouse(bool flag);
