@@ -677,6 +677,11 @@ Surface CanvasBase::pcolor(const Matrix<double>& cmat){
     return this->gca()->add<SurfaceBase>()->pcolor(cmat);
 }
 
+// -*-
+Surface CanvasBase::pcolor(const Colormap& cdata){
+    return this->gca()->add<SurfaceBase>()->pcolor(cdata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
