@@ -244,6 +244,14 @@ Surface AxesBase::surface(
     return this->add<SurfaceBase>()->surface(xvec, yvec, zmat);
 }
 
+// -*-
+Surface AxesBase::surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Matrix<float>& cmat
+){
+    return this->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
