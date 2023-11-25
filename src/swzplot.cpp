@@ -151,6 +151,14 @@ std::string Color::colorspec(std::vector<float> rgb){
     return stream.str(); 
 }
 
+// -*----------------------------------------------------------------*-
+// -*- swzplot::AxesBase                                            --
+// -*----------------------------------------------------------------*-
+// -*-
+void AxesBase::vertex(double x, double y){
+    this->gco<Line>()->vertex(x, y);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

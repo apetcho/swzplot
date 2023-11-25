@@ -519,7 +519,7 @@ public:
     // DrawableBase
     template<typename T>
     std::shared_ptr<T> add(){
-        std::shared_ptr<T> ptr(new T(this->share()));
+        std::shared_ptr<T> ptr = std::make_shared<T>(this->share());
         this->m_co = std::dynamic_pointer_cast<DrawableBase, T>(ptr);
         assert(this->m_co);
         std::unique_lock<std::mutex> lock(this->m_children_mtx);
@@ -570,6 +570,7 @@ public:
 
     // - draw vertex
     void vertex(double x, double y);
+
     void vertex(double x, double y, double z);
 
     // - plot data
@@ -1299,6 +1300,7 @@ public:
 
     // -*-
     Line vertex(double x, double y);
+    // Line vertex(double x, double y, double z); // ????
     Line line(const Vector<double>& xvec, const Vector<double>& yvec);
     Line plot(const Vector<double>& yvec);
     Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
