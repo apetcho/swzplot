@@ -380,6 +380,15 @@ Surface AxesBase::mesh(
     return this->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
 }
 
+// -*-
+Surface AxesBase::surf(
+    const Vector<double>& xvec,
+    const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return this->add<SurfaceBase>()->surf(xvec, yvec, zmat);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
