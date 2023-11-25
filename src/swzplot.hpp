@@ -1815,7 +1815,7 @@ void ylabel(std::string label){ gca()->ylabel(label); }
 
 //! @todo: Axes zlabel(std::string label);
 // - Capture mouse events
-void capture_mouse(bool flag);
+void capture_mouse(bool flag){ gca()->capture_mouse(flag); }
 
 // - draw vertex
 void vertex(double x, double y);
