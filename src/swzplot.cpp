@@ -193,6 +193,11 @@ Line AxesBase::semilogy(const Vector<double>& xdata, const Vector<double>& ydata
     return this->add<LineBase>()->semilogy(xdata, ydata);
 }
 
+// -*-
+Line AxesBase::loglog(const Vector<double>& xdata, const Vector<double>& ydata){
+    return this->add<LineBase>()->loglog(xdata, ydata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
