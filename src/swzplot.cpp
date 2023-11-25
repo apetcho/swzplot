@@ -582,6 +582,11 @@ Line CanvasBase::semilogy(const Vector<double>& xvec, const Vector<double>&  yve
     return this->gca()->add<LineBase>()->semilogy(xvec, yvec);
 }
 
+// -*-
+Line CanvasBase::loglog(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return this->gca()->add<LineBase>()->loglog(xvec, yvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
