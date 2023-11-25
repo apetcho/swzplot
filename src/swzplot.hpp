@@ -1267,26 +1267,26 @@ private:
 class LineBase: public DrawableBase, public std::enable_shared_from_this<LineBase>{
 public:
     // -
-    bool errorbarFlag;
+    bool m_errorbarFlag;
 
     void clear();
     void set_color(float r, float g, float b);
 
     // -*-
-    unsigned int maxCapacity;
-    bool stopAtMax;
-    Vector<double> xdata;
-    Vector<double> ydata;
-    Vector<double> zdata;
-    std::string color;
-    std::string lineStyle;  // "-" | "--" | ":" | "-." "none"
-    float lineWidth;
+    unsigned int m_maxCapacity;
+    bool m_stopAtMax;
+    Vector<double> m_xdata;
+    Vector<double> m_ydata;
+    Vector<double> m_zdata;
+    std::string m_color;
+    std::string m_lineStyle;  // "-" | "--" | ":" | "-." "none"
+    float m_lineWidth;
     // marker: "none" | "." | "+" | "x" | "d" | "^" | "v" | "o" | "*" | "s"
-    std::string marker;
-    float markerSize;
-    std::string markerEdgeColor;
-    std::string markerFaceColor;
-    bool visible;
+    std::string m_marker;
+    float m_markerSize;
+    std::string m_markerEdgeColor;
+    std::string m_markerFaceColor;
+    bool m_visible;
 
     // -
     LineBase(const Axes axes);
@@ -1300,8 +1300,6 @@ public:
 
     // -*-
     Line vertex(double x, double y);
-    //! @note: Added the vertex(double, double, double)
-    Line vertex(double x, double y, double z); // ????
     Line line(const Vector<double>& xvec, const Vector<double>& yvec);
     Line plot(const Vector<double>& yvec);
     Line plot(const Vector<double>& xvec, const Vector<double>& yvec);

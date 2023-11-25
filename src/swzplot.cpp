@@ -156,17 +156,17 @@ std::string Color::colorspec(std::vector<float> rgb){
 // -*----------------------------------------------------------------*-
 // -*-
 void AxesBase::vertex(double x, double y){
-    this->gco<Line>()->vertex(x, y);
+    this->gco<LineBase>()->vertex(x, y);
 }
 
 // -*-
 void AxesBase::vertex(double x, double y, double z){
-    this->gco<Line>()->vertex(x, y, z);
+    this->gco<LineBase>()->vertex(x, y, z);
 }
 
 // -*-
 Line AxesBase::plot(const Vector<double>& ydata){
-    return this->add<Line>()->plot(ydata);
+    return this->add<LineBase>()->plot(ydata);
 }
 
 // -*----------------------------------------------------------------*-
