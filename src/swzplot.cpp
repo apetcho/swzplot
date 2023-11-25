@@ -539,6 +539,11 @@ void CanvasBase::ylabel(std::string label){
     this->gca()->ylabel(label);
 }
 
+// -*-
+void CanvasBase::capture_mouse(bool flag){
+    this->gca()->capture_mouse(flag);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
