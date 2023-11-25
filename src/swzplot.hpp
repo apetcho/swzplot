@@ -1796,7 +1796,7 @@ void axis(double xmin, double xmax, double ymin, double ymax, double zmin, doubl
 }
 
 // - toggle axis visibility: "on" | "off" | true | false
-void axis(std::string onoff);
+void axis(std::string onoff){ gca()->axis(onoff); }
 void axis(bool onoff);
 // - toggle grid visibility: "on" | "off" | true | false
 void grid(std::string onoff);
