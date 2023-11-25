@@ -447,6 +447,11 @@ Patch AxesBase::bar(const Vector<double>& ydata){
     return this->add<PatchBase>()->bar(ydata);
 }
 
+// -*-
+Patch AxesBase::bar(const Vector<double>& ydata, float width){
+    return this->add<PatchBase>()->bar(ydata, width);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
