@@ -299,10 +299,20 @@ Surface AxesBase::pcolor(const Colormap& cdata){
 Surface AxesBase::pcolor(
     const Vector<double>& xvec,
     const Vector<double>& yvec,
-    const Matrix<double>& cvec
+    const Matrix<double>& cmat
 ){
-    return this->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
+    return this->add<SurfaceBase>()->pcolor(xvec, yvec, cmat);
 }
+
+// -*-
+Surface AxesBase::pcolor(
+    const Vector<double>& xvec,
+    const Vector<double>& yvec,
+    const Colormap& cdata
+){
+    return this->add<SurfaceBase>()->pcolor(xvec, yvec, cdata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
