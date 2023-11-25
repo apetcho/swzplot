@@ -1809,7 +1809,8 @@ void ticklabel(bool onoff){ gca()->ticklabel(onoff); }
 // - title
 void title(std::string label){ gca()->title(label); }
 // - [x|y|z]label
-void xlabel(std::string label);
+void xlabel(std::string label){ gca()->xlabel(label); }
+
 void ylabel(std::string label);
 //! @todo: Axes zlabel(std::string label);
 // - Capture mouse events
