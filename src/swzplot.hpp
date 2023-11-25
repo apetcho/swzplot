@@ -1339,7 +1339,7 @@ public:
     );
 
     // - shading:
-    void set_shading(std::string arg);
+    void shading(std::string arg);
 
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
