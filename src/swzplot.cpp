@@ -220,6 +220,12 @@ void AxesBase::errorbar(
     this->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
 }
 
+// -*-
+Surface AxesBase::surface(const Matrix<double>& zmat){
+    return this->add<SurfaceBase>()->surface(zmat);
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
