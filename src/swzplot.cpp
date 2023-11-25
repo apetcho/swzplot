@@ -889,6 +889,11 @@ Line FigureBase::plot(const Vector<double>& yvec){
     return this->gca()->add<LineBase>()->plot(yvec);
 }
 
+// -*-
+Line FigureBase::plot(const Vector<double>& xvec, const Vector<double>& yvec){
+    return this->gca()->add<LineBase>()->plot(xvec, yvec);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
