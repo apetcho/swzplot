@@ -1176,7 +1176,10 @@ public:
     }
 
     // - title
-    void title(std::string label);
+    void title(std::string label){
+        this->gca()->title(label);
+    }
+
     // - [x|y|z]label
     void set_xlabel(std::string label);
     void set_ylabel(std::string label);
