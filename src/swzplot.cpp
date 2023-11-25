@@ -907,6 +907,11 @@ Line FigureBase::semilogx(const Vector<double>& xvec, const Vector<double>&  yve
     return this->gca()->add<LineBase>()->semilogx(xvec, yvec);
 }
 
+// -*-
+Line FigureBase::semilogy(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return this->gca()->add<LineBase>()->semilogy(xvec, yvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
