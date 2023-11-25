@@ -544,6 +544,11 @@ void CanvasBase::capture_mouse(bool flag){
     this->gca()->capture_mouse(flag);
 }
 
+// -*-
+void CanvasBase::vertex(double x, double y){
+    this->gca()->gco<LineBase>()->vertex(x, y);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
