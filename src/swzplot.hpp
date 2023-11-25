@@ -1807,7 +1807,7 @@ void grid(bool onoff){ gca()->grid(onoff); }
 // - toggle ticklabel visibility: true | false
 void ticklabel(bool onoff){ gca()->ticklabel(onoff); }
 // - title
-void title(std::string label);
+void title(std::string label){ gca()->title(label); }
 // - [x|y|z]label
 void xlabel(std::string label);
 void ylabel(std::string label);
