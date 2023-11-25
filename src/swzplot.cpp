@@ -524,6 +524,11 @@ void CanvasBase::ticklabel(bool onoff){
     this->gca()->ticklabel(onoff);
 }
 
+// -*-
+void CanvasBase::title(std::string label){
+    this->gca()->title(label);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
