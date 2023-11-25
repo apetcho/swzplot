@@ -1195,7 +1195,10 @@ public:
         this->gca()->capture_mouse(flag);
     }
 
-    Axes colorbar();
+    Axes colorbar(){
+        return this->gca()->colorbar();
+    }
+
     void grey();
     void jet();
     void hsv();
