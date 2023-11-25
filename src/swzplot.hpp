@@ -560,6 +560,7 @@ public:
     void gray(){ this->colormap("gray"); }
     void jet(){ this->colormap("jet"); }
     void hsv(){ this->colormap("hsv"); }
+    void hot(){ this->colormap("hot"); }
     void cool(){ this->colormap("cool"); }
     void spring(){ this->colormap("spring"); }
     void summer(){ this->colormap("summer"); }
@@ -855,7 +856,10 @@ public:
     void hsv(){
         this->gca()->hsv();
     }
-    
+
+    void hot(){
+        this->gca()->hot();
+    }
     void cool();
     void spring();
     void summer();
