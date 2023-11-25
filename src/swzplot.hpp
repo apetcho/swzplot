@@ -1109,7 +1109,9 @@ public:
 
     Figure gcf(){ return this->share(); }
     Axes gca(){ return this->get_current_canvas()->gca(); }
-    Axes subplot(unsigned int m, unsigned int n, unsigned int p);
+    Axes subplot(unsigned int m, unsigned int n, unsigned int k){
+        return this->get_current_canvas()->subplot(m, n, k);
+    }
 
     // -*----------------------------*-
     // -*- Interface i.e public API -*-
