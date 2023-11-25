@@ -985,6 +985,14 @@ Surface FigureBase::surface(
     return this->gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat);
 }
 
+// -*-
+Surface FigureBase::surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Matrix<float>& cmat
+){
+    return this->gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
