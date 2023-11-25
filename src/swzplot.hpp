@@ -1085,7 +1085,12 @@ public:
     void set_window_name(const std::string& name);
     // -
     Canvas canvas(std::string name="default", bool visible=true);
-    Canvas get_current_canvas();
+    
+    // -*-
+    Canvas get_current_canvas(){
+        return this->m_current_canvas ? this->m_current_canvas : this->canvas();
+    }
+
     Figure clear();
     void draw();
     void draw_all(); // draw_layer_list
