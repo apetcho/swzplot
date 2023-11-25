@@ -519,6 +519,11 @@ void CanvasBase::grid(bool onoff){
     this->gca()->grid(onoff);
 }
 
+// -*-
+void CanvasBase::ticklabel(bool onoff){
+    this->gca()->ticklabel(onoff);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
