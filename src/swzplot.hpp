@@ -1791,7 +1791,10 @@ void axis(double xmin, double xmax, double ymin, double ymax){
     gca()->axis(xmin, xmax, ymin, ymax);
 }
 
-void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
+    gca()->axis(xmin, xmax, ymin, ymax, zmin, zmax);
+}
+
 // - toggle axis visibility: "on" | "off" | true | false
 void axis(std::string onoff);
 void axis(bool onoff);
