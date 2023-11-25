@@ -394,6 +394,10 @@ void AxesBase::shading(std::string arg){
     this->gco<SurfaceBase>()->shading(arg);
 }
 
+// -*-
+Patch AxesBase::patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
+    return this->add<PatchBase>()->patch(xmat, ymat);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
