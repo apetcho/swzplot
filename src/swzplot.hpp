@@ -1757,8 +1757,10 @@ void set(const std::string key){ gca()->gco<T>()->set(key); }
 // -*-
 void set(const std::string key){ gca()->gco<LineBase>()->set(key); }
 
+// -*-
 template<typename T>
-void set(float key);
+void set(float key){ gca()->gco<T>()->set(key); }
+
 void set(float key);
 template<typename T>
 void set(std::string key, std::string val);
