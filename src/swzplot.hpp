@@ -1040,7 +1040,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Colormap& cten
+        const Colormap& cdata
     );
 
     Patch bar(const Vector<double>& ydata);
