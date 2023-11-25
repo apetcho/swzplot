@@ -1191,7 +1191,9 @@ public:
 
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
-    void capture_mouse(bool flag);
+    void capture_mouse(bool flag){
+        this->gca()->capture_mouse(flag);
+    }
 
     Axes colorbar();
     void grey();
