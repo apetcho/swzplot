@@ -549,6 +549,11 @@ void CanvasBase::vertex(double x, double y){
     this->gca()->gco<LineBase>()->vertex(x, y);
 }
 
+// -*-
+void CanvasBase::vertex(double x, double y, double z){
+    this->gca()->gco<LineBase>()->vertex(x, y, z);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
