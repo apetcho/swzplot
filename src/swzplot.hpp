@@ -1750,10 +1750,10 @@ Canvas canvas(std::string name="plot", bool visible=true){
 
 Axes gca(){ return gcf()->get_current_canvas()->gca(); }
 
-Vector<double> linspace(double minval, double maxval, size_t count);
 
 template<typename T>
-void set(const std::string key);
+void set(const std::string key){ gca()->gco<T>()->set(key); }
+
 void set(const std::string key);
 template<typename T>
 void set(float key);
