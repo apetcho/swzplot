@@ -877,7 +877,9 @@ public:
         this->gca()->autumn();
     }
 
-    void winter();
+    void winter(){
+        this->gca()->winter();
+    }
 
     // - draw vertex
     void vertex(double x, double y);
