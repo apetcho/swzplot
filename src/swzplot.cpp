@@ -164,6 +164,11 @@ void AxesBase::vertex(double x, double y, double z){
     this->gco<Line>()->vertex(x, y, z);
 }
 
+// -*-
+Line AxesBase::plot(const Vector<double>& ydata){
+    return this->add<Line>()->plot(ydata);
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
