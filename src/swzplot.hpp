@@ -16,6 +16,7 @@
 #include<iostream>
 #include<sstream>
 #include<variant>
+#include<cassert>
 #include<optional>
 #include<chrono>
 #include<vector>
@@ -341,21 +342,44 @@ struct BBox{
 // -*- ::axes                                                       -*-
 // -*----------------------------------------------------------------*-
 class AxesBase: public std::enable_shared_from_this<AxesBase>{
+public:
+    std::vector<std::vector<float>> cmap;
 private:
-    std::mutex m_childer_mtx;
+    std::mutex m_children_mtx;
     Canvas m_canvas;
     Axes m_colorbar_ax;
 
+    int window_height();
+    int window_width();
+    void draw2d();
+    void draw3d();
+    void draw_colorbar();
+    // -
+    double coord2D_to_xaxis(double x);
+    double coord2D_to_yaxis(double y);
+    double coord3D_to_xaxis(double x);
+    double coord3D_to_yaxis(double y);
+    double coord3D_to_zaxis(double z);
+
+// public:
+    // - get shared_pointer sharing the current instance of this AxesBase object
+    Axes share(){
+        return shared_from_this();
+    }
+
 public:
     AxesBase(Canvas layer);
-    ~AxesBase(){};
+    ~AxesBase(){
+        this->m_children.clear();
+    }; // XXX
     // Canvas gcl(){ return this->m_canvas; }
     Canvas canvas(){ return this->m_canvas; }
 
     // -*- START OF PROTECTED API -*-
-    // -*- 
+    // ---- default values of the ones below --- 
     float m_cta0;
     float m_phi0;
+    // ----- mouse controlled data -----
     float m_cta;
     float m_phi;
     // -*-
@@ -366,8 +390,10 @@ public:
     // int xbuttonDown;
     // int ybuttonDown;
     Position<int> m_xybutton;
+    // - View angles when the button is pressed -
     float m_ctaButtonDown;
     float m_phiButtonDown;
+    // - Optional user-defined callback when a mouse button is clicked -
     bool (*mouse_callback)(int button, int state, int x, int y);
 
     // double xmin;
@@ -380,28 +406,42 @@ public:
     // double zmax;
     DataLim<double> m_zdatalim;
 
+    // - Reset the axes limits for recalculation -
     void reset_limits();
+    // - Configure the axes object to fit the data -
     void config();
     // - set property -
     Axes set(const std::string& key, const std::string& value);
+    // - Add legend colorbar to the axes -
     Axes colorbar();
 
+    // - Draw text to the axes -
     void ptext(float x, float y, const std::string& text);
+    // - Draw text to the axes in 3D, left adjusted at the coordinates -
     void ptext3(float x, float y, float z, const std::string& text);
+    // - Draw text to the axes in 3D, centered to the coordinates -
     void ptext3c(float x, float y, float z, const std::string& text);
 
+    // - Callback when mouse button clicked -
+    //! @note: change this to @em{on_mouse_clicked()}
     bool mouse(int button, int state, int x, int y);
+    // - Callback when mouse moved with button pressed -
+    //! @note: change this to @em{on_mouse_pressed()}
     bool motion(int x, int y);
 
+    // - Draw ticks to the axes -
+    //! @note: change this to @em{draw_tick()} 
     Vector<double> make_tick(double minval, double maxval);
 
-    AxesType m_axType;
+    // - Indicates the type of plotted data -
+    AxesType m_axType; // type
 
     // -*- styles -
     bool m_boxed; // Axes on/off :: boxFlag
     float m_linewidth;
     std::string m_tickDir; // "in" | "out"
     bool m_is_visible;
+    // - flags to draw grid -
     bool m_xgrid; // xgridFlag
     bool m_ygrid; // ygridFlag
     bool m_zgrid; // zgridFlag
@@ -410,31 +450,35 @@ public:
     DrawableList m_children;  // container for children drawings
     Drawable m_co;            // currently active drawing object
     bool m_selected;          // Axes have been clicked by the user
-    BBox<float> m_axBBox;     // ::position
-    BBox<float> m_viewBBox;   // ::viewport3d
+    // - Position and size of the axes (left, bottom, width, height) -
+    BBox<float> m_axBBox;     // ::position     i.e position[4]
+    // - Position and size of axes used by 3D-view (left, bottom, width, height)
+    BBox<float> m_viewBBox;   // ::viewport3d   i.e viewport3d[4]
 
     // -*- Scale and axes
     std::string m_xAxisLocation;  // "top" | "bottom"
     std::string m_yAxisLocation;  // "left"| "right" 
 
-    DataLim<double> m_xlim;       // x-axis limit
-    DataLim<double> m_ylim;       // y-axis limit
-    DataLim<double> m_zlim;       // z-axis limit
+    DataLim<double> m_xlim;       // x-axis limit   :: double[2]
+    DataLim<double> m_ylim;       // y-axis limit   :: double[2]
+    DataLim<double> m_zlim;       // z-axis limit   :: double[2]
+    // - Mode of axes adjustment to data: [AxisLimMode::Auto] | AxisLimMode::manual
     AxesLimMode m_xlimMode;
     AxesLimMode m_ylimMode;
     AxesLimMode m_zlimMode;
+    // - Scale of axes: [Scale::Linear] | Scale::Logarithm
     Scale m_xscale;
     Scale m_yscale;
     Scale m_zscale;
     Vector<double> m_xticks;
     Vector<double> m_yticks;
     Vector<double> m_zticks;
-    bool m_ticklabel;         // ticklabelFlag
+    bool m_ticklabelFlag;         // ticklabel
 
     // -
-    Position<float> m_cameraPosition;
-    Position<float> m_cameraTarget;
-    Position<float> m_cameraUpVector;
+    Position<float> m_cameraPosition;   // Position of the 3D-view camera
+    Position<float> m_cameraTarget;     // Position of the 3D-view target
+    Position<float> m_cameraUpVector;   // Orientation of the 3D-view camera
 
     // -*- Label
     std::string m_title;
@@ -443,6 +487,7 @@ public:
     std::string m_zlabl;
     DataLim<double> m_clim;
 
+    // -*- Draw the axes and its children
     void draw();
 
     // -*- END OF PROTECTED API -*-
@@ -455,12 +500,12 @@ public:
     Axes set_axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
     // - toggle axis visibility: "on" | "off" | true | false
     Axes set_axis(std::string onoff);
-    Axes set_axis(bool onoff);
+    Axes set_axis(bool onoff=true);
     // - toggle grid visibility: "on" | "off" | true | false
     Axes set_grid(std::string onoff);
-    Axes set_grid(bool onoff);
+    Axes set_grid(bool onoff=true);
     // - toggle ticklabel visibility: true | false
-    Axes set_ticklabel(bool onoff);
+    Axes set_ticklabel(bool onoff=true);
     // - title
     Axes set_title(std::string label);
     // - [x|y|z]label
@@ -472,7 +517,14 @@ public:
 
     //! @todo: implement this here
     template<typename T>
-    std::shared_ptr<T> add();
+    std::shared_ptr<T> add(){
+        std::shared_ptr<T> ptr(new T(this->share()));
+        this->m_co = std::dynamic_pointer_cast<DrawableBase, T>(ptr);
+        assert(this->m_co);
+        std::unique_lock<std::mutex> lock(this->m_children_mtx);
+        this->m_children.push_back(this->m_co);
+        return ptr;
+    }
 
     //! @todo: implement this here
     template<typename T>
@@ -669,25 +721,6 @@ public:
 
     //! @todo: add font information
     Text text(double x, double y, const std::string message);
-
-private:
-    int window_height();
-    int window_width();
-    void draw2d();
-    void draw3d();
-    void draw_colorbar();
-    // -
-    double coord2D_to_xaxis(double x);
-    double coord2D_to_yaxis(double y);
-    double coord3D_to_xaxis(double x);
-    double coord3D_to_yaxis(double y);
-    double coord3D_to_zaxis(double z);
-
-// public:
-    // - get shared_pointer sharing the current instance of this AxesBase object
-    Axes share(){
-        return shared_from_this();
-    }
 };
 
 // -*----------------------------------------------------------------*-
