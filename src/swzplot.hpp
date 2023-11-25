@@ -744,7 +744,7 @@ public:
 // -*----------------------------------------------------------------*-
 class CanvasBase: public std::enable_shared_from_this<CanvasBase>{
 private:
-    Axes m_ax;
+    Axes m_ca;
     Axes m_selected_axes;
     bool m_visible;
     Position<float> m_xyButtonDown;
@@ -752,19 +752,22 @@ private:
 public:
     // -
     std::chrono::steady_clock::time_point timeCliked;
-    std::string name;       // or simply ::name
-    Figure figure;          // 
-    AxesDict axesDict;      // axes
+    std::string m_name;       // or simply ::name
+    Figure m_figure;          // 
+    AxesDict m_axesDict;      // axes
 
     // -
     CanvasBase(const Figure fig, const std::string& name, bool visible)
-    : m_visible{visible}, name{name}, figure{fig}
+    : m_visible{visible}, m_name{name}, m_figure{fig}
     {}
 
     // -
     void draw();
     Axes subplot(unsigned int m, unsigned int n, unsigned p);
-    Axes gca();
+    // -*-
+    Axes gca(){
+        return this->m_ca ? this->m_ca : this->subplot(1,1,1);
+    }
     Figure gcf();
     Canvas clear();
     void toggle_visibility();
