@@ -1043,6 +1043,11 @@ Surface FigureBase::pcolor(
     return this->gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
 }
 
+// -*-
+Surface FigureBase::contour(const Matrix<double>& zmat){
+    return this->gca()->add<SurfaceBase>()->contour(zmat);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
