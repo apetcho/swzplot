@@ -1091,7 +1091,13 @@ public:
         return this->m_current_canvas ? this->m_current_canvas : this->canvas();
     }
 
-    Figure clear();
+    // -*-
+    Figure clear(){
+        this->m_current_canvas.reset();
+        this->m_canvasDict.clear();
+        return this->share();
+    }
+
     void draw();
     void draw_all(); // draw_layer_list
 
