@@ -1185,7 +1185,10 @@ public:
         this->gca()->xlabel(label);
     }
 
-    void ylabel(std::string label);
+    void ylabel(std::string label){
+        this->gca()->ylabel(label);
+    }
+
     //! @todo: Axes zlabel(std::string label);
     // - Capture mouse events
     void capture_mouse(bool flag);
