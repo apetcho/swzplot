@@ -557,7 +557,7 @@ public:
     void colormap(const Matrix<float>& colors);
 
     // - set colormaps
-    void grey(){ this->colormap("gray"); }
+    void gray(){ this->colormap("gray"); }
     void jet(){ this->colormap("jet"); }
     void hsv(){ this->colormap("hsv"); }
     void cool(){ this->colormap("cool"); }
@@ -844,7 +844,10 @@ public:
         return this->gca()->colorbar();
     }
 
-    void grey();
+    void gray(){
+        this->gca()->gray();
+    }
+
     void jet();
     void hsv();
     void cool();
