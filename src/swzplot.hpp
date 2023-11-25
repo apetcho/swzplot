@@ -1787,7 +1787,10 @@ void set(std::string key, float val){
 }
 
 // - set axis limit (2D & 3D)
-void axis(double xmin, double xmax, double ymin, double ymax);
+void axis(double xmin, double xmax, double ymin, double ymax){
+    gca()->axis(xmin, xmax, ymin, ymax);
+}
+
 void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
 // - toggle axis visibility: "on" | "off" | true | false
 void axis(std::string onoff);
