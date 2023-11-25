@@ -14,6 +14,7 @@
 #include<exception>
 #include<valarray>
 #include<iostream>
+#include<sstream>
 #include<variant>
 #include<optional>
 #include<chrono>
@@ -288,6 +289,8 @@ public:
 
     void rgb(float& r, float& g, float& b);
     std::string colorspec();
+    std::string colorspec(float r, float g, float b);
+    std::string colorspec(std::vector<float> rgb);
     Vector<float> to_vector();
 };
 

@@ -122,6 +122,15 @@ void Color::rgb(float& r, float& g, float& b){
     b = this->m_rgb.b;
 }
 
+std::string Color::colorspec(){
+    std::ostringstream stream;
+    stream << "(" << this->m_rgb.r;
+    stream << " " << this->m_rgb.g;
+    stream << " " << this->m_rgb.b;
+    stream << ")";
+    return stream.str(); 
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
