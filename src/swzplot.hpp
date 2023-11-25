@@ -1171,7 +1171,10 @@ public:
     }
 
     // - toggle ticklabel visibility: true | false
-    void ticklabel(bool onoff);
+    void ticklabel(bool onoff){
+        this->gca()->ticklabel(onoff);
+    }
+
     // - title
     void title(std::string label);
     // - [x|y|z]label
