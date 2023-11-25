@@ -852,7 +852,10 @@ public:
         this->gca()->jet();
     }
 
-    void hsv();
+    void hsv(){
+        this->gca()->hsv();
+    }
+    
     void cool();
     void spring();
     void summer();
