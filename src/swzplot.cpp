@@ -640,6 +640,15 @@ Surface CanvasBase::surface(
     return this->gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
 }
 
+// -*-
+Surface CanvasBase::surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return this->gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cdata);
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-

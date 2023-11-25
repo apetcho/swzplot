@@ -933,7 +933,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Colormap& cten
+        const Colormap& cdata
     );
 
     Surface surface(
