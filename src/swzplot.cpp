@@ -1019,6 +1019,13 @@ Surface FigureBase::pcolor(
     return this->gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
 }
 
+// -*-
+Surface FigureBase::pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Colormap& cdata
+){
+    return this->gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cdata);
+}
 
 
 // -*----------------------------------------------------------------*-
