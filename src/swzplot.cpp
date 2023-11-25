@@ -587,6 +587,11 @@ Line CanvasBase::loglog(const Vector<double>& xvec, const Vector<double>&  yvec)
     return this->gca()->add<LineBase>()->loglog(xvec, yvec);
 }
 
+// -*-
+void CanvasBase::vertex(double x, double y, double dx, double dy){
+    this->gca()->gco<LineBase>()->vertex(x, y, dx, dy);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
