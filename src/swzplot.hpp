@@ -1202,6 +1202,7 @@ public:
     void gray(){ this->gca()->gray(); }
     void jet(){ this->gca()->jet(); }
     void hsv(){ this->gca()->hsv(); }
+    void hot(){ this->gca()->hot(); }
     void cool();
     void spring();
     void summer();
