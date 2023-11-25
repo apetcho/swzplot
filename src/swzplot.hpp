@@ -1820,7 +1820,9 @@ void capture_mouse(bool flag){ gca()->capture_mouse(flag); }
 // - draw vertex
 void vertex(double x, double y){ gca()->gco<LineBase>()->vertex(x, y); }
 
-void vertex(double x, double y, double z);
+void vertex(double x, double y, double z){
+    gca()->gco<LineBase>()->vertex(x, y, z);
+}
 
 // - plot data
 Line plot(const Vector<double>& yvec);
