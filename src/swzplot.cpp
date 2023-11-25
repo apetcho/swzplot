@@ -290,6 +290,12 @@ Surface AxesBase::pcolor(const Matrix<double>& cmat){
     return this->add<SurfaceBase>()->pcolor(cmat);
 }
 
+// -*-
+Surface AxesBase::pcolor(const Colormap& cdata){
+    return this->add<SurfaceBase>()->pcolor(cdata);
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-

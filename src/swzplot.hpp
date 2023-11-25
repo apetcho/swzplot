@@ -642,7 +642,7 @@ public:
     );
 
     Surface pcolor(const Matrix<double>& cmat);
-    Surface pcolor(const Colormap& cten);
+    Surface pcolor(const Colormap& cdata);
     Surface pcolor(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
