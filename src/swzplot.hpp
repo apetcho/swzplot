@@ -1151,9 +1151,12 @@ public:
     void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
         this->gca()->axis(xmin, xmax, ymin, ymax, zmin, zmax);
     }
-    
+
     // - toggle axis visibility: "on" | "off" | true | false
-    void axis(std::string onoff);
+    void axis(std::string onoff){
+        this->gca()->axis(onoff);
+    }
+
     void axis(bool onoff);
     // - toggle grid visibility: "on" | "off" | true | false
     void set_grid(std::string onoff);
