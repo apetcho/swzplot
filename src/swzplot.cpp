@@ -115,6 +115,13 @@ Color::Color(float r, float g, float b){
     }
 }
 
+// -*-
+void Color::rgb(float& r, float& g, float& b){
+    r = this->m_rgb.r;
+    g = this->m_rgb.g;
+    b = this->m_rgb.b;
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
