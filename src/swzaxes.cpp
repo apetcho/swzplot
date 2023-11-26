@@ -838,6 +838,52 @@ void AxesBase::ptext3c(float x, float y, float z, const std::string& text){
     }
 }
 
+// -*-
+Vector<float> AxesBase::colormap(std::string color, float t){
+    std::vector<float> rgb(3);
+    if(t > 1.f){ t = 1.f; }
+    if(t < 0.f){ t = 0.f; }
+    color = tolower(color);
+    if(color == "gray" || color == "grey"){
+        rgb = {t, t, t};
+    }else if(color == "hsv"){
+        t *= 6;
+        if(0 <= t && t <= 1.0f){ rgb = { 1.f, t, 0.f}; }
+        if(1.0f <= t && t <= 2.f){ rgb = { 1.f - (t - 1.f), 1.f, 0.f}; }
+        if(2.0f <= t && t <= 3.0f){ rgb = { 0.f, 1.f, t-2.f }; }
+        if(3.0f <= t && t <= 4.0f){ rgb = { 0.f, 1-(t-3.f), 1.f };}
+        if(4.0f <= t && t <= 5.0f){ rgb = { t-4.f, 0.f, 1.f }; }
+        if(5.0f <= t && t <= 6.0f){ rgb = { 1.f, 0.f, 1-(t-5.f) }; }
+    }else if(color=="jet"){
+        t *= 8.f;
+        if(0.f <= t && t <= 1.f){ rgb = {0.f, 0.f, 0.5f}; }
+        if(1.f <= t && t <= 3.f){ rgb = {0.f, 0.5f*(t-1), 1.f}; }
+        if(3.f <= t && t <= 5.f){ rgb = {0.5f*(t-3), 1.f, 1.f-0.5f*(t-3.f)};}
+        if(5.f <= t && t <= 7.f){ rgb = {1.f, 1.f-0.5f*(t-5.f), 0.f}; }
+        if(7.f <= t && t <= 8.f){ rgb = {1.f-0.5f*(t-7.f), 0.f, 0.f}; }
+    }else if(color=="hot"){
+        t *= 3.f;
+        if(0.f <= t && t <= 1.0f){ rgb = {t, 0.f, 0.f}; }
+        if(1.f <= t && t <= 2.0f){ rgb = {1.f, t-1.f, 0.f}; }
+        if(2.f <= t && t <= 3.0f){ rgb = {1.f, 1.f, t-2.f}; }
+    }else if(color=="cool"){
+        rgb = {t, 1.f, 1.f};
+    }else if(color=="spring"){
+        rgb = {1.f, t, 1.f - t};
+    }else if(color=="summer"){
+        rgb = {t, 1.f, 0.f};
+    }else if(color=="autumn"){
+        rgb = {1.f, t, 0.f};
+    }else if(color=="winter"){
+        rgb = {0.f, t, 1.f-t};
+    }else{
+        float g = t < 0.8f ? t : 0.8f;
+        rgb = {t, g, t};
+    }
+    return rgb;
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
