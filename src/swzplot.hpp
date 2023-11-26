@@ -1967,7 +1967,10 @@ Surface pcolor(
 }
 
 // -*-
-Surface contour(const Matrix<double>& zmat);
+Surface contour(const Matrix<double>& zmat){
+    return gca()->add<SurfaceBase>()->contour(zmat);
+}
+
 Surface contour(const Matrix<double>& zmat, unsigned int n);
 Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
 Surface contour(
