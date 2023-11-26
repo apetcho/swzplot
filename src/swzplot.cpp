@@ -172,6 +172,24 @@ double DrawableBase::coord2D_to_xaxis(double x){
     return result;
 }
 
+// -*-
+double DrawableBase::coord2D_to_yaxis(double y){
+    double result;
+    if(this->m_ca->m_yscale==Scale::Linear){
+        double num = y - this->m_ca->m_ylim.minval;
+        double den = this->m_ca->m_ylim.maxval - this->m_ca->m_ylim.minval;
+        result = num / den;
+    }else{
+        double num = std::log10(y) - std::log10(this->m_ca->m_ylim.minval);
+        double den = (
+            std::log10(this->m_ca->m_ylim.maxval) -
+            std::log10(this->m_ca->m_ylim.minval)
+        );
+        result = num / den;
+    }
+    return result;
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- swzplot::AxesBase                                            -*-
