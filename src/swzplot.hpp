@@ -1930,7 +1930,10 @@ Surface surface(
     return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cdata);
 }
 
-Surface pcolor(const Matrix<double>& cmat);
+Surface pcolor(const Matrix<double>& cmat){
+    return gca()->add<SurfaceBase>()->pcolor(cmat);
+}
+
 Surface pcolor(const Colormap& cten);
 Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
