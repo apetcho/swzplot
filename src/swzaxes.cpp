@@ -785,6 +785,12 @@ Axes AxesBase::xlabel(std::string label){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::ylabel(std::string label){
+    this->m_ylabel = label;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
