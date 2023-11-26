@@ -1849,7 +1849,9 @@ Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec){
     return gca()->add<LineBase>()->semilogy(xvec, yvec);
 }
 
-Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
+Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return gca()->add<LineBase>()->loglog(xvec, yvec);
+}
 
 // - vertex
 void vertex(double x, double y, double dx, double dy);
