@@ -823,6 +823,20 @@ void AxesBase::ptext3(float x, float y, float z, const std::string& text){
     }
 }
 
+// -*-
+void AxesBase::ptext3c(float x, float y, float z, const std::string& text){
+    int _charw = 6;
+    int _charh = 12;
+    int _numchar = text.length();
+    glColor3f(0.f, 0.f, 0.f);
+    glRasterPos3d(x, y, z);
+    glBitmap(0, 0, 0, 0, _charw*_numchar/2, _charh/2, nullptr);
+    gl2psText(text.c_str(), "Arial", 12);
+
+    for(auto i=0; i < text.length(); ++i){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, text[i]);
+    }
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
