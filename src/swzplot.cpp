@@ -1201,6 +1201,9 @@ Figure figure(const std::string name){
     return fig;
 }
 
+Figure figure(){
+    return figure(maxFigureNum+1);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
