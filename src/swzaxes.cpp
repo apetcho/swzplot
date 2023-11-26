@@ -138,6 +138,24 @@ void AxesBase::config(){
     this->m_zticks = this->make_tick(vmin, vmax);
 }
 
+// -*-
+bool AxesBase::mouse(int button, int state, int x, int y){
+    if(!this->m_mouse){ return false;}
+    if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+        this->m_xybutton = Position(x, y);
+        if(this->m_axType==AxesType::Axes3D){
+            this->m_ctaButtonDown = this->m_cta;
+            this->m_phiButtonDown = this->m_phi;
+        }
+        this->m_xymouse = Position(static_cast<double>(x), static_cast<double>(y));
+        return true;
+    }
+    if(this->mouse_callback!=nullptr){
+        this->mouse_callback(button, state, x, y);
+    }
+    return false;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
