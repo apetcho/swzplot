@@ -753,6 +753,14 @@ Axes AxesBase::axis(bool onoff){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::grid(bool onoff){
+    this->m_xgrid = onoff;
+    this->m_ygrid = onoff;
+    this->m_zgrid = onoff;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
