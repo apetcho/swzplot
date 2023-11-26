@@ -761,6 +761,12 @@ Axes AxesBase::grid(bool onoff){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::grid(std::string onoff){
+    this->grid(onoff=="on");
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
