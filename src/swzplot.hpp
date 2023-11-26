@@ -2119,7 +2119,10 @@ void append(Figure fig, std::pair<double, double> point2d){
     fig->gca()->gco<LineBase>()->vertex(point2d.first, point2d.second);
 }
 
-void append(Line line, double x, double y);
+void append(Line line, double x, double y){
+    line->vertex(x, y);
+}
+
 void append(Axes axes, double x, double y);
 void append(Canvas canvas, double x, double y);
 void append(Figure fig, double x, double y);
