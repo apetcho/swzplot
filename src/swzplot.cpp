@@ -1205,6 +1205,23 @@ Figure figure(){
     return figure(maxFigureNum+1);
 }
 
+Figure figure(int num){
+    if(num > maxFigureNum){
+        maxFigureNum = num;
+    }
+    std::unique_lock<std::mutex> lock(figure_mtx);
+    currentFigure = nullptr;
+    auto iter = figureDict.find(num);
+    if(iter == figureDict.end()){
+        currentFigure = std::make_shared<FigureBase>();
+        glut::register_figure(currentFigure);
+        figureDict[num] = currentFigure;
+    }else{
+        currentFigure = iter->second;
+    }
+    return currentFigure;
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
