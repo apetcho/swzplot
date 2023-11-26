@@ -1854,7 +1854,10 @@ Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec){
 }
 
 // - vertex
-void vertex(double x, double y, double dx, double dy);
+void vertex(double x, double y, double dx, double dy){
+    gca()->gco<LineBase>()->vertex(x, y, dx, dy);
+}
+
 void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec
