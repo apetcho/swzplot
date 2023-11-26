@@ -1934,7 +1934,10 @@ Surface pcolor(const Matrix<double>& cmat){
     return gca()->add<SurfaceBase>()->pcolor(cmat);
 }
 
-Surface pcolor(const Colormap& cten);
+Surface pcolor(const Colormap& cdata){
+    return gca()->add<SurfaceBase>()->pcolor(cdata);
+}
+
 Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& cvec
