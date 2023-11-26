@@ -2084,7 +2084,7 @@ Axes colorbar(){
     return gca()->add<AxesBase>()->colorbar();
 }
 
-void grey();
+void gray(){ gca()->gray(); }
 void jet();
 void hsv();
 void cool();
