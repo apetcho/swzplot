@@ -1883,7 +1883,11 @@ Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat){
     return gca()->add<SurfaceBase>()->surface(zmat, cmat);
 }
 
-Surface surface(const Matrix<double>& zmat, const Colormap& cten);
+// -*-
+Surface surface(const Matrix<double>& zmat, const Colormap& cdata){
+    return gca()->add<SurfaceBase>()->surface(zmat, cdata);
+}
+
 Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
