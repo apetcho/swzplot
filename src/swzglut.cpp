@@ -49,6 +49,13 @@ void create_window(const Figure fig){
     windowDict.insert(WindowDict::value_type(fig->m_window_num, fig));
 }
 
+// -*-
+void register_figure(const Figure fig){
+    std::cout << "Registering new figure" << std::endl;
+    std::unique_lock<std::mutex> lock(wq_mutex);
+    windowQueue.push_back(fig);
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
