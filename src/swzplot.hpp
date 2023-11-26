@@ -2090,7 +2090,7 @@ void hsv(){ gca()->hsv(); }
 void hot(){ gca()->hot(); }
 void cool(){ gca()->cool(); }
 void spring(){ gca()->spring(); }
-void summer();
+void summer(){ gca()->summer(); }
 void autumn();
 void winter();
 
