@@ -13,7 +13,7 @@ AxesBase::AxesBase(Canvas canvas): m_canvas(canvas){
     this->m_mouse = false;
     this->mouse_callback = nullptr;
     double vmin = std::numeric_limits<double>::max();
-    double vmax = -std::numeric_limits<double>::max();
+    double vmax = -vmin;
     this->m_xdatalim = DataLim(vmin, vmax);
     this->m_ydatalim = DataLim(vmin, vmax);
     this->m_zdatalim = DataLim(vmin, vmax);
@@ -55,6 +55,15 @@ int AxesBase::window_height(){
 // -*-
 int AxesBase::window_width(){
     return this->m_canvas->m_figure->m_window_width;
+}
+
+// -*-
+void AxesBase::reset_limits(){
+    double vmin = std::numeric_limits<double>::max();
+    double vmax = -vmin;
+    this->m_xdatalim = DataLim(vmin, vmax);
+    this->m_ydatalim = DataLim(vmin, vmax);
+    this->m_zdatalim = DataLim(vmin, vmax);
 }
 
 
