@@ -1982,7 +1982,10 @@ Surface contour(const Matrix<double>& zmat, const Vector<double>& values){
 Surface contour(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-);
+){
+    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat);
+}
+
 Surface contour(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, unsigned int n
