@@ -85,6 +85,12 @@ void initilalize(int &argc, char **argv){
     windowThread = std::thread(std::bind(run, argc, argv));
 }
 
+// -*-
+void idlefn(){
+    glutPostRedisplay();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
