@@ -747,6 +747,12 @@ Axes AxesBase::axis(std::string onoff){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::axis(bool onoff){
+    this->m_boxed = onoff;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
