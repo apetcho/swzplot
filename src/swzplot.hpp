@@ -1841,7 +1841,10 @@ Line plot(
 }
 
 // - log-scale plot
-Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
+Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return gca()->add<LineBase>()->semilogx(xvec, yvec);
+}
+
 Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
 Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
 
