@@ -52,6 +52,11 @@ int AxesBase::window_height(){
     return this->m_canvas->m_figure->m_window_height;
 }
 
+// -*-
+int AxesBase::window_width(){
+    return this->m_canvas->m_figure->m_window_width;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
