@@ -66,6 +66,78 @@ void AxesBase::reset_limits(){
     this->m_zdatalim = DataLim(vmin, vmax);
 }
 
+// -*-
+void AxesBase::config(){
+    this->reset_limits();
+    for(auto iter=this->m_children.begin(); iter != this->m_children.end(); ++iter){
+        (*iter)->config();
+    }
+    float extent = 0.0f;
+    float extentLinear = 0.03f;
+    bool test = (
+        (this->m_xlimMode==AxesLimMode::Auto) &&
+        (this->m_xdatalim.maxval > this->m_xdatalim.minval)
+    );
+    if(test){
+        extent = this->m_xscale==Scale::Linear ? extentLinear : 0.f;
+        double vmin = this->m_xdatalim.minval - extent*(
+            this->m_xdatalim.maxval - this->m_xdatalim.minval
+        );
+        double vmax = this->m_xdatalim.maxval + extent*(
+            this->m_xdatalim.maxval - this->m_xdatalim.minval
+        );
+        this->m_xlim = DataLim(vmin, vmax);
+    }
+    test = (
+        (this->m_ylimMode==AxesLimMode::Auto) &&
+        (this->m_ydatalim.maxval > this->m_ydatalim.minval)
+    );
+    if(test){
+        extent = this->m_yscale == Scale::Linear ? extentLinear : 0.f;
+        double vmin = (
+            this->m_ydatalim.minval - extent*(
+                this->m_ydatalim.maxval - this->m_ydatalim.minval
+            )
+        );
+        double vmax = (
+            this->m_ydatalim.maxval + extent*(
+                this->m_ydatalim.maxval - this->m_ydatalim.minval
+            )
+        );
+        this->m_ylim = DataLim(vmin, vmax);
+    }
+    test = (
+        (this->m_zlimMode==AxesLimMode::Auto) &&
+        (this->m_zdatalim.maxval > this->m_zdatalim.minval)
+    );
+    if(test){
+        extent = (this->m_zscale==Scale::Linear) ? extentLinear : 0.f;
+        double vmin = (
+            this->m_zdatalim.minval - extent * (
+                this->m_zdatalim.maxval - this->m_zdatalim.minval
+            )
+        );
+        double vmax = (
+            this->m_zdatalim.maxval + extent*(
+                this->m_zdatalim.maxval - this->m_zdatalim.minval
+            )
+        );
+        this->m_zlim = DataLim(vmin, vmax);
+    }
+
+    double vmin = this->m_xdatalim.minval;
+    double vmax = this->m_xdatalim.maxval;
+    this->m_xticks = this->make_tick(vmin, vmax);
+
+    vmin = this->m_ydatalim.minval;
+    vmax = this->m_ydatalim.maxval;
+    this->m_yticks = this->make_tick(vmin, vmax);
+
+    vmin = this->m_zdatalim.minval;
+    vmax = this->m_zdatalim.maxval;
+    this->m_zticks = this->make_tick(vmin, vmax);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
