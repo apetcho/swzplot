@@ -669,6 +669,24 @@ double AxesBase::coord2D_to_xaxis(double x){
     return result;
 }
 
+// -*-
+double AxesBase::coord2D_to_yaxis(double y){
+    double result = 0.0;
+    auto y1 = this->m_ylim.minval;
+    auto y2 = this->m_ylim.maxval;
+    auto bottom = this->m_axBBox.bottom;
+    auto height = this->m_axBBox.height;
+    if(this->m_yscale==Scale::Linear){    
+        result = bottom + height*(y-y1)/(y2-y1);
+    }else{
+        //! @todo: check arg of log10
+        result = bottom + height*(std::log10(y)-std::log10(y1))/(
+            std::log10(y2)-std::log10(y1)
+        );
+    }
+    return result;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
