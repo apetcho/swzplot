@@ -2020,7 +2020,10 @@ void shading(std::string arg){
 }
 
 // -
-Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
+Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
+    return gca()->add<PatchBase>()->patch(xmat, ymat);
+}
+
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Vector<double>& cvec // Matrix<double>???
