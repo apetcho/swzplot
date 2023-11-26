@@ -345,7 +345,7 @@ struct BBox{
 // -*----------------------------------------------------------------*-
 class AxesBase: public std::enable_shared_from_this<AxesBase>{
 public:
-    std::vector<std::vector<float>> cmap;
+    std::vector<std::vector<float>> m_cmap;
 private:
     std::mutex m_children_mtx;
     Canvas m_canvas;

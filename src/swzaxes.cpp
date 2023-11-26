@@ -556,6 +556,31 @@ void AxesBase::draw3d(){
     }
 }
 
+// -*-
+Axes AxesBase::colorbar(){
+    auto result = std::make_shared<AxesBase>(this->m_canvas);
+    this->m_colorbar_ax = result;
+    auto left = this->m_axBBox.left;
+    auto bottom = this->m_axBBox.bottom;
+    auto width = this->m_axBBox.width;
+    auto height = this->m_axBBox.height;
+    auto zmin = this->m_zlim.minval;
+    auto zmax = this->m_zlim.maxval;
+
+    //! @todo: use in 3D
+    result->m_cmap = this->m_cmap;
+    result->m_axType = AxesType::ColorBar;
+
+    float _left = left + width*1.01;
+    float _bottom = bottom;
+    float _width = width * 0.05;
+    float _height = height;
+    result->m_axBBox = BBox(_left, _bottom, _width, _height);
+    result->m_zlim = DataLim(zmin, zmax);
+    result->m_ylim = DataLim(zmin, zmax);
+    return result;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
