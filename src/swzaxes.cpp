@@ -231,6 +231,197 @@ void AxesBase::draw(){
     if(this->m_colorbar_ax){ this->m_colorbar_ax->draw(); }
 }
 
+// -*-
+void AxesBase::draw2d(){
+    float r = 0.01f;
+    auto left = this->m_axBBox.left;
+    auto bottom = this->m_axBBox.bottom;
+    auto width = this->m_axBBox.width;
+    auto height = this->m_axBBox.height;
+
+    auto w = static_cast<int>(this->window_width());
+    auto h = static_cast<int>(this->window_height());
+    glViewport(0, 0, w, h);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+    glDisable(GL_LINE_STIPPLE);
+    gl2psDisable(GL2PS_LINE_STIPPLE);
+
+    int _charw = 6;
+    int _charh = 12;
+    float _offset = 0.01f;
+    int _numchar = 4;
+
+    int _tickdir = 1; // 1 => "in" ; -1 => "out"
+
+    if(this->m_boxed){
+        glLineWidth(this->m_linewidth);
+        gl2psLineWidth(this->m_linewidth);
+        if(this->m_selected){
+            glLineWidth(2*this->m_linewidth);
+            gl2psLineWidth(this->m_linewidth);
+        }
+        glColor3f(0.f, 0.f, 0.f);
+        glBegin(GL_LINE_LOOP);
+            glVertex2d(left, bottom);
+            glVertex2d(left+width, bottom);
+            glVertex2d(left+width, bottom+height);
+            glVertex2d(left, bottom+height);
+        glEnd();
+
+        // mouse capture
+        if(this->m_selected){
+            std::ostringstream stream;
+            stream << "Mouse: (" << this->m_xymouse.x;
+            stream << ", " << this->m_xymouse.y << ")";
+            this->ptext(left, bottom+height+r, stream.str());
+        }
+
+        // grid
+        auto selectGridLineStyle = [](std::string key){
+            std::map<std::string, int> styles = {
+                {"-", 1}, {"- -", 2}, {"--", 2}, {":", 3}, {"-.", 4}
+            };
+            auto iter = styles.find(key);
+            int rv;
+            if(iter != styles.end()){
+                rv = iter->second;
+            }else{
+                rv = 3;
+            }
+            return rv;
+        };
+        int gridlinestyle = selectGridLineStyle(this->m_gridLineStyle);
+        if(this->m_xgrid){
+            glLineWidth(this->m_linewidth);
+            gl2psLineWidth(this->m_linewidth);
+            for(size_t i=0; i < this->m_xticks.size(); ++i){
+                if(gridlinestyle==1){   // -
+                    glDisable(GL_LINE_STIPPLE);
+                    gl2psDisable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==2){ // - -
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0xf0f0);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==3){ // :
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0xcccc);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==4){ 
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0x087f);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }
+                glBegin(GL_LINE_STRIP);
+                    glVertex2d(this->coord2D_to_xaxis(this->m_xticks[i]), bottom);
+                    glVertex2d(this->coord2D_to_xaxis(this->m_xticks[i]), bottom+height);
+                glEnd();
+            }
+        }
+        if(this->m_ygrid){
+            for(size_t i=0; i < this->m_xticks.size(); ++i){
+                if(gridlinestyle==1){   // -
+                    glDisable(GL_LINE_STIPPLE);
+                    gl2psDisable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==2){ // - -
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0xf0f0);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==3){ // :
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0xcccc);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }else if(gridlinestyle==4){ 
+                    glEnable(GL_LINE_STIPPLE);
+                    glLineStipple(1, 0x087f);
+                    gl2psEnable(GL2PS_LINE_STIPPLE);
+                }
+                glBegin(GL_LINE_STRIP);
+                    glVertex2d(left, this->coord2D_to_xaxis(this->m_yticks[i]));
+                    glVertex2d(left+width, this->coord2D_to_xaxis(this->m_yticks[i]));
+                glEnd();
+            }
+        }
+
+        // ticks
+        if(this->m_tickDir=="in"){ _tickdir = 1; }
+        if(this->m_tickDir=="out"){ _tickdir = -1; }
+
+        glDisable(GL_LINE_STIPPLE);
+        gl2psDisable(GL2PS_LINE_STIPPLE);
+        // x-ticks
+        for(size_t i=0; i < this->m_xticks.size(); ++i){
+            glBegin(GL_LINE_STRIP);
+                glVertex2d(this->coord2D_to_xaxis(this->m_xticks[i]), bottom);
+                glVertex2d(this->coord2D_to_xaxis(this->m_xticks[i]), bottom+_tickdir*0.01);
+            glEnd();
+        }
+        // x-tick labal
+        if(this->m_ticklabelFlag){
+            std::ostringstream stream;
+            float x, y;
+            for(size_t i=0; i < this->m_xticks.size(); ++i){
+                stream << std::setw(4) << std::setprecision(1);
+                stream << this->m_xticks[i];
+                x = (
+                    this->coord2D_to_xaxis(this->m_xticks[i]) -
+                    static_cast<float>(_numchar*_charw)/this->window_width()/2.0f
+                );
+                y = bottom - _offset - 1.0f*_charh/this->window_height();
+                this->ptext(x, y, stream.str());
+                stream.clear();
+            }
+        }
+        // y-tick
+        for(size_t i=0; i < this->m_yticks.size(); ++i){
+            glBegin(GL_LINE_STRIP);
+                glVertex2d(left, this->coord2D_to_yaxis(this->m_yticks[i]));
+                glVertex2d(left+_tickdir*0.01, this->coord2D_to_yaxis(this->m_yticks[i]));
+            glEnd();
+        }
+        // y-ticklabel
+        if(this->m_ticklabelFlag){
+            std::ostringstream stream;
+            float x, y;
+            for(size_t i=0; i < this->m_yticks.size(); ++i){
+                stream << std::setw(4) << std::setprecision(1);
+                stream << this->m_yticks[i];
+                x = left - static_cast<float>(_numchar*_charw)/this->window_width() - _offset;
+                y = this->coord2D_to_yaxis(this->m_yticks[i]) - 0.5*_charh/this->window_height();
+                this->ptext(x, y, stream.str());
+                stream.clear();
+            }
+        }
+    }
+
+    // - title
+    _numchar = this->m_title.length();
+    float x = left - width/2.0f - static_cast<float>(_numchar*_charw)/this->window_width()/2.0f;
+    float y = bottom + height + _offset;
+    this->ptext(x, y, this->m_title);
+
+    // - xlabel
+    _numchar = this->m_xlabel.length();
+    x = left + width/2.0f-static_cast<float>(_numchar*_charw)/this->window_width()/2.0f;
+    y = bottom - _offset + 2.0*_charh/this->window_height();
+    this->ptext(x, y, this->m_xlabel);
+
+    // - ylabel
+    //_numchar = this->m_ylabel.length();
+    x = left;
+    y = bottom + height + _offset;
+    this->ptext(x, y, this->m_ylabel);
+
+    // - viewport
+    int _left = static_cast<int>(this->m_axBBox.left * this->window_width());
+    int _bottom = static_cast<int>(this->m_axBBox.bottom*this->window_height());
+    int _width = static_cast<int>(this->m_axBBox.width*this->window_width());
+    int _height = static_cast<int>(this->m_axBBox.height*this->window_height());
+    glViewport(_left, _bottom, _width, _height);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
