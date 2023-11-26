@@ -2003,7 +2003,10 @@ Surface contour(
 Surface mesh(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-);
+){
+    return gca()->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
+}
+
 Surface surf(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
