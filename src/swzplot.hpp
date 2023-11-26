@@ -124,7 +124,7 @@ enum AxesType {
 };
 
 enum AxesLimMode{
-    Auto, Maxnual
+    Auto, Manual
 };
 
 /**

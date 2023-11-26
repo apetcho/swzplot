@@ -708,6 +708,21 @@ double AxesBase::coord3D_to_zaxis(double z){
     return 2.0*(z + z1)/(z2 - z1) - 1.0;
 }
 
+// -*-
+Axes AxesBase::axis(double xmin, double xmax, double ymin, double ymax){
+    if(xmin != xmax){
+        this->m_xlim = DataLim(xmin, xmax);
+        this->m_xlimMode = AxesLimMode::Manual;
+    }
+    if(ymin != ymax){
+        this->m_ylim = DataLim(ymin, ymax);
+        this->m_ylimMode = AxesLimMode::Manual;
+    }
+
+    this->m_axType = AxesType::Axes2D;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
