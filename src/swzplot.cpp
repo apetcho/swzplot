@@ -197,6 +197,13 @@ double DrawableBase::coord3D_to_xaxis(double x){
     return (num/den) - 1;
 }
 
+// -*-
+double DrawableBase::coord3D_to_yaxis(double y){
+    double num = 2 * (y - this->m_ca->m_xlim.minval);
+    double den = this->m_ca->m_xlim.maxval - this->m_ca->m_xlim.minval;
+    return (num/den) - 1;
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- swzplot::AxesBase                                            -*-
