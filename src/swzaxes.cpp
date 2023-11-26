@@ -581,6 +581,69 @@ Axes AxesBase::colorbar(){
     return result;
 }
 
+// -*-
+void AxesBase::draw_colorbar(){
+    auto left = this->m_axBBox.left;
+    auto bottom = this->m_axBBox.bottom;
+    auto width = this->m_axBBox.width;
+    auto height = this->m_axBBox.height;
+
+    // -
+    auto _w = static_cast<int>(this->window_width());
+    auto _h = static_cast<int>(this->window_height());
+    glViewport(0, 0, _w, _h);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+    glDisable(GL_LINE_STIPPLE);
+    gl2psDisable(GL2PS_LINE_STIPPLE);
+
+    if(this->m_boxed){
+        // - box
+        glLineWidth(this->m_linewidth);
+        gl2psLineWidth(this->m_linewidth);
+        glColor3f(0.f, 0.f, 0.f);
+        glBegin(GL_LINE_LOOP);
+            glVertex2d(left, bottom);
+            glVertex2d(left+width, bottom);
+            glVertex2d(left+width, bottom+height);
+            glVertex2d(left, bottom+height);
+        glEnd();
+
+        // z-tick
+        for(size_t i=0; i < this->m_zticks.size(); ++i){
+            double z = this->coord2D_to_yaxis(this->m_zticks[i]);
+            glBegin(GL_LINE_STRIP);
+                glVertex2d(left+width, z);
+                glVertex2d(left+width+0.01, z);
+            glEnd();
+        }
+
+        // z-ticklabels
+        std::ostringstream stream;
+        for(size_t i=0; i < this->m_zticks.size(); ++i){
+            stream << std::setw(4) << std::setprecision(1);
+            stream << this->m_zticks[i];
+            double z = this->coord2D_to_yaxis(this->m_zticks[i]);
+            this->ptext(left+width+0.01, z, stream.str());
+            stream.clear();
+        }
+    }
+
+    // -
+    std::vector<float> rgb;
+    auto n = this->m_cmap.size();
+    for(size_t i=0; i < n; ++i){
+        rgb = this->m_cmap[i];
+        glColor3f(rgb[0], rgb[1], rgb[1]);
+        glBegin(GL_QUADS);
+            glVertex2d(left, bottom+height*i/n);
+            glVertex2d(left+width, bottom+height*i/n);
+            glVertex2d(left+width, bottom+height*(i+1)/n);
+            glVertex2d(left, bottom+height*(i+1)/n);
+        glEnd();
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
