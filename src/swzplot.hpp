@@ -2033,8 +2033,11 @@ Patch patch(
 
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Colormap& cten
-);
+    const Colormap& cdata
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
+}
+
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat
