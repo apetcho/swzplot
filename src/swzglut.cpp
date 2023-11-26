@@ -56,6 +56,17 @@ void register_figure(const Figure fig){
     windowQueue.push_back(fig);
 }
 
+// -*-
+void tool(){
+    std::unique_lock<std::mutex> lock(wq_mutex);
+    auto iter = windowQueue.begin();
+    while(iter != windowQueue.end()){
+        create_window(*iter);
+        windowQueue.erase(iter++);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
