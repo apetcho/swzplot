@@ -932,6 +932,69 @@ Axes CanvasBase::subplot(unsigned int m, unsigned int n, unsigned p){
     return this->m_ca;
 }
 
+// -*-
+bool CanvasBase::mouse(int button, int state, int x, int y){
+    double _x = static_cast<double>(x)/(this->m_figure->m_window_width);
+    double _y = (
+        static_cast<double>(this->m_figure->m_window_height-y) /
+        this->m_figure->m_window_height
+    );
+    double rx, ry, mx, my;
+    double left, bottom, width, height;
+    if(this->m_selected_axes && this->m_selected_axes->m_is_visible){
+        left = this->m_selected_axes->m_axBBox.left;
+        bottom = this->m_selected_axes->m_axBBox.bottom;
+        width = this->m_selected_axes->m_axBBox.width;
+        height = this->m_selected_axes->m_axBBox.height;
+        bool check = (
+            (left <= _x) && (_x <= (left+width)) &&
+            (bottom <= _y) && (_y <= (bottom + height))
+        );
+        if(this->m_selected_axes->m_mouse && check){
+            rx = (_x - left)/width;
+            ry = (_y - bottom)/height;
+            mx = (
+                rx*(this->m_selected_axes->m_xlim.maxval - this->m_selected_axes->m_xlim.minval) +
+                this->m_selected_axes->m_xlim.minval
+            );
+            my = (
+                ry*(this->m_selected_axes->m_ylim.maxval - this->m_selected_axes->m_ylim.minval) +
+                this->m_selected_axes->m_ylim.minval
+            );
+            if(this->m_selected_axes->mouse(button, state, mx, my)){
+                return true;
+            }
+        }
+    }
+    // - axes select
+    if(button==GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+        if(this->m_selected_axes){
+            this->m_selected_axes->m_selected = false;
+        }
+        for(auto axIter=this->m_axesDict.rbegin(); axIter!=this->m_axesDict.rend(); ++axIter){
+            if(this->m_ca->m_is_visible){
+                left = axIter->second->m_axBBox.left;
+                bottom = axIter->second->m_axBBox.bottom;
+                width = axIter->second->m_axBBox.width;
+                height = axIter->second->m_axBBox.height;
+
+                bool test = (
+                    (left <= _x) && (_x <= (left + width)) &&
+                    (bottom <= _y) && (_y <= (bottom + height)) 
+                );
+                if(test){
+                    this->m_selected_axes = axIter->second;
+                    axIter->second->m_selected = true;
+                    axIter->second->m_xybutton = Position(x, y);
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
 // -*----------------------------------------------------------------*-
