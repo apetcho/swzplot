@@ -422,6 +422,140 @@ void AxesBase::draw2d(){
     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
 }
 
+// -*-
+void AxesBase::draw3d(){
+    auto _left = static_cast<int>(this->m_viewBBox.left*this->window_width());
+    auto _bottom = static_cast<int>(this->m_viewBBox.bottom*this->window_height());
+    auto _width = static_cast<int>(this->m_viewBBox.width*this->window_width());
+    auto _height = static_cast<int>(this->m_viewBBox.height*this->window_height());
+    
+    glViewport(_left, _bottom, _width, _height);
+    glLoadIdentity();
+    glOrtho(-1.8, 1.8, -1.8, 1.8, -1.5, 3.);
+    auto _xt = this->m_cameraTarget.x;
+    auto _yt = this->m_cameraTarget.y;
+    float _zt = 0.0;
+    if(this->m_cameraTarget.z.has_value()){
+        _zt = this->m_cameraTarget.z.value();
+    }
+    auto _xu = this->m_cameraUpVector.x;
+    auto _yu = this->m_cameraUpVector.y;
+    float _zu = 0.0;
+    if(this->m_cameraUpVector.z.has_value()){
+        _zu = this->m_cameraUpVector.z.value();
+    }
+
+    gluLookAt(
+        std::cos(this->m_cta*M_PI/180)*std::cos(this->m_phi*M_PI/180),
+        std::sin(this->m_cta*M_PI/180)*std::cos(this->m_phi*M_PI/180),
+        std::sin(this->m_phi*M_PI/180),
+        _xt, _yt, _zt, _xu, _yu, _zu
+    );
+
+    if(this->m_boxed){
+        // tick
+        float r1 = 1.05f;
+        float r2 = 1.2f;
+        float r3 = 1.4f;
+        float cta0 = std::fmod(this->m_cta, 360);
+        int xsign = 0, ysign = 0;
+        if((0 <= cta0) && (cta0 < 90)){
+            xsign = 1;
+            ysign = 1;
+        }
+        if((90<cta0) && (cta0<190)){
+            xsign = -1;
+            ysign = 1;
+        }
+        if((180 <= cta0) && (cta0 < 270)){
+            xsign = -1;
+            ysign = -1;
+        }
+        if((270 <= cta0) && (cta0 < 360)){
+            xsign = 1;
+            ysign = -1;
+        }
+
+        glColor3f(0.f, 0.f, 0.f);
+
+        // - axes
+        // x
+        glBegin(GL_LINE_STRIP);
+            glVertex3d(-1, ysign, -1);
+            glVertex3d(1, ysign, -1);
+        glEnd();
+        // y
+        glBegin(GL_LINE_STRIP);
+            glVertex3d(xsign, -1, -1);
+            glVertex3d(xsign, 1, -1);
+        glEnd();
+        // z
+        glBegin(GL_LINE_STRIP);
+            glVertex3d(ysign, -xsign, -1);
+            glVertex3d(ysign, -xsign, 1);
+        glEnd();
+
+        // x-ticks
+        for(size_t i=0; i < this->m_xticks.size(); ++i){
+            double x = this->coord3D_to_xaxis(this->m_xticks[i]);
+            glBegin(GL_LINE_STRIP);
+                glVertex3d(x, ysign, -1);
+                glVertex3d(x, ysign*r1, -1);
+            glEnd();
+        }
+        // y-ticks
+        for(size_t i=0; i < this->m_yticks.size(); ++i){
+            double y = this->coord3D_to_yaxis(this->m_yticks[i]);
+            glBegin(GL_LINE_STRIP);
+                glVertex3d(xsign, y, -1);
+                glVertex3d(xsign*r1, y, -1);
+            glEnd();
+        }
+        // z-ticks
+        for(size_t i=0; i < this->m_zticks.size(); ++i){
+            double z = this->coord3D_to_zaxis(this->m_zticks[i]);
+            glBegin(GL_LINE_STRIP);
+                glVertex3d(ysign, -xsign, z);
+                glVertex3d(ysign*r1, -xsign, z);
+            glEnd();
+        }
+        // -ticklabel
+        if(this->m_ticklabelFlag){
+            // xticklabel
+            std::ostringstream stream;
+            for(size_t i=0; i < this->m_xticks.size(); ++i){
+                stream << std::setw(4) << std::setprecision(1);
+                stream << this->m_xticks[i];
+                double x = this->coord3D_to_xaxis(this->m_xticks[i]);
+                this->ptext3c(x, ysign*r2, -1, stream.str());
+                stream.clear();
+            }
+            // yticklabel
+            stream.clear();
+            for(size_t i=0; i < this->m_yticks.size(); ++i){
+                stream << std::setw(4) << std::setprecision(1);
+                stream << this->m_yticks[i];
+                double y = this->coord3D_to_yaxis(this->m_yticks[i]);
+                this->ptext3c(ysign*r2, y, -1, stream.str());
+                stream.clear();
+            }
+            // zticklabel
+            stream.clear();
+            for(size_t i=0; i < this->m_zticks.size(); ++i){
+                stream << std::setw(4) << std::setprecision(1);
+                stream << this->m_zticks[i];
+                double z = this->coord3D_to_xaxis(this->m_zticks[i]);
+                this->ptext3c(ysign*r2, -xsign, z, stream.str());
+                stream.clear();
+            }
+        }
+        // {x|y|z}label
+        this->ptext3c(0, ysign*r3, -1, "x");
+        this->ptext3c(xsign*r3, 0, -1, "y");
+        this->ptext3c(ysign*r3, -xsign, 0, "z");
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
