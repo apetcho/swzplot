@@ -2088,7 +2088,7 @@ void gray(){ gca()->gray(); }
 void jet(){ gca()->jet(); }
 void hsv(){ gca()->hsv(); }
 void hot(){ gca()->hot(); }
-void cool();
+void cool(){ gca()->cool(); }
 void spring();
 void summer();
 void autumn();
