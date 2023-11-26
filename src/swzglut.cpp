@@ -67,6 +67,18 @@ void tool(){
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }
 
+// -*-
+void run(int& argc, char**argv){
+    glutInit(&argc, argv);
+    glutInitWindowPosition(-50, -50);
+    glutInitWindowSize(0, 0);
+    toolWindowNum = glutCreateWindow("");
+    glutIdleFunc(tool);
+    glutDisplayFunc(no_displayfn);
+    glutHideWindow();
+    glutMainLoop();
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
