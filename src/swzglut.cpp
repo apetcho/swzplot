@@ -113,12 +113,21 @@ void reshapefn(int width, int height){
 }
 
 // -*-
-void mouse(int btn, int state, int x, int y){
+void mousefn(int btn, int state, int x, int y){
     int win = glutGetWindow();
     if(win==0){ return; }
     auto winPtr = windowDict.find(win);
     if(winPtr==windowDict.end()){ return; }
     winPtr->second->mouse(btn, state, x, y);
+}
+
+// -*-
+void motionfn(int x, int y){
+    int win = glutGetWindow();
+    if(win==0){ return; }
+    auto winPtr = windowDict.find(win);
+    if(winPtr==windowDict.end()){ return; }
+    winPtr->second->motion(x, y);
 }
 
 // -*------------------------*-
