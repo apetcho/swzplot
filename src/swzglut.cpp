@@ -91,6 +91,8 @@ void idlefn(){
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
+void no_displayfn(){}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
