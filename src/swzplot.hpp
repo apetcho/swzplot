@@ -558,8 +558,8 @@ public:
     void color(float r, float g, float b);
     //! @note: It will better our utility classes here for colormap operations
     // - set the colormap of the children's axes
-    Vector<float> colormap(std::string color, float target);
-    void colormap(std::string color);
+    Vector<float> colormap(std::string name, float target);
+    void colormap(std::string name);
     void colormap(const Matrix<float>& colors);
 
     // - set colormaps

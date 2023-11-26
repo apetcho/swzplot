@@ -883,6 +883,19 @@ Vector<float> AxesBase::colormap(std::string color, float t){
     return rgb;
 }
 
+// -*-
+void AxesBase::colormap(std::string name){
+    constexpr int n = 64;
+    this->m_cmap.clear();
+    for(int i=0; i < n; ++i){
+        float t = static_cast<float>(i)/(n-1);
+        this->m_cmap.push_back(this->colormap(name, t));
+    }
+    if(this->m_colorbar_ax){
+        this->m_colorbar_ax->m_cmap = this->m_cmap;
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
