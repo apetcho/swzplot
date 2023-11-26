@@ -2010,7 +2010,9 @@ Surface mesh(
 Surface surf(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-);
+){
+    return gca()->add<SurfaceBase>()->surf(xvec, yvec, zmat);
+}
 
 // - shading:
 void shading(std::string arg);
