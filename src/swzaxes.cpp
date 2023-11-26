@@ -47,6 +47,12 @@ AxesBase::AxesBase(Canvas canvas): m_canvas(canvas){
     this->jet();
 }
 
+// -*-
+int AxesBase::window_height(){
+    return this->m_canvas->m_figure->m_window_height;
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
