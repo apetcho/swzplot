@@ -1861,7 +1861,10 @@ void vertex(double x, double y, double dx, double dy){
 void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec
-);
+){
+    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
+}
+
 void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec, const Vector<double>& dyvec
