@@ -941,7 +941,7 @@ bool CanvasBase::mouse(int button, int state, int x, int y){
     );
     double rx, ry, mx, my;
     double left, bottom, width, height;
-    if(this->m_selected_axes && this->m_selected_axes->m_is_visible){
+    if(this->m_selected_axes && this->m_selected_axes->m_visible){
         left = this->m_selected_axes->m_axBBox.left;
         bottom = this->m_selected_axes->m_axBBox.bottom;
         width = this->m_selected_axes->m_axBBox.width;
@@ -972,7 +972,7 @@ bool CanvasBase::mouse(int button, int state, int x, int y){
             this->m_selected_axes->m_selected = false;
         }
         for(auto axIter=this->m_axesDict.rbegin(); axIter!=this->m_axesDict.rend(); ++axIter){
-            if(this->m_ca->m_is_visible){
+            if(this->m_ca->m_visible){
                 left = axIter->second->m_axBBox.left;
                 bottom = axIter->second->m_axBBox.bottom;
                 width = axIter->second->m_axBBox.width;
@@ -1012,7 +1012,7 @@ void CanvasBase::toggle_visibility(){
 void CanvasBase::set_visibility(bool flag){
     this->m_visible = flag;
     for(auto axIter=this->m_axesDict.begin(); axIter!=this->m_axesDict.end(); ++axIter){
-        axIter->second->m_is_visible = flag;
+        axIter->second->m_visible = flag;
     }
 }
 

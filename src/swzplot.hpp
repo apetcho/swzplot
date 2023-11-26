@@ -22,6 +22,7 @@
 #include<vector>
 #include<string>
 #include<memory>
+#include<limits>
 #include<thread>
 #include<mutex>
 #include<cmath>
@@ -368,7 +369,7 @@ private:
     }
 
 public:
-    AxesBase(Canvas layer);
+    AxesBase(Canvas canvas);
     // AxesBase(const Canvas layer);
     ~AxesBase(){
         this->m_children.clear();
@@ -439,9 +440,10 @@ public:
 
     // -*- styles -
     bool m_boxed; // Axes on/off :: boxFlag
+    std::string m_gridLineStyle;
     float m_linewidth;
     std::string m_tickDir; // "in" | "out"
-    bool m_is_visible;
+    bool m_visible;
     // - flags to draw grid -
     bool m_xgrid; // xgridFlag
     bool m_ygrid; // ygridFlag
@@ -485,7 +487,7 @@ public:
     std::string m_title;
     std::string m_xlabel;
     std::string m_ylabel;
-    std::string m_zlabl;
+    std::string m_zlabel;
     DataLim<double> m_clim;
 
     // -*- Draw the axes and its children
