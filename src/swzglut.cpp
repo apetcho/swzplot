@@ -101,6 +101,17 @@ void displayfn(){
     }
 }
 
+// -*-
+void reshapefn(int width, int height){
+    int win = glutGetWindow();
+    if(win==0){ return; }
+    auto winPtr = windowDict.find(win);
+    if(winPtr == windowDict.end()){
+        return;
+    }
+    winPtr->second->reshape(width, height);
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
