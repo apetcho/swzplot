@@ -694,6 +694,13 @@ double AxesBase::coord3D_to_xaxis(double x){
     return 2*(x-x1)/(x2-x1) - 1.0;
 }
 
+// -*-
+double AxesBase::coord3D_to_yaxis(double y){
+    auto y1 = this->m_ylim.minval;
+    auto y2 = this->m_ylim.maxval;
+    return 2*(y-y1)/(y2-y1) - 1.0;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
