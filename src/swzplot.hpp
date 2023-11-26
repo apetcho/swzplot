@@ -1925,8 +1925,10 @@ Surface surface(
 
 Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cten
-);
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cdata);
+}
 
 Surface pcolor(const Matrix<double>& cmat);
 Surface pcolor(const Colormap& cten);
