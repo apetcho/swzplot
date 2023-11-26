@@ -905,6 +905,33 @@ Text CanvasBase::text(double x, double y, const std::string message){
     return this->gca()->add<TextBase>()->text(x, y, message);
 }
 
+// -*-
+Axes CanvasBase::subplot(unsigned int m, unsigned int n, unsigned p){
+    Axes result = nullptr;
+    auto k = p - 1;
+    auto item = this->m_axesDict.find(k);
+    if(item == this->m_axesDict.end()){
+
+        auto ax = std::make_shared<AxesBase>(this->share());
+        this->m_axesDict[k] = ax;
+        this->m_ca = ax;
+        int ix = k/m;
+        int iy = (m-1) - (k % m);
+        this->m_ca->m_axBBox.left = (ix + 0.13)/n;
+        this->m_ca->m_axBBox.bottom = (ix + 0.11)/m;
+        this->m_ca->m_axBBox.width = 0.775/n;
+        this->m_ca->m_axBBox.height = 0.815/m;
+
+        this->m_ca->m_viewBBox.left = 1.0*ix/n;
+        this->m_ca->m_viewBBox.bottom = 1.0*iy/m;
+        this->m_ca->m_viewBBox.width = 1.0/n;
+        this->m_ca->m_viewBBox.height = 1.0/m;
+    }else{
+        this->m_ca = item->second;
+    }
+    return this->m_ca;
+}
+
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
 // -*----------------------------------------------------------------*-
