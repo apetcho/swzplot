@@ -214,6 +214,23 @@ Vector<double> AxesBase::make_ticks(double vmin, double vmax){
     return result;
 }
 
+// -*-
+void AxesBase::draw(){
+    std::unique_lock<std::mutex> lock(this->m_children_mtx);
+    if(this->m_children.size() > 0){
+        if(this->m_axType==AxesType::Axes2D){ this->draw2d(); }
+        else if(this->m_axType==AxesType::Axes3D){ this->draw3d(); }
+    }
+    if(this->m_axType==AxesType::ColorBar){ this->draw_colorbar(); }
+    this->config();
+
+    for(auto iter=this->m_children.begin(); iter != this->m_children.end(); ++iter){
+        (*iter)->draw();   
+    }
+
+    if(this->m_colorbar_ax){ this->m_colorbar_ax->draw(); }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
