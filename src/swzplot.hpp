@@ -1874,7 +1874,10 @@ void errorbar(
 
 // ----
 // - Surface & contour
-Surface surface(const Matrix<double>& zmat);
+Surface surface(const Matrix<double>& zmat){
+    return gca()->add<SurfaceBase>()->surface(zmat);
+}
+
 Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
 Surface surface(const Matrix<double>& zmat, const Colormap& cten);
 Surface surface(
