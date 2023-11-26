@@ -2076,7 +2076,9 @@ Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width)
 }
 
 //! @todo: add font information
-Text text(double x, double y, const std::string message);
+Text text(double x, double y, const std::string message){
+    return gca()->add<TextBase>()->text(x, y, message);
+}
 
 Axes colorbar();
 void grey();
