@@ -509,6 +509,7 @@ public:
     Axes grid(std::string onoff);
     Axes grid(bool onoff=true);
     // - toggle ticklabel visibility: true | false
+    //! @todo: change this to show_ticklabel()
     Axes ticklabel(bool onoff=true);
     // - title
     Axes title(std::string label);

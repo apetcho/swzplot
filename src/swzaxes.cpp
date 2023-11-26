@@ -767,6 +767,12 @@ Axes AxesBase::grid(std::string onoff){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::ticklabel(bool onoff){
+    this->m_ticklabelFlag = onoff;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
