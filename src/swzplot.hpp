@@ -2041,7 +2041,10 @@ Patch patch(
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat
-);
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat);
+}
+
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Vector<double>& cvec
