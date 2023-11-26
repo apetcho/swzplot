@@ -2143,7 +2143,10 @@ void append(Axes axes, Position<double> point2d){
     axes->gco<LineBase>()->vertex(point2d.x, point2d.y);
 }
 
-void append(Canvas canvas, Position<double> point2d);
+void append(Canvas canvas, Position<double> point2d){
+    canvas->gca()->gco<LineBase>()->vertex(point2d.x, point2d.y);
+}
+
 void append(Figure fig, Position<double> point2d);
 
 // -*----------------------------------------------------------------*-
