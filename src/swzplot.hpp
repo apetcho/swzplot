@@ -2026,8 +2026,11 @@ Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
 
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Vector<double>& cvec // Matrix<double>???
-);
+    const Vector<double>& cvec
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, cvec);
+}
+
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Colormap& cten
