@@ -2099,7 +2099,9 @@ void print(std::string filename="out.eps"){
         currentFigure->print(filename);
     }
 }
-void savefig(std::string filename="out.eps");
+void savefig(std::string filename="out.eps"){
+    print(filename);
+}
 
 void append(Line line, std::pair<double, double> point2d);
 void append(Axes axes, std::pair<double, double> point2d);
