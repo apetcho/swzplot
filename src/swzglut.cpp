@@ -24,6 +24,7 @@ int toolWindowNum;
 WindowDict windowDict;      // windows
 WindowQueue windowQueue;    // 
 std::mutex wq_mutex;
+std::thread windowThread;   // glutThread
 
 // -*-
 void set_window_title(int window, std::string name){
@@ -77,6 +78,11 @@ void run(int& argc, char**argv){
     glutDisplayFunc(no_displayfn);
     glutHideWindow();
     glutMainLoop();
+}
+
+// -*-
+void initilalize(int &argc, char **argv){
+    windowThread = std::thread(std::bind(run, argc, argv));
 }
 
 // -*------------------------*-
