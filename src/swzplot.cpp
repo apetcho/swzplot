@@ -200,7 +200,14 @@ double DrawableBase::coord3D_to_xaxis(double x){
 // -*-
 double DrawableBase::coord3D_to_yaxis(double y){
     double num = 2 * (y - this->m_ca->m_xlim.minval);
-    double den = this->m_ca->m_xlim.maxval - this->m_ca->m_xlim.minval;
+    double den = this->m_ca->m_ylim.maxval - this->m_ca->m_ylim.minval;
+    return (num/den) - 1;
+}
+
+// -*-
+double DrawableBase::coord3D_to_zaxis(double z){
+    double num = 2 * (z - this->m_ca->m_zlim.minval);
+    double den = this->m_ca->m_zlim.maxval - this->m_ca->m_zlim.minval;
     return (num/den) - 1;
 }
 
