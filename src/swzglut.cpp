@@ -139,6 +139,15 @@ void passivemotionfn(int x, int y){
     winPtr->second->passivemotion(x, y);
 }
 
+// -*-
+void keyboardfn(unsigned char key, int x, int y){
+    int win = glutGetWindow();
+    if(win==0){ return; }
+    auto winPtr = windowDict.find(win);
+    if(winPtr==windowDict.end()){ return; }
+    winPtr->second->keyboard(key, x, y);
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
