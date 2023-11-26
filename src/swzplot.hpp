@@ -1730,7 +1730,7 @@ namespace glut{
 }
 
 // -*----------------------------------------------------------------*-
-// -*- SWZPLOT PUBLIC API                                           -*-
+// -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-
 extern Figure currentFigure;
 Figure figure();

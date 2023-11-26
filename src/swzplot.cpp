@@ -1173,6 +1173,34 @@ Text FigureBase::text(double x, double y, const std::string message){
     return this->gca()->add<TextBase>()->text(x, y, message);
 }
 
+// -*----------------------------------------------------------------*-
+// -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
+// -*----------------------------------------------------------------*-
+FigureDict figureDict;
+Figure currentFigure;
+using NamedFigureDict = std::map<std::string, Figure>;
+NamedFigureDict namedFigureDict;
+
+std::mutex figure_mtx;
+std::mutex namedFigure_mtx;
+
+int maxFigureNum = 0;
+
+Figure figure(const std::string name){
+    std::unique_lock<std::mutex> lock(namedFigure_mtx);
+    Figure fig = nullptr;
+    auto iter = namedFigureDict.find(name);
+    if(iter == namedFigureDict.end()){
+        std::cout << "New figure: " << name << std::endl;
+        fig = figure();
+        fig->set_window_name(name);
+        namedFigureDict[name] = fig;
+    }else{
+        fig = iter->second;
+    }
+    return fig;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
