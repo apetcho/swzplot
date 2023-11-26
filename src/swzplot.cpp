@@ -1008,6 +1008,14 @@ void CanvasBase::toggle_visibility(){
     this->set_visibility(!this->m_visible);
 }
 
+// -*-
+void CanvasBase::set_visibility(bool flag){
+    this->m_visible = flag;
+    for(auto axIter=this->m_axesDict.begin(); axIter!=this->m_axesDict.end(); ++axIter){
+        axIter->second->m_is_visible = flag;
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
