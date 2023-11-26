@@ -1898,7 +1898,10 @@ Surface surface(
 Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, const Matrix<float>& cmat
-);
+){
+    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
+}
+
 Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, const Colormap& cten
