@@ -1961,8 +1961,10 @@ Surface pcolor(
 
 Surface pcolor(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Colormap& cten
-);
+    const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
+}
 
 // -*-
 Surface contour(const Matrix<double>& zmat);
