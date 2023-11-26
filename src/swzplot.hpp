@@ -2094,7 +2094,11 @@ void summer(){ gca()->summer(); }
 void autumn(){ gca()->autumn(); }
 void winter(){ gca()->winter(); }
 
-void print(std::string filename="out.eps");
+void print(std::string filename="out.eps"){
+    if(currentFigure){
+        currentFigure->print(filename);
+    }
+}
 void savefig(std::string filename="out.eps");
 
 void append(Line line, std::pair<double, double> point2d);
