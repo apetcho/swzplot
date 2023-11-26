@@ -995,6 +995,15 @@ bool CanvasBase::mouse(int button, int state, int x, int y){
     return false;
 }
 
+// -*-
+bool CanvasBase::motion(int x, int y){
+    if(this->m_selected_axes){
+        return this->m_selected_axes->motion(x, y);
+    }
+    return false;
+}
+
+
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
 // -*----------------------------------------------------------------*-
