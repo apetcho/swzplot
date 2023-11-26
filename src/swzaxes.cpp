@@ -791,6 +791,12 @@ Axes AxesBase::ylabel(std::string label){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::capture_mouse(bool flag){
+    this->m_mouse = flag;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
