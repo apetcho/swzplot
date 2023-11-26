@@ -773,6 +773,12 @@ Axes AxesBase::ticklabel(bool onoff){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::title(std::string label){
+    this->m_title = label;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
