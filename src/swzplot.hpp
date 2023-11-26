@@ -2054,8 +2054,10 @@ Patch patch(
 
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cten
-);
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
+}
 
 Patch bar(const Vector<double>& ydata);
 Patch bar(const Vector<double>& ydata, float width);
