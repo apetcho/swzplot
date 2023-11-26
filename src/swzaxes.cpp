@@ -896,6 +896,11 @@ void AxesBase::colormap(std::string name){
     }
 }
 
+// -*-
+void AxesBase::colormap(const Matrix<float>& cmap){
+    this->m_cmap = cmap;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

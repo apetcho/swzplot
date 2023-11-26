@@ -560,7 +560,7 @@ public:
     // - set the colormap of the children's axes
     Vector<float> colormap(std::string name, float target);
     void colormap(std::string name);
-    void colormap(const Matrix<float>& colors);
+    void colormap(const Matrix<float>& cmap);
 
     // - set colormaps
     void gray(){ this->colormap("gray"); }
