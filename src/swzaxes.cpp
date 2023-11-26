@@ -741,6 +741,12 @@ Axes AxesBase::axis(double xmin, double xmax, double ymin, double ymax, double z
     return this->share();
 }
 
+// -*-
+Axes AxesBase::axis(std::string onoff){
+    this->axis(onoff=="on");
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
