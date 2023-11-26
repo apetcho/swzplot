@@ -1016,6 +1016,14 @@ void CanvasBase::set_visibility(bool flag){
     }
 }
 
+// -*-
+void CanvasBase::draw(){
+    if(!this->m_visible){ return; }
+    for(auto axIter=this->m_axesDict.begin(); axIter!=this->m_axesDict.end(); ++axIter){
+        axIter->second->draw();
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
