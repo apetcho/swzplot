@@ -2085,7 +2085,7 @@ Axes colorbar(){
 }
 
 void gray(){ gca()->gray(); }
-void jet();
+void jet(){ gca()->jet(); }
 void hsv();
 void cool();
 void spring();
