@@ -1941,7 +1941,10 @@ Surface pcolor(const Colormap& cdata){
 Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& cvec
-);
+){
+    return gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
+}
+
 Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Colormap& cten
