@@ -2015,7 +2015,9 @@ Surface surf(
 }
 
 // - shading:
-void shading(std::string arg);
+void shading(std::string arg){
+    gca()->gco<SurfaceBase>()->shading(arg);
+}
 
 // -
 Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
