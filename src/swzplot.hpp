@@ -2091,7 +2091,7 @@ void hot(){ gca()->hot(); }
 void cool(){ gca()->cool(); }
 void spring(){ gca()->spring(); }
 void summer(){ gca()->summer(); }
-void autumn();
+void autumn(){ gca()->autumn(); }
 void winter();
 
 void print(std::string filename="out.eps");
