@@ -797,6 +797,22 @@ Axes AxesBase::capture_mouse(bool flag){
     return this->share();
 }
 
+// -*-
+void AxesBase::ptext(float x, float y, const std::string& text){
+    auto _w = static_cast<int>(this->window_width());
+    auto _h = static_cast<int>(this->window_height());
+    glViewport(0, 0, _w, _h);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glRasterPos2f(x, y);
+    gl2psText(text.c_str(), "Arial", 12);
+
+    for(size_t i=0; i < text.size(); ++i){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, text[i]);
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
