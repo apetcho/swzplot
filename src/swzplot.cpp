@@ -152,7 +152,29 @@ std::string Color::colorspec(std::vector<float> rgb){
 }
 
 // -*----------------------------------------------------------------*-
-// -*- swzplot::AxesBase                                            --
+// -*- swzplot::DrawableBase                                        -*-
+// -*----------------------------------------------------------------*-
+double DrawableBase::coord2D_to_xaxis(double x){
+    double result;
+    if(this->m_ca->m_xscale == Scale::Linear){
+        auto rv = (x - this->m_ca->m_xlim.minval)/(
+            this->m_ca->m_xlim.maxval - this->m_ca->m_xlim.minval
+        );
+        result = rv;
+    }else{
+        auto num = (std::log10(x) - std::log10(this->m_ca->m_xlim.maxval));
+        auto den = (
+            std::log10(this->m_ca->m_xlim.maxval) -
+            std::log10(this->m_ca->m_xlim.minval)
+        );
+        result = num/den;
+    }
+    return result;
+}
+
+
+// -*----------------------------------------------------------------*-
+// -*- swzplot::AxesBase                                            -*-
 // -*----------------------------------------------------------------*-
 // -*-
 void AxesBase::vertex(double x, double y){
