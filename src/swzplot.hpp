@@ -1919,7 +1919,10 @@ Surface surface(
 Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Matrix<float>& cmat
-);
+){
+    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
+}
+
 Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Colormap& cten
