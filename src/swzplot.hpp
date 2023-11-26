@@ -369,6 +369,7 @@ private:
 
 public:
     AxesBase(Canvas layer);
+    // AxesBase(const Canvas layer);
     ~AxesBase(){
         this->m_children.clear();
     }; // XXX
@@ -519,6 +520,7 @@ public:
     // DrawableBase
     template<typename T>
     std::shared_ptr<T> add(){
+        //  = std::make_shared<T>(this->share());
         std::shared_ptr<T> ptr = std::make_shared<T>(this->share());
         this->m_co = std::dynamic_pointer_cast<DrawableBase, T>(ptr);
         assert(this->m_co);
@@ -2049,7 +2051,7 @@ Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Vector<double>& cvec
 ){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, zmat);
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cvec);
 }
 
 Patch patch(
@@ -2068,11 +2070,11 @@ Patch bar(const Vector<double>& ydata, float width){
 }
 
 Patch bar(const Vector<double>& xdata, const Vector<double>& ydata){
-    return gca()->add<PatchBase>()->patch(xdata, ydata);
+    return gca()->add<PatchBase>()->bar(xdata, ydata);
 }
 
 Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width){
-    return gca()->add<PatchBase>()->patch(xdata, ydata, width);
+    return gca()->add<PatchBase>()->bar(xdata, ydata, width);
 }
 
 //! @todo: add font information
@@ -2081,7 +2083,7 @@ Text text(double x, double y, const std::string message){
 }
 
 Axes colorbar(){
-    return gca()->add<AxesBase>()->colorbar();
+    return gca()->colorbar();
 }
 
 void gray(){ gca()->gray(); }
