@@ -1003,6 +1003,11 @@ bool CanvasBase::motion(int x, int y){
     return false;
 }
 
+// -*-
+void CanvasBase::toggle_visibility(){
+    this->set_visibility(!this->m_visible);
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- swzplot::FigureBase                                          -*-
