@@ -2092,7 +2092,7 @@ void cool(){ gca()->cool(); }
 void spring(){ gca()->spring(); }
 void summer(){ gca()->summer(); }
 void autumn(){ gca()->autumn(); }
-void winter();
+void winter(){ gca()->winter(); }
 
 void print(std::string filename="out.eps");
 void savefig(std::string filename="out.eps");
