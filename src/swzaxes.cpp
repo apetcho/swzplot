@@ -156,6 +156,26 @@ bool AxesBase::mouse(int button, int state, int x, int y){
     return false;
 }
 
+// -*-
+bool AxesBase::motion(int x, int y){
+    if(this->m_axType==AxesType::Axes3D){
+        auto xbtn = this->m_xybutton.x;
+        auto ybtn = this->m_xybutton.y;
+        this->m_cta = this->m_ctaButtonDown - static_cast<float>(x - xbtn);
+        this->m_phi = this->m_phiButtonDown + static_cast<float>(y - ybtn);
+        auto myclamp = [](float val, float min, float max) -> float{
+            if(val >= max){ val = max; }
+            if(val <= min){ val = min; }
+            return val;
+        };
+        this->m_phi = myclamp(this->m_phi, -90.f, 90.f);
+        this->m_cta = myclamp(this->m_cta, 0.0f, 360.f);
+        
+        return true;
+    }
+    return false;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
