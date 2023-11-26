@@ -723,6 +723,24 @@ Axes AxesBase::axis(double xmin, double xmax, double ymin, double ymax){
     return this->share();
 }
 
+// -*-
+Axes AxesBase::axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
+    if(xmin != xmax){
+        this->m_xlim = DataLim(xmin, xmax);
+        this->m_xlimMode = AxesLimMode::Manual;
+    }
+    if(ymin != ymax){
+        this->m_ylim = DataLim(ymin, ymax);
+        this->m_ylimMode = AxesLimMode::Manual;
+    }
+    if(zmin != zmax){
+        this->m_zlim = DataLim(zmin, zmax);
+        this->m_zlimMode = AxesLimMode::Manual;
+    }
+    this->m_axType = AxesType::Axes3D;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
