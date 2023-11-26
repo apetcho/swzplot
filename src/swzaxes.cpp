@@ -127,15 +127,15 @@ void AxesBase::config(){
 
     double vmin = this->m_xdatalim.minval;
     double vmax = this->m_xdatalim.maxval;
-    this->m_xticks = this->make_tick(vmin, vmax);
+    this->m_xticks = this->make_ticks(vmin, vmax);
 
     vmin = this->m_ydatalim.minval;
     vmax = this->m_ydatalim.maxval;
-    this->m_yticks = this->make_tick(vmin, vmax);
+    this->m_yticks = this->make_ticks(vmin, vmax);
 
     vmin = this->m_zdatalim.minval;
     vmax = this->m_zdatalim.maxval;
-    this->m_zticks = this->make_tick(vmin, vmax);
+    this->m_zticks = this->make_ticks(vmin, vmax);
 }
 
 // -*-
@@ -163,17 +163,55 @@ bool AxesBase::motion(int x, int y){
         auto ybtn = this->m_xybutton.y;
         this->m_cta = this->m_ctaButtonDown - static_cast<float>(x - xbtn);
         this->m_phi = this->m_phiButtonDown + static_cast<float>(y - ybtn);
-        auto myclamp = [](float val, float min, float max) -> float{
+        auto myclamp = [](float val, float min, float max) -> float {
             if(val >= max){ val = max; }
             if(val <= min){ val = min; }
             return val;
         };
         this->m_phi = myclamp(this->m_phi, -90.f, 90.f);
         this->m_cta = myclamp(this->m_cta, 0.0f, 360.f);
-        
+
         return true;
     }
     return false;
+}
+
+// -*-
+Vector<double> AxesBase::make_ticks(double vmin, double vmax){
+    double x = std::abs(vmax-vmin);
+    auto z = static_cast<int>(std::log10(x));
+    double y = x / std::pow(10.0, static_cast<double>(z));
+    double dg = std::pow(10.0, static_cast<double>(z));
+    if(y < 2.0){ dg *= 0.2; }
+    else if( y < 5.){ dg *= 0.5; }
+
+    double vmin0 = vmin - std::fmod(vmin, dg);
+
+    int j = 0;
+    int i;
+    Vector<double> result;
+    if(vmax > vmin){
+        i = -2;
+        while(vmax >= (vmin0 + dg*i)){
+            if(vmin <= vmin0 + dg*i){
+                result.push_back((vmin0 + dg*i));
+                ++j;
+            }
+            ++i;
+        }
+    }
+    if(vmax < vmin){
+        i = -2;
+        while(vmax <= vmin0 - dg*i){
+            if(vmin >= vmin0 - dg*i){
+                result.push_back(vmin0 - dg*i);
+                ++j;
+            }
+            ++i;
+        }
+    }
+
+    return result;
 }
 
 

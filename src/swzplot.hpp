@@ -433,7 +433,7 @@ public:
 
     // - Draw ticks to the axes -
     //! @note: change this to @em{draw_tick()} 
-    Vector<double> make_tick(double minval, double maxval);
+    Vector<double> make_ticks(double minval, double maxval);
 
     // - Indicates the type of plotted data -
     AxesType m_axType; // type
