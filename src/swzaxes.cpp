@@ -644,6 +644,31 @@ void AxesBase::draw_colorbar(){
     }
 }
 
+// - coordindate transform
+double AxesBase::coord2D_to_xaxis(double x){
+    double result = 0.0;
+    if(this->m_xscale==Scale::Linear){
+        auto left = this->m_axBBox.left;
+        auto width = this->m_axBBox.width;
+        auto x1 = this->m_xlim.minval;
+        auto x2 = this->m_xlim.maxval;
+        result = left + width*(x-x1)/(x2-x1);
+    }else{
+        auto x1 = this->m_xlim.minval;
+        auto x2 = this->m_xlim.maxval;
+        double t = 0.0;
+        try{
+            t = (std::log10(x) - std::log10(x1))/(std::log10(x2) - std::log10(x1));
+        }catch(...){}
+        if(x <= 0){
+            t = -1.0;
+        }
+        result = this->m_axBBox.left + this->m_axBBox.width*t;
+    }
+
+    return result;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
