@@ -93,6 +93,14 @@ void idlefn(){
 
 void no_displayfn(){}
 
+void displayfn(){
+    int win = glutGetWindow();
+    if(win==0){ return; }
+    for(auto winIter = windowDict.begin(); winIter!=windowDict.end(); ++winIter){
+        winIter->second->draw();
+    }
+}
+
 // -*------------------------*-
 }//-*- end::namespace::glut -*-
 // -*------------------------*-
