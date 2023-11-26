@@ -1868,7 +1868,9 @@ void errorbar(
 void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec, const Vector<double>& dyvec
-);
+){
+    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
+}
 
 // ----
 // - Surface & contour
