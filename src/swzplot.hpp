@@ -2103,7 +2103,10 @@ void savefig(std::string filename="out.eps"){
     print(filename);
 }
 
-void append(Line line, std::pair<double, double> point2d);
+void append(Line line, std::pair<double, double> point2d){
+    line->vertex(point2d.first, point2d.second);
+}
+
 void append(Axes axes, std::pair<double, double> point2d);
 void append(Canvas canvas, std::pair<double, double> point2d);
 void append(Figure fig, std::pair<double, double> point2d);
