@@ -2059,7 +2059,10 @@ Patch patch(
     return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
 
-Patch bar(const Vector<double>& ydata);
+Patch bar(const Vector<double>& ydata){
+    return gca()->add<PatchBase>()->bar(ydata);
+}
+
 Patch bar(const Vector<double>& ydata, float width);
 Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
 Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
