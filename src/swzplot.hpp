@@ -2080,7 +2080,10 @@ Text text(double x, double y, const std::string message){
     return gca()->add<TextBase>()->text(x, y, message);
 }
 
-Axes colorbar();
+Axes colorbar(){
+    return gca()->add<AxesBase>()->colorbar();
+}
+
 void grey();
 void jet();
 void hsv();
