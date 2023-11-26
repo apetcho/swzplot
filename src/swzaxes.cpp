@@ -701,6 +701,13 @@ double AxesBase::coord3D_to_yaxis(double y){
     return 2*(y-y1)/(y2-y1) - 1.0;
 }
 
+// -*-
+double AxesBase::coord3D_to_zaxis(double z){
+    auto z1 = this->m_zlim.minval;
+    auto z2 = this->m_zlim.maxval;
+    return 2.0*(z + z1)/(z2 - z1) - 1.0;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
