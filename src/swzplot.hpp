@@ -2067,7 +2067,10 @@ Patch bar(const Vector<double>& ydata, float width){
     return gca()->add<PatchBase>()->bar(ydata, width);
 }
 
-Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
+Patch bar(const Vector<double>& xdata, const Vector<double>& ydata){
+    return gca()->add<PatchBase>()->patch(xdata, ydata);
+}
+
 Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
 
 //! @todo: add font information
