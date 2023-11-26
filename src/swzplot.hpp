@@ -1955,7 +1955,10 @@ Surface pcolor(
 Surface pcolor(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& cmat
-);
+){
+    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
+}
+
 Surface pcolor(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Colormap& cten
