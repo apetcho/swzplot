@@ -416,6 +416,15 @@ Line LineBase::semilogy(const Vector<double>& xvec, const Vector<double>& yvec){
     return this->share();
 }
 
+// -*-
+Line LineBase::loglog(const Vector<double>& xvec, const Vector<double>& yvec){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_ca->m_xscale = Scale::Logarithm;
+    this->m_ca->m_yscale = Scale::Logarithm;
+    this->m_xdata = xvec;
+    this->m_ydata = yvec;
+    return this->share();
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
