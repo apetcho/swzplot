@@ -384,6 +384,12 @@ Line LineBase::plot(const Vector<double>& xvec, const Vector<double>& yvec){
     return this->line(xvec, yvec);
 }
 
+// -*-
+Line LineBase::plot(const Vector<double>& xvec, const Vector<double>& yvec, const Vector<double>& zvec){
+    this->m_ca->m_axType = AxesType::Axes3D;
+    return this->line(xvec, yvec, zvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
