@@ -759,13 +759,13 @@ private:
 public:
     // -
     std::chrono::steady_clock::time_point timeCliked;
-    std::string m_name;       // or simply ::name
+    std::string m_canvas_name;       // or simply ::name
     Figure m_figure;          // 
     AxesDict m_axesDict;      // axes
 
     // -
     CanvasBase(const Figure fig, const std::string& name, bool visible)
-    : m_visible{visible}, m_name{name}, m_figure{fig}
+    : m_visible{visible}, m_canvas_name{name}, m_figure{fig}
     {}
 
     // -

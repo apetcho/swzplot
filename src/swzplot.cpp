@@ -1395,7 +1395,57 @@ void FigureBase::draw(){
     glFlush();
     glViewport(0, 0, _w, _h);
     glutSwapBuffers();
+}
 
+// -*-
+void FigureBase::draw_all(){
+    if(this->m_canvasDict.size() <= 1){ return; }
+
+    std::string label;
+    int left = 1;
+    int width = 20;
+    int height = 20;
+    int r = 3;
+
+    if(this->m_xyPassive.x < 25){
+        auto _w = static_cast<int>(this->m_window_width);
+        auto _h = static_cast<int>(this->m_window_height);
+        glViewport(0, 0, _w, _h);
+        glLoadIdentity();
+        auto w = static_cast<double>(_w);
+        auto h = static_cast<double>(_h);
+        gluOrtho2D(0.0, w, h, 0.0);
+        glDisable(GL_LINE_STIPPLE);
+        gl2psDisable(GL2PS_LINE_STIPPLE);
+        glLineWidth(2.f);
+        glColor3d(0., 0., 1.);
+        int j = 0;
+        auto entry = this->m_canvasDict.begin();
+        for(; entry != this->m_canvasDict.end(); ++entry){
+            glBegin(GL_LINE_STRIP);
+                glVertex2d(left+r, height*j+r);
+                glVertex2d(left+r, height*j+height-r);
+                glVertex2d(left+width-r, height*j+height-r);
+                glVertex2d(left+width-r, height*j+r);
+                glVertex2d(left+r, height*j+r);
+            glEnd();
+
+            if(entry->second->is_visible()){
+                glBegin(GL_LINE_STRIP);
+                    glVertex2d(left+9, height*j+5);
+                    glVertex2d(left+8, height*j+15);
+                    glVertex2d(left+15, height*j+7);
+                glEnd();
+            }
+            glColor3f(0.f, 0.f, 1.0f);
+            glRasterPos2f(22.f, height*j+height-6);
+            label = entry->second->m_canvas_name;
+            gl2psText(label.c_str(), "Arial", 12);
+            for(auto i = 0; i < label.size(); ++i){
+                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, label[i]);
+            }
+        }        
+    }
 }
 
 
