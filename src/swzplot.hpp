@@ -1458,8 +1458,7 @@ public:
 
     Line vertex(double x, double y, double dy1, double dy2);
     Line errorbar(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
+        const Vector<double>& xvec, const Vector<double>& yvec,
         const Vector<double>& evec
     );
     Line errorbar(

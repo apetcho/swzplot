@@ -467,6 +467,19 @@ Line LineBase::vertex(double x, double y, double dy1, double dy2){
     return this->share();
 }
 
+// -*-
+Line LineBase::errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& evec
+){
+    for(auto i=0; i < xvec.size(); ++i){
+        this->vertex(xvec[i], yvec[i], evec[i], evec[i]);
+    }
+    this->m_errorbarFlag = true;
+    return this->share();
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
