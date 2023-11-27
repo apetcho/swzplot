@@ -1364,6 +1364,18 @@ FigureBase::FigureBase(std::string name, bool visible)
     this->m_windowBBox = BBox(0, 0, 500, 500);
 }
 
+// -*-
+Canvas FigureBase::canvas(std::string name, bool visible){
+    auto entry = this->m_canvasDict.find(name);
+    if(entry == this->m_canvasDict.end()){
+        this->m_current_canvas = std::make_shared<CanvasBase>(
+            this->share(), name, visible
+        );
+        this->m_canvasDict[name] = this->m_current_canvas;
+    }
+    return this->m_current_canvas;
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
