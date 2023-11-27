@@ -28,6 +28,7 @@
 #include<thread>
 #include<mutex>
 #include<cmath>
+#include<deque>
 #include<list>
 #include<map>
 
@@ -1706,10 +1707,8 @@ private:
     void draw2d();
     void draw3d();
     void contourc(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
-        const Matrix<double>& zmat,
-        const Vector<double>& values,
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Matrix<double>& zmat, const Vector<double>& values,
         Matrix<double>& cmat
     );
     void draw_contour();
@@ -1720,7 +1719,7 @@ private:
     struct Contour{
         double x;
         double y;
-        int xi;
+        int xj;
         int yi;
         int xy;
         int done;

@@ -403,6 +403,197 @@ void SurfaceBase::draw3d(){
     }
 }
 
+// -*-
+void SurfaceBase::contourc(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Vector<double>& values,
+    Matrix<double>& cmat
+){
+    double x, y, z;
+    auto ny = zmat.size();
+    auto nx = zmat[0].size();
+    Contour contour;                    // c
+    std::vector<Contour> contourVec;    // vc
+    std::deque<Contour> contourQueue;   // ac
+    cmat.resize(2);
+
+    for(auto iv =0; iv < values.size(); ++iv){
+        z = values[iv];
+        /* find contour points */
+        contourVec.clear();
+        for(auto i=0; i < ny; ++i){
+            for(auto j=0; j < nx; ++j){
+                bool ok = (j < nx-1) && ((zmat[i][j+1]-z)*(zmat[i][j]-z) < 0);
+                if(ok){
+                    x = (xvec[j]+(xvec[j+1]-xvec[j]))*(z-zmat[i][j])/(zmat[i][j+1]+zmat[i][i]);
+                    contour.xj = j;
+                    contour.yi = i;
+                    contour.xy = 0;
+                    contour.done = 0;
+                    contour.x = x;
+                    contour.y = yvec[i];
+                    contourVec.push_back(contour);
+                }
+                ok = (
+                    (i < ny - 1) && ((zmat[i+1][j]-z)*(zmat[i][j]-z) < 0)
+                );
+                if(ok){
+                    y = yvec[i]+(yvec[i+1]-yvec[i])*(z-zmat[i][j])/(zmat[i+1][j]-zmat[i][j]);
+                    contour.xj = j;
+                    contour.yi = i;
+                    contour.xy = 1;
+                    contour.done = 0;
+                    contour.x = xvec[j];
+                    contour.y = y;
+                    contourVec.push_back(contour);
+                }
+            }
+        }
+        /* sort contour points */
+        int is = 0;
+        unsigned int m, kk;
+        int mode, nxtmode;
+        mode = 0;
+        while(mode < 5){
+            if(mode == 0){
+                contourQueue.clear();
+                is = 0;
+                m = 0;
+                while(!is && (m < contourVec.size())){
+                    if(!contourVec[m].done){
+                        is = 1;
+                        kk = m;
+                    }
+                    ++m;
+                }
+                if(is){
+                    contourVec[kk].done = 2;
+                    contour = contourVec[kk];
+                    contourQueue.push_back(contour);
+                    nxtmode = 1;
+                }else{
+                    nxtmode = 5;
+                }
+            }else if(mode==1 || mode==3){
+                is = 0;
+                m = 0;
+                while(!is && (m < contourVec.size())){
+                    is = 0;
+                    if((!contourVec[m].done) || ((contourVec[m].done==2)&&(contourQueue.size()>2))){
+                        bool yes = (
+                            (contour.xy==0) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi-1)
+                        );
+                        if(yes){ is = 1; }
+                        yes = (
+                            (contour.xy==0) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi+1)
+                        );
+                        if(yes){ is = 2; }
+                        yes = (
+                            (contour.xy==0) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 3; }
+                        yes = (
+                            (contour.xy==0) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj+1) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 4; }
+                        yes = (
+                            (contour.xy==0) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi-1)
+                        );
+                        if(yes){ is = 5; }
+                        yes = (
+                            (contour.xy==0) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj+1) &&
+                            (contourVec[m].yi==contour.yi-1)
+                        );
+                        if(yes){ is = 6; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj+1) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 7; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==1) &&
+                            (contourVec[m].xj==contour.xj-1) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 8; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 9; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj) &&
+                            (contourVec[m].yi==contour.yi+1)
+                        );
+                        if(yes){ is = 10; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj-1) &&
+                            (contourVec[m].yi==contour.yi)
+                        );
+                        if(yes){ is = 11; }
+                        yes = (
+                            (contour.xy==1) && (contourVec[m].xy==0) &&
+                            (contourVec[m].xj==contour.xj-1) &&
+                            (contourVec[m].yi==contour.yi+1)
+                        );
+                        if(yes){ is = 12; }
+                    }
+                    if(is){ kk = m;}
+                    m++;
+                }
+                if(is){
+                    contourVec[kk].done = 1;
+                    contour = contourVec[kk];
+                }
+                if(mode==1){
+                    if(is){
+                        contourQueue.push_back(contourVec[kk]);
+                        nxtmode = 1;
+                    }else{
+                        nxtmode = 2;
+                    }
+                }else if(mode==3){
+                    if(is){
+                        contourQueue.push_front(contourVec[kk]);
+                        nxtmode = 3;
+                    }else{
+                        nxtmode = 4;
+                    }
+                }
+            }else if(mode==2){
+                contour = contourQueue[0];
+                nxtmode = 3;
+            }else if(mode==4){
+                if(contourQueue.size()){
+                    cmat[0].push_back(z);
+                    cmat[1].push_back(contourQueue.size());
+                    for(auto i=0; i < contourQueue.size(); ++i){
+                        cmat[0].push_back(contourQueue[i].x);
+                        cmat[1].push_back(contourQueue[i].y);
+                    }
+                }
+                nxtmode = 0;
+            }
+            mode = nxtmode;
+        }
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
