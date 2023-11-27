@@ -571,6 +571,15 @@ Line LineBase::set(std::string key, std::string val){
     return this->share();
 }
 
+// -*-
+Line LineBase::set(std::string key, float val){
+    key = tolower(key);
+    if(key=="linewidth" || key == "lw"){ this->m_lineWidth = val; }
+    else if(key == "markersize" || key == "ms"){ this->m_markerSize = val; }
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
