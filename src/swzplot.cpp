@@ -1526,6 +1526,29 @@ void FigureBase::keyboard(char key, int x, int y){
     }
 }
 
+// -*-
+void FigureBase::print(const std::string filename){
+    FILE *fp;
+    int state = GL2PS_OVERFLOW;
+    int bufsize = 0;
+    fp = std::fopen(filename.c_str(), "wb");
+    std::cout << "Writing '" << filename << "' ...\n";
+    while(state == GL2PS_OVERFLOW){
+        bufsize += 1024*1024; // XXX
+        gl2psBeginPage(
+            "test", "gl2ps", NULL,
+            GL2PS_EPS, GL2PS_SIMPLE_SORT,
+            GL2PS_USE_CURRENT_VIEWPORT, GL_RGBA,
+            0, NULL, 0, 0, 0,
+            bufsize, fp, filename.c_str()
+        );
+        this->draw();
+        state = gl2psEndPage();
+    }
+    fclose(fp);
+    std::cout << "DONE!" << std::endl;
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-

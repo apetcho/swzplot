@@ -23,6 +23,7 @@
 #include<vector>
 #include<string>
 #include<memory>
+#include<cstdio>
 #include<limits>
 #include<thread>
 #include<mutex>
