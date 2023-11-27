@@ -308,6 +308,12 @@ Line LineBase::set_capacity(unsigned int cap){
     return this->share();
 }
 
+// -*-
+Line LineBase::stop_at_max(bool flag){
+    this->m_stopAtMax = flag;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
