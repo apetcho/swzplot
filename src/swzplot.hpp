@@ -1704,10 +1704,8 @@ public:
         const Matrix<double>& zmat, unsigned int n
     );
     Surface contour(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
-        const Matrix<double>& zmat,
-        const Vector<double>& values
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Matrix<double>& zmat, const Vector<double>& values
     );
 
     Surface mesh(
