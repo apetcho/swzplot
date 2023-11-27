@@ -23,6 +23,12 @@ LineBase::LineBase(const Axes axes)
 , m_visible(true)
 {}
 
+// -*-
+Figure LineBase::gcf(){
+    return this->m_ca->canvas()->gcf();
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
