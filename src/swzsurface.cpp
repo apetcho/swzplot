@@ -594,6 +594,41 @@ void SurfaceBase::contourc(
     }
 }
 
+// -*-
+void SurfaceBase::draw_contour(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    Matrix<double> cmat;
+    double x, y;
+    this->contourc(
+        this->m_xdata[0], this->m_ydata[0], this->m_zdata, this->m_vdata, cmat
+    );
+    glDisable(GL_LINE_STIPPLE);
+    gl2psDisable(GL2PS_LINE_STIPPLE);
+    glLineWidth(2.f);
+    gl2psLineWidth(2.f);
+    glColor3f(0.f, 0.f, 0.f);
+
+    //! @todo: adjust line color and properties
+    unsigned int k = 0, nk;
+    for(auto i=0; i < cmat[0].size(); ++i){
+        if(k==0){
+            nk = static_cast<unsigned int>(cmat[1][i]);
+            glBegin(GL_LINE_STRIP);
+        }else{
+            if(k <= nk){
+                x = this->coord2D_to_xaxis(cmat[0][i]);
+                y = this->coord2D_to_yaxis(cmat[1][i]);
+                glVertex2d(x, y);
+            }
+        }
+        ++k;
+        if(k > nk){
+            k = 0;
+            glEnd();
+        }
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
