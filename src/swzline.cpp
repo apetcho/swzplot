@@ -267,11 +267,28 @@ std::pair<double, double> LineBase::minmax(const Vector<double>& data, Scale sca
     }else{
         for(auto item = data.begin(); item != data.end(); ++item){
             if(result.first > *item && *item > 0){ result.first = *item; }
-            if(result.second < *item){ result = *item; }
+            if(result.second < *item){ result.second = *item; }
         }
     }
 
     return result;
+}
+
+// -*-
+void LineBase::config(){
+    auto rc = this->minmax(this->m_xdata, this->m_ca->m_xscale);
+    double vmin, vmax;
+    vmin = std::min(rc.first, this->m_ca->m_xdatalim.minval);
+    vmax = std::max(rc.second, this->m_ca->m_xdatalim.maxval);
+    this->m_ca->m_xdatalim = DataLim(vmin, vmax);
+    rc = this->minmax(this->m_ydata, this->m_ca->m_yscale);
+    vmin = std::min(rc.first, this->m_ca->m_ydatalim.minval);
+    vmax = std::max(rc.second, this->m_ca->m_ydatalim.maxval);
+    this->m_ca->m_ydatalim = DataLim(vmin, vmax);
+    rc = this->minmax(this->m_ydata, this->m_ca->m_zscale);
+    vmin = std::min(rc.first, this->m_ca->m_zdatalim.minval);
+    vmax = std::max(rc.second, this->m_ca->m_zdatalim.maxval);
+    this->m_ca->m_zdatalim = DataLim(vmin, vmax);
 }
 
 
