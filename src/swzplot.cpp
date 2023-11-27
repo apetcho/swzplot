@@ -1565,6 +1565,11 @@ Text TextBase::text(double x, double y, const std::string message){
     return this->share();
 }
 
+// -*-
+void TextBase::clear(){
+    this->m_message.clear();
+}
+
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-
