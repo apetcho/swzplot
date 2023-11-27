@@ -1084,6 +1084,12 @@ Surface SurfaceBase::set(std::string key, std::string val){
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::set(std::string key, float val){
+    key = tolower(key);
+    if(key=="linewidth" || key=="lw"){ this->m_lineWidth = val; }
+    return this->share();
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
