@@ -369,6 +369,16 @@ Line LineBase::line(
     return this->share();
 }
 
+// -*-
+Line LineBase::plot(const Vector<double>& yvec){
+    auto size = yvec.size();
+    Vector<double> xvec(size);
+    for(auto i=0; i < size; ++i){
+        xvec[i] = 1.0*i/(size - 1);
+    }
+    return this->line(xvec, yvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
