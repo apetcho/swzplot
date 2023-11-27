@@ -900,6 +900,26 @@ Surface SurfaceBase::pcolor(const Colormap& cdata){
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::mesh(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_ca->m_axType = AxesType::Axes3D;
+    this->m_axType = AxesType::Axes3D;
+    this->m_xdata.resize(1);
+    this->m_xdata[0] = xvec;
+    this->m_ydata.resize(1);
+    this->m_ydata[0] = yvec;
+    this->m_zdata = zmat;
+    this->m_cdataIndex = zmat;
+    this->m_cdata.clear();
+    this->m_edgeColor = "k";
+    this->m_faceColor = "w";
+    return this->share();
+}
+
 // --
 Surface SurfaceBase::pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,

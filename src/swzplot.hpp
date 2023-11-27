@@ -1714,8 +1714,7 @@ public:
     );
 
     Surface mesh(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
+        const Vector<double>& xvec, const Vector<double>& yvec,
         const Matrix<double>& zmat
     );
     Surface surf(
