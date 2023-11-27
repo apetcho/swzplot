@@ -875,6 +875,19 @@ Surface SurfaceBase::surf(
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::pcolor(const Matrix<double>& cmat){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata.clear();
+    this->m_cdataIndex = cmat;
+    this->m_cdata.clear();
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
