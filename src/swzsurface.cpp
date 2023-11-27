@@ -1073,6 +1073,17 @@ Surface SurfaceBase::contour(
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::set(std::string key, std::string val){
+    key = tolower(key);
+    if(key=="color"){ this->m_edgeColor = val; }
+    else if(key=="linestyle" || key=="ls"){ this->m_lineStyle = val; }
+    else if(key=="edgecolor" || key=="ec"){ this->m_edgeColor = val; }
+    else if(key=="facecolor" || key=="fc"){ this->m_faceColor = val; }
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
