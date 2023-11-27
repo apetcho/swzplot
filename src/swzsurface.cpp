@@ -888,6 +888,23 @@ Surface SurfaceBase::pcolor(const Matrix<double>& cmat){
     return this->share();
 }
 
+// --
+Surface SurfaceBase::pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& cmat
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata.resize(1);
+    this->m_xdata[0] = xvec;
+    this->m_ydata.resize(1);
+    this->m_ydata[0] = yvec;
+    this->m_zdata.clear();
+    this->m_cdataIndex = cmat;
+    this->m_cdata.clear();
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
