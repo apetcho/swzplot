@@ -542,6 +542,13 @@ Line LineBase::vertex(double x, double y, double z){
     return this->share();
 }
 
+// -*-
+Line LineBase::set(float linewidth){
+    this->m_lineWidth = linewidth;
+    this->m_markerSize = linewidth;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
