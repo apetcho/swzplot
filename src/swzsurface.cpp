@@ -888,6 +888,18 @@ Surface SurfaceBase::pcolor(const Matrix<double>& cmat){
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::pcolor(const Colormap& cdata){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata.clear();
+    this->m_cdataIndex.clear();
+    this->m_cdata = cdata;
+    return this->share();
+}
+
 // --
 Surface SurfaceBase::pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
