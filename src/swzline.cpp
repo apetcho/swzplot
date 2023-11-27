@@ -314,6 +314,41 @@ Line LineBase::stop_at_max(bool flag){
     return this->share();
 }
 
+// -*-
+Line LineBase::vertex(double x, double y){
+    bool ok = (this->m_xdata.size() == this->m_maxCapacity && this->m_stopAtMax);
+    if(!ok){
+        std::unique_lock<std::mutex> lock(this->m_data_mtx);
+        if(this->m_ca->m_xdatalim.minval > x ){
+            this->m_ca->m_xdatalim.minval = x;
+        }
+        if(this->m_ca->m_xdatalim.maxval < x){
+            this->m_ca->m_xdatalim.maxval = x;
+        }
+        if(this->m_ca->m_ydatalim.minval > y ){
+            this->m_ca->m_ydatalim.minval = y;
+        }
+        if(this->m_ca->m_ydatalim.maxval < y){
+            this->m_ca->m_ydatalim.maxval = y;
+        }
+        this->m_xdata.push_back(x);
+        if(this->m_xdata.size() > this->m_maxCapacity){
+            this->m_xdata.erase(
+                this->m_xdata.begin(),
+                this->m_xdata.end()-this->m_maxCapacity
+            );
+        }
+        this->m_ydata.push_back(y);
+        if(this->m_ydata.size() > this->m_maxCapacity){
+            this->m_ydata.erase(
+                this->m_ydata.begin(),
+                this->m_ydata.end()-this->m_maxCapacity
+            );
+        }
+    }
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
