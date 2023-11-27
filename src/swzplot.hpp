@@ -1646,8 +1646,7 @@ public:
     Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
     Surface surface(const Matrix<double>& zmat, const Colormap& cdata);
     Surface surface(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
+        const Vector<double>& xvec, const Vector<double>& yvec,
         const Matrix<double>& zmat
     );
     Surface surface(
