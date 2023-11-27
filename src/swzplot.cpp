@@ -1509,6 +1509,23 @@ void FigureBase::passivemotion(int x, int y){
     this->m_xyPassive = Position(x, y);
 }
 
+// -*-
+void FigureBase::keyboard(char key, int x, int y){
+    switch(key){
+    case 'q':
+        glutDestroyWindow(this->m_window_num);
+        break;
+    case 'p':
+        this->print();
+        break;
+    default:
+        break;
+    }
+    if(this->keyboard_callack){
+        this->keyboard_callack(key, x, y);
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
