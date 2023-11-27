@@ -1426,7 +1426,9 @@ public:
     std::string m_marker;
     float m_markerSize;
     std::string m_markerEdgeColor;
+    Color m_mc;
     std::string m_markerFaceColor;
+    Color m_fc;
     bool m_visible;
 
     // -

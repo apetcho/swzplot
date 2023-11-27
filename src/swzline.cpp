@@ -22,6 +22,8 @@ LineBase::LineBase(const Axes axes)
 , m_markerFaceColor("w")
 , m_visible(true)
 , m_rgbcolor(Color("blue"))
+, m_mc(Color("blue"))
+, m_fc(Color("blue"))
 {}
 
 // -*-
@@ -546,6 +548,26 @@ Line LineBase::vertex(double x, double y, double z){
 Line LineBase::set(float linewidth){
     this->m_lineWidth = linewidth;
     this->m_markerSize = linewidth;
+    return this->share();
+}
+
+// -*-
+Line LineBase::set(std::string key, std::string val){
+    key = tolower(key);
+    if(key=="color" || key=="colour"){
+        this->m_rgbcolor = Color(val);
+        this->m_mc = Color(val);
+        this->m_fc = Color(val);
+    }else if(key == "marker"){ this->m_marker = val; }
+    else if(key == "linestyle"){ this->m_lineStyle = val; }
+    else if(key == "markeredgecolor" || key == "mc"){
+        this->m_markerEdgeColor = val;
+        this->m_mc = Color(val);
+    }else if(key=="markerfacecolor" || key == "fc"){
+        this->m_markerFaceColor = val;
+        this->m_fc = Color(val);
+    }
+
     return this->share();
 }
 
