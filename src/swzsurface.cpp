@@ -785,6 +785,25 @@ Surface SurfaceBase::surface(
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_ca->m_axType = AxesType::Axes3D;
+    this->m_axType = AxesType::Axes3D;
+    this->m_xdata.resize(1);
+    this->m_xdata[0] = xvec;
+    this->m_ydata.resize(1);
+    this->m_ydata[0] = yvec;
+    this->m_zdata = zmat;
+    this->m_cdataIndex.clear();
+    this->m_cdata = cdata;
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
