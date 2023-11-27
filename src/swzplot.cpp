@@ -1528,6 +1528,8 @@ void FigureBase::keyboard(char key, int x, int y){
 
 // -*-
 void FigureBase::print(const std::string filename){
+    //! @todo : allow not only saving .eps file but also .svg, .pdf, .png and .jp[e]g
+    //! @note: use std::map<std::string, int> flagSelectors = {{extension, flag}, ...}
     FILE *fp;
     int state = GL2PS_OVERFLOW;
     int bufsize = 0;
@@ -1547,6 +1549,11 @@ void FigureBase::print(const std::string filename){
     }
     fclose(fp);
     std::cout << "DONE!" << std::endl;
+}
+
+// -*-
+void FigureBase::savefig(const std::string filename){
+    this->print(filename);
 }
 
 
