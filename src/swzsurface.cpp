@@ -998,6 +998,19 @@ Surface SurfaceBase::contour(const Matrix<double>& zmat){
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::contour(const Matrix<double>& zmat, unsigned int n){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::ContourPlot;
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata = zmat;
+    this->m_numContour = n;
+    this->m_vdata.clear();
+    return this->share();
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
