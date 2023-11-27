@@ -11,6 +11,17 @@ void SurfaceBase::draw(){
     else{ this->draw2d(); }
 }
 
+// -*-
+void SurfaceBase::clear(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata.clear();
+    this->m_cdataIndex.clear();
+    this->m_cdata.clear();
+    this->m_vdata.clear();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
