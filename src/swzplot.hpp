@@ -121,7 +121,7 @@ enum Scale{
 };
 
 enum AxesType {
-    Axes2D, Axes3D, ColorBar
+    Axes2D, Axes3D, ColorBar, ContourPlot,
 };
 
 enum AxesLimMode{
@@ -1570,29 +1570,31 @@ private:
 //! @note: It would be better to do this: Colormap = Vector<Color>;
 class SurfaceBase: public DrawableBase, public std::enable_shared_from_this<SurfaceBase>{
 public:
-    Matrix<double> xdata;
-    Matrix<double> ydata;
-    Matrix<double> zdata;
-    Matrix<double> cdataIndex;
-    Colormap cdata;
-    Vector<double> vdata;   // V
-    std::string faceColor;  // "none" | "flat"
-    std::string edgeColor;  // "none" | "flat"
-    std::string lineStyle;  // "-" | "--" | ":" | "-." | "none"
-    float lineWidth;
-    int numContour;
-    AxesType axesType;
+    Matrix<double> m_xdata;
+    Matrix<double> m_ydata;
+    Matrix<double> m_zdata;
+    Matrix<double> m_cdataIndex;
+    Colormap m_cdata;
+    Vector<double> m_vdata;   // V
+    std::string m_faceColor;  // "none" | "flat"
+    std::string m_edgeColor;  // "none" | "flat"
+    Color m_ec;
+    std::string m_lineStyle;  // "-" | "--" | ":" | "-." | "none"
+    float m_lineWidth;
+    int m_numContour;
+    AxesType m_axType;
 
     // -*-
     SurfaceBase(const Axes axes)
     : DrawableBase(axes)
-    , vdata()
-    , faceColor("flat")
-    , edgeColor("b")
-    , lineStyle("-")
-    , lineWidth(0.5f)
-    , numContour(10)
-    , axesType(AxesType::Axes2D)
+    , m_vdata()
+    , m_faceColor("flat")
+    , m_edgeColor("b")
+    , m_lineStyle("-")
+    , m_lineWidth(0.5f)
+    , m_numContour(10)
+    , m_axType(AxesType::Axes2D)
+    , m_ec(Color("b"))
     {}
 
     // -

@@ -582,6 +582,7 @@ Line LineBase::set(std::string key, float val){
 
 // -*-
 Line LineBase::set(std::string val){
+    val = tolower(val);
     if(val=="k"){ this->set("color", "k"); }
     else if(val=="r"){ this->set("color", "r"); }
     else if(val=="b"){ this->set("color", "b"); }
