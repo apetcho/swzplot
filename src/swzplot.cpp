@@ -1376,6 +1376,28 @@ Canvas FigureBase::canvas(std::string name, bool visible){
     return this->m_current_canvas;
 }
 
+// -*-
+void FigureBase::draw(){
+    if(!this->m_visible){ return; }
+    glutSetWindow(this->m_window_num);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(1, 1, 1, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    auto _w = this->m_window_width;
+    auto _h = this->m_window_height;
+    glViewport(0, 0, _w, _h);
+    glLoadIdentity();
+    glOrtho(0, 1, 0, 1, -1, 3);
+    for(auto entry=this->m_canvasDict.begin(); entry!=this->m_canvasDict.end(); ++entry){
+        entry->second->draw();
+    }
+    this->draw_all();
+    glFlush();
+    glViewport(0, 0, _w, _h);
+    glutSwapBuffers();
+
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
