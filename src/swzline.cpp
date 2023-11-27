@@ -390,6 +390,14 @@ Line LineBase::plot(const Vector<double>& xvec, const Vector<double>& yvec, cons
     return this->line(xvec, yvec, zvec);
 }
 
+// -*-
+Line LineBase::plot(const std::valarray<double>& xvec, const std::valarray<double>& yvec){
+    Vector<double> xdata, ydata;
+    for(auto i=0; i < xvec.size(); ++i){ xdata.push_back(xvec[i]); }
+    for(auto i=0; i < yvec.size(); ++i){ ydata.push_back(yvec[i]); }
+    return this->line(xdata, ydata);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
