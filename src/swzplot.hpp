@@ -1774,7 +1774,7 @@ private:
 class TextBase: public DrawableBase, public std::enable_shared_from_this<TextBase>{
 public:
     std::string m_message; // String
-    Position<float> m_position;
+    Position<double> m_position;
     void draw();
 
     TextBase(const Axes axes): DrawableBase(axes){}

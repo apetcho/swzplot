@@ -1570,6 +1570,20 @@ void TextBase::clear(){
     this->m_message.clear();
 }
 
+// -*-
+void TextBase::draw(){
+    glColor3f(0.f, 0.f, 0.f);
+    double x, y;
+    x = this->coord2D_to_xaxis(this->m_position.x);
+    y = this->coord2D_to_yaxis(this->m_position.y);
+    glRasterPos2d(x, y);
+    gl2psText(this->m_message.c_str(), "Arial", 12);
+    for(auto i=0; i < this->m_message.size(); ++i){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, this->m_message[i]);
+    }
+}
+
+
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-
