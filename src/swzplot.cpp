@@ -1490,6 +1490,13 @@ void FigureBase::mouse(int button, int state, int x, int y){
     }
 }
 
+// -*- resize event handler
+void FigureBase::reshape(int width, int height){
+    this->m_window_width = width;
+    this->m_window_height = height;
+    glViewport(0, 0, width, height);
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
