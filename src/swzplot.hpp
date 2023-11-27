@@ -1416,6 +1416,8 @@ public:
     Vector<double> m_xdata;
     Vector<double> m_ydata;
     Vector<double> m_zdata;
+    Vector<double> m_xerrdata;  // XPData
+    Vector<double> m_yerrdata;  // YMData
     std::string m_color;
     std::string m_lineStyle;  // "-" | "--" | ":" | "-." "none"
     float m_lineWidth;

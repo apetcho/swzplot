@@ -28,6 +28,16 @@ Figure LineBase::gcf(){
     return this->m_ca->canvas()->gcf();
 }
 
+// -*-
+void LineBase::clear(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata.clear();
+    this->m_xerrdata.clear();
+    this->m_yerrdata.clear();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
