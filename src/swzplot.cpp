@@ -1448,6 +1448,48 @@ void FigureBase::draw_all(){
     }
 }
 
+// -*- mouse event handler
+void FigureBase::mouse(int button, int state, int x, int y){
+    int left = 1;
+    int width = 20;
+    int height = 20;
+    if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+        int j = 0;
+        auto entry = this->m_canvasDict.begin();
+        for(; entry != this->m_canvasDict.end(); ++entry){
+            bool ok = (
+                (left < x) && (x < width) &&
+                (height*j < y) && (y < height*j + height)
+            );
+            if(ok){
+                entry->second->toggle_visibility();
+                bool okay = (
+                    std::chrono::duration_cast<std::chrono::milliseconds>(
+                        std::chrono::steady_clock::now() -
+                        entry->second->timeCliked
+                    ).count() < 200
+                );
+                if(okay){
+                    auto keyval = this->m_canvasDict.begin();
+                    for(; keyval!=this->m_canvasDict.end(); ++keyval){
+                        keyval->second->set_visibility(false);
+                    }
+                    entry->second->set_visibility(true);
+                }
+                entry->second->timeCliked = std::chrono::steady_clock::now();
+                return;
+            }
+        }
+    }
+
+    auto entry = this->m_canvasDict.rbegin();
+    for(; entry != this->m_canvasDict.rend(); ++entry){
+        if(entry->second->mouse(button, state, x, y)){
+            this->m_selected_canvas = entry->second;
+        }
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
