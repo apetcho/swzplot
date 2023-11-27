@@ -426,6 +426,47 @@ Line LineBase::loglog(const Vector<double>& xvec, const Vector<double>& yvec){
     return this->share();
 }
 
+// -*-
+Line LineBase::vertex(double x, double y, double dy1, double dy2){
+    auto ok = (this->m_xdata.size() == this->m_maxCapacity && this->m_stopAtMax);
+    if(!ok){
+        std::unique_lock<std::mutex> lock(this->m_data_mtx);
+        if(this->m_ca->m_xdatalim.minval > x){ this->m_ca->m_xdatalim.minval = x; }
+        if(this->m_ca->m_xdatalim.maxval < x){ this->m_ca->m_xdatalim.maxval = x; }
+        if(this->m_ca->m_ydatalim.minval > (y+dy1)){
+            this->m_ca->m_xdatalim.minval = y+dy1;
+        }
+        if(this->m_ca->m_ydatalim.maxval < (y-dy2)){
+            this->m_ca->m_xdatalim.maxval = (y-dy2);
+        }
+        this->m_xdata.push_back(x);
+        if(this->m_xdata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_xdata.begin();
+            auto pos2 = this->m_xdata.end();
+            this->m_xdata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+        this->m_ydata.push_back(y);
+        if(this->m_ydata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_ydata.begin();
+            auto pos2 = this->m_ydata.end();
+            this->m_ydata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+        this->m_y1errdata.push_back(dy1);
+        if(this->m_y1errdata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_y1errdata.begin();
+            auto pos2 = this->m_y1errdata.end();
+            this->m_y1errdata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+        this->m_y2errdata.push_back(dy2);
+        if(this->m_y2errdata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_y2errdata.begin();
+            auto pos2 = this->m_y2errdata.end();
+            this->m_y2errdata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+    }
+    return this->share();
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-

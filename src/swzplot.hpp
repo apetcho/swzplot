@@ -1456,7 +1456,7 @@ public:
     Line semilogy(const Vector<double>& xvec, const Vector<double>& yvec);
     Line loglog(const Vector<double>& xvec, const Vector<double>& yvec);
 
-    Line vertex(double x, double y, double dx, double dy);
+    Line vertex(double x, double y, double dy1, double dy2);
     Line errorbar(
         const Vector<double>& xvec,
         const Vector<double>& yvec,
