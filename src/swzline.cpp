@@ -349,6 +349,14 @@ Line LineBase::vertex(double x, double y){
     return this->share();
 }
 
+// -*-
+Line LineBase::line(const Vector<double>& xvec, const Vector<double>& yvec){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_xdata = xvec;
+    this->m_ydata = yvec;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

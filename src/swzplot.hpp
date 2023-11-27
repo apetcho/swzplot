@@ -1443,6 +1443,10 @@ public:
     Line vertex(double x, double y);
     
     Line line(const Vector<double>& xvec, const Vector<double>& yvec);
+    Line line(
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Vector<double>& zvec
+    );
     Line plot(const Vector<double>& yvec);
     Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
     Line plot(const Vector<double>& xvec, const Vector<double>& yvec, const Vector<double>& zvec);
