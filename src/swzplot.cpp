@@ -1497,6 +1497,13 @@ void FigureBase::reshape(int width, int height){
     glViewport(0, 0, width, height);
 }
 
+// -*- motion event handler
+void FigureBase::motion(int x, int y){
+    if(this->m_selected_canvas){
+        this->m_selected_canvas->motion(x, y);
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
