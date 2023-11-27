@@ -725,6 +725,19 @@ Surface SurfaceBase::surface(const Matrix<double>& zmat){
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::surface(const Matrix<double>& zmat, const Matrix<double>& cmat){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_ca->m_axType = AxesType::Axes3D;
+    this->m_axType = AxesType::Axes3D;
+    this->m_zdata = zmat;
+    this->m_cdataIndex = cmat;
+    this->m_cdata.clear();
+
+    return this->share();
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
