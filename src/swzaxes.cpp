@@ -901,6 +901,27 @@ void AxesBase::colormap(const Matrix<float>& cmap){
     this->m_cmap = cmap;
 }
 
+// -*-
+Vector<float> AxesBase::map_to_color(double x){
+    this->m_xdatalim.minval = this->m_clim.minval;
+    this->m_xdatalim.maxval = this->m_clim.maxval;
+    auto n = this->m_cmap.size();
+    if(n < 1){
+        return std::vector<float>(3, 0.0f);
+    }
+    float xnorm;
+    if(x >= this->m_xdatalim.maxval){ xnorm = 1.f; }
+    else if(x <= this->m_xdatalim.minval){ xnorm = 0.f; }
+    else{
+        xnorm = (x - this->m_xdatalim.minval) / (
+            this->m_xdatalim.maxval - this->m_xdatalim.minval
+        );
+    }
+    std::vector<float> rgb;
+    rgb = this->m_cmap[static_cast<int>(xnorm*(n-1))];
+    return rgb;
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
