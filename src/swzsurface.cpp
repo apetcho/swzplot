@@ -1022,6 +1022,23 @@ Surface SurfaceBase::contour(const Matrix<double>& zmat, const Vector<double>& v
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::ContourPlot;
+    this->m_xdata.resize(1);
+    this->m_xdata[0] = xvec;
+    this->m_ydata.resize(1);
+    this->m_ydata[0] = yvec;
+    this->m_zdata = zmat;
+    this->m_numContour = 0;
+    this->m_vdata.clear();
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
