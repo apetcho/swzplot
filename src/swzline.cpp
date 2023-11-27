@@ -495,6 +495,53 @@ Line LineBase::errorbar(
     return this->share();
 }
 
+// -*- 3D
+Line LineBase::vertex(double x, double y, double z){
+    auto ok = (this->m_xdata.size() == this->m_maxCapacity && this->m_stopAtMax);
+    if(!ok){
+        std::unique_lock<std::mutex> lock(this->m_data_mtx);
+        if(this->m_ca->m_xdatalim.minval > x){
+            this->m_ca->m_xdatalim.minval = x;
+        }
+        if(this->m_ca->m_xdatalim.maxval < x){
+            this->m_ca->m_xdatalim.minval = x;
+        }
+
+        if(this->m_ca->m_ydatalim.minval > y){
+            this->m_ca->m_ydatalim.minval = y;
+        }
+        if(this->m_ca->m_ydatalim.maxval < y){
+            this->m_ca->m_ydatalim.minval = y;
+        }
+
+        if(this->m_ca->m_zdatalim.minval > z){
+            this->m_ca->m_zdatalim.minval = z;
+        }
+        if(this->m_ca->m_zdatalim.maxval < z){
+            this->m_ca->m_zdatalim.minval = z;
+        }
+        this->m_xdata.push_back(x);
+        if(this->m_xdata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_xdata.begin();
+            auto pos2 = this->m_xdata.end();
+            this->m_xdata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+        this->m_ydata.push_back(y);
+        if(this->m_ydata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_ydata.begin();
+            auto pos2 = this->m_ydata.end();
+            this->m_ydata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+        this->m_zdata.push_back(z);
+        if(this->m_zdata.size() > this->m_maxCapacity){
+            auto pos1 = this->m_zdata.begin();
+            auto pos2 = this->m_zdata.end();
+            this->m_zdata.erase(pos1, pos2-this->m_maxCapacity);
+        }
+    }
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
