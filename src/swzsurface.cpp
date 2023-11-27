@@ -629,6 +629,84 @@ void SurfaceBase::draw_contour(){
     }
 }
 
+// -*-
+void SurfaceBase::config(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    unsigned int nzi, nzj;
+    nzi = this->m_zdata.size();
+    if(nzi){
+        nzj = this->m_zdata[0].size();
+    }
+
+    unsigned int nci, ncj;
+    nci = this->m_cdataIndex.size();
+    if(nci){
+        ncj = this->m_cdataIndex[0].size();
+    }
+    // - generate x and y data
+    unsigned int nx = 0, ny = 0;
+    if(nzi){
+        ny = nzi;
+        nx = nzj;
+    }
+    if(nci){
+        ny = nci;
+        nx = ncj;
+    }
+    if(this->m_xdata.size()==0){
+        this->m_xdata.resize(1);
+        this->m_xdata[0] = linspace(1.0, static_cast<double>(nx), nx);
+    }
+    if(this->m_ydata.size()==0){
+        this->m_ydata.resize(1);
+        this->m_ydata[0] = linspace(1.0, static_cast<double>(ny), ny);
+    }
+
+    // - config data range
+    double vmin, vmax;
+    vmax = std::max(max(this->m_xdata), this->m_ca->m_xdatalim.maxval);
+    vmin = std::min(min(this->m_xdata), this->m_ca->m_xdatalim.minval);
+    this->m_ca->m_xdatalim = DataLim(vmin, vmax);
+
+    vmax = std::max(max(this->m_ydata), this->m_ca->m_ydatalim.maxval);
+    vmin = std::min(min(this->m_ydata), this->m_ca->m_ydatalim.minval);
+    this->m_ca->m_ydatalim = DataLim(vmin, vmax);
+
+    vmax = std::max(max(this->m_zdata), this->m_ca->m_zdatalim.maxval);
+    vmin = std::min(min(this->m_zdata), this->m_ca->m_zdatalim.minval);
+    this->m_ca->m_zdatalim = DataLim(vmin, vmax);
+
+    // - set clim
+    vmin = this->m_ca->m_clim.minval;
+    vmax = this->m_ca->m_clim.maxval;
+    if(vmin == vmax){
+        this->m_ca->m_clim.minval = min(this->m_cdataIndex);
+        this->m_ca->m_clim.maxval = max(this->m_cdataIndex);
+    }
+    if((this->m_cdata.size()==0) && (this->m_cdataIndex.size())){
+        std::vector<float> rgb;
+        Colormap cdata(ny);
+        for(auto i=0; i < ny; ++i){
+            cdata[i].resize(nx);
+            for(auto j=0; j < nx; ++j){
+                rgb = this->m_ca->map_to_color(this->m_cdataIndex[i][j]);
+                cdata[i][j] = rgb;
+            }
+        }
+        this->m_cdata = cdata;
+    }
+
+    // - contour plot
+    if(this->m_vdata.size()==0){
+        if(this->m_numContour < 1){
+            this->m_numContour = 10;
+        }
+        double start = min(this->m_zdata);
+        double stop = max(this->m_zdata);
+        this->m_vdata = linspace(start, stop, static_cast<size_t>(this->m_numContour));
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

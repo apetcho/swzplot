@@ -141,8 +141,16 @@ T max(const std::vector<T>& vec){
     return *std::max_element(vec.begin(), vec.end());
 }
 
+double max(const std::vector<double>& vec){
+    return *std::max_element(vec.begin(), vec.end());
+}
+
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
 T min(const std::vector<T>& vec){
+    return *std::min_element(vec.begin(), vec.end());
+}
+
+double min(const std::vector<double>& vec){
     return *std::min_element(vec.begin(), vec.end());
 }
 
@@ -156,6 +164,15 @@ T max(const std::vector<std::vector<T>>& mat){
     return static_cast<T>(result);
 }
 
+double max(const std::vector<std::vector<double>>& mat){
+    auto result = std::numeric_limits<double>::min();
+    for(auto vec: mat){
+        result = std::max(result, max(vec));
+    }
+
+    return static_cast<double>(result);
+}
+
 // -*-
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
 T min(const std::vector<std::vector<T>>& mat){
@@ -164,6 +181,14 @@ T min(const std::vector<std::vector<T>>& mat){
         result = std::min(result, min(vec));
     }
     return static_cast<T>(result);
+}
+
+double min(const std::vector<std::vector<double>>& mat){
+    auto result = std::numeric_limits<double>::max();
+    for(auto vec: mat){
+        result = std::min(result, min(vec));
+    }
+    return static_cast<double>(result);
 }
 
 //! @note: Vector
@@ -183,6 +208,19 @@ Vector<T> linspace(T minval, T maxval, size_t count=10){
     if(count==1){ return Vector<T>{minval}; }
     if(count==2){ return Vector<T>{minval, maxval}; }
     Vector<T> result{};
+    auto dx = (maxval - minval)/(count-1);
+    for(size_t i=0; i < count; ++i){
+        auto value = minval + dx*i;
+        result.push_back(value);
+    }
+    return result;
+}
+
+Vector<double> linspace(double minval, double maxval, size_t count=10){
+    if(count==0){ return Vector<double>{}; }
+    if(count==1){ return Vector<double>{minval}; }
+    if(count==2){ return Vector<double>{minval, maxval}; }
+    Vector<double> result{};
     auto dx = (maxval - minval)/(count-1);
     for(size_t i=0; i < count; ++i){
         auto value = minval + dx*i;
