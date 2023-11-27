@@ -1504,6 +1504,11 @@ void FigureBase::motion(int x, int y){
     }
 }
 
+// -*-
+void FigureBase::passivemotion(int x, int y){
+    this->m_xyPassive = Position(x, y);
+}
+
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
