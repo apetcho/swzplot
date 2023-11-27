@@ -1723,8 +1723,7 @@ public:
         const Matrix<double>& zmat
     );
     Surface surf(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
+        const Vector<double>& xvec, const Vector<double>& yvec,
         const Matrix<double>& zmat
     );
 
