@@ -1762,6 +1762,10 @@ private:
         int xy;
         int done;
     };
+
+    Surface share(){
+        return shared_from_this();
+    }
 };
 
 // -*----------------------------------------------------------------*-

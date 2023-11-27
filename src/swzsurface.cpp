@@ -707,6 +707,12 @@ void SurfaceBase::config(){
     }
 }
 
+// -*-
+Surface SurfaceBase::shading(std::string arg){
+    if(arg == "faceted"){ this->m_edgeColor = "k"; }
+    else if(arg == "flat"){ this->m_edgeColor = "none"; }
+    return this->share();
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
