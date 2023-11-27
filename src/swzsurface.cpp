@@ -985,6 +985,19 @@ Surface SurfaceBase::pcolor(
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::contour(const Matrix<double>& zmat){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::ContourPlot;
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata = zmat;
+    this->m_numContour = 0;
+    this->m_vdata.clear();
+
+    return this->share();
+}
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
