@@ -1687,9 +1687,8 @@ public:
         const Matrix<double>& cmat
     );
     Surface pcolor(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Colormap& cten
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Colormap& cdata
     );
 
     // -*-

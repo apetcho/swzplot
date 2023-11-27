@@ -938,6 +938,20 @@ Surface SurfaceBase::pcolor(
     return this->share();
 }
 
+// -*-
+Surface SurfaceBase::pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Colormap& cdata
+){
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata = xmat;
+    this->m_ydata = ymat;
+    this->m_zdata.clear();
+    this->m_cdataIndex.clear();
+    this->m_cdata = cdata;
+
+    return this->share();
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
