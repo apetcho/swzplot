@@ -249,6 +249,160 @@ void SurfaceBase::draw2d(){
     }
 }
 
+// -*-
+void SurfaceBase::draw3d(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    std::vector<float> rgb;
+    auto ny = this->m_zdata.size();
+    auto nx = this->m_zdata[0].size();
+
+    if(ny == 1){
+        if(this->m_faceColor!="none"){
+            double x, y, z;
+            for(auto i=0; i < ny-1; ++i){
+                for(auto j=0; j < nx - 1; ++j){
+                    auto color = Color(this->m_faceColor);
+                    rgb = color.to_vector();
+                    glColor3d(rgb[0], rgb[1], rgb[2]);
+                    if(this->m_faceColor=="flat"){
+                        rgb = this->m_cdata[i][j];
+                        glColor3f(rgb[0], rgb[1], rgb[2]);
+                    }
+                    glBegin(GL_TRIANGLES);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j+1]);
+                        glVertex3d(x, y, z);
+                    glEnd();
+                    glBegin(GL_TRIANGLES);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j+1]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[0][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[0][i+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j+1]);
+                        glVertex3d(x, y, z);
+                    glEnd();
+                }
+            }
+        }
+
+        if(this->m_edgeColor!="none"){
+            glLineWidth(this->m_lineWidth);
+            auto color = Color(this->m_edgeColor);
+            rgb = color.to_vector();
+            glColor3d(rgb[0], rgb[1], rgb[2]);
+
+            double x, y, z;
+            for(auto i=0; i < ny; ++i){
+                glBegin(GL_LINE_STRIP);
+                for(auto j=0; j < nx; ++j){
+                    x = this->coord3D_to_xaxis(this->m_xdata[0][j]);
+                    y = this->coord3D_to_yaxis(this->m_ydata[0][i]);
+                    z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                    glVertex3d(x, y, z);
+                }
+                glEnd();
+            }
+            for(auto j=0; j < nx; ++j){
+                glBegin(GL_LINE_STRIP);
+                for(auto i=0; i < ny; ++i){
+                    x = this->coord3D_to_xaxis(this->m_xdata[0][j]);
+                    y = this->coord3D_to_yaxis(this->m_ydata[0][i]);
+                    z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                    glVertex3d(x, y, z);
+                }
+                glEnd();
+            }
+        }
+    }else{
+        if(this->m_faceColor!="none"){
+            double x, y, z;
+            for(auto i=0; i < ny-1; ++i){
+                for(auto j=0; j < nx; ++j){
+                    auto color = Color(this->m_faceColor);
+                    rgb = color.to_vector();
+                    glColor3d(rgb[0], rgb[1], rgb[2]);
+                    if(this->m_faceColor=="flat"){
+                        rgb = this->m_cdata[i][j];
+                        glColor3f(rgb[0], rgb[1], rgb[2]);
+                    }
+                    glBegin(GL_TRIANGLES);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i][j]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i][j+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j+1]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i+1][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i+1][j+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j+1]);
+                        glVertex3d(x, y, z);
+                    glEnd();
+
+                    glBegin(GL_TRIANGLES);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i][j]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i+1][j]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i+1][j]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j]);
+                        glVertex3d(x, y, z);
+                        x = this->coord3D_to_xaxis(this->m_xdata[i+1][j+1]);
+                        y = this->coord3D_to_yaxis(this->m_ydata[i+1][j+1]);
+                        z = this->coord3D_to_zaxis(this->m_zdata[i+1][j+1]);
+                        glVertex3d(x, y, z);
+                    glEnd();
+                }
+            }
+        }
+        if(this->m_edgeColor != "none"){
+            glLineWidth(this->m_lineWidth);
+            auto color = Color(this->m_edgeColor);
+            rgb = color.to_vector();
+            glColor3d(rgb[0], rgb[1], rgb[2]);
+            
+            double x, y, z;
+            for(auto i=0; i < ny; ++i){
+                glBegin(GL_LINE_STRIP);
+                for(auto j=0; j < nx; ++j){
+                    x = this->coord3D_to_xaxis(this->m_xdata[i][j]);
+                    y = this->coord3D_to_yaxis(this->m_ydata[i][j]);
+                    z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                    glVertex3d(x, y, z);
+                }
+                glEnd();
+            }
+            for(auto j=0; j < nx; ++j){
+                glBegin(GL_LINE_STRIP);
+                for(auto i=0; i < ny; ++i){
+                    x = this->coord3D_to_xaxis(this->m_xdata[i][j]);
+                    y = this->coord3D_to_yaxis(this->m_ydata[i][j]);
+                    z = this->coord3D_to_zaxis(this->m_zdata[i][j]);
+                    glVertex3d(x, y, z);
+                }
+                glEnd();
+            }
+        }
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
