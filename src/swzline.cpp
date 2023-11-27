@@ -291,6 +291,23 @@ void LineBase::config(){
     this->m_ca->m_zdatalim = DataLim(vmin, vmax);
 }
 
+// -*-
+Line LineBase::set_capacity(unsigned int cap){
+    if(cap < this->m_maxCapacity){
+        if(this->m_xdata.size() > cap){
+            this->m_xdata.erase(this->m_xdata.begin(), this->m_xdata.end()-cap);
+        }
+        if(this->m_ydata.size() > cap){
+            this->m_ydata.erase(this->m_ydata.begin(), this->m_ydata.end()-cap);
+        }
+        if(this->m_zdata.size() > cap){
+            this->m_zdata.erase(this->m_zdata.begin(), this->m_zdata.end()-cap);
+        }
+    }
+    this->m_maxCapacity = cap;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

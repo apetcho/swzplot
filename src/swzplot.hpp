@@ -1475,6 +1475,10 @@ public:
 private:
     std::pair<double, double> minmax(const Vector<double>& data, Scale scale);
     std::mutex m_data_mtx;
+
+    Line share(){
+        return shared_from_this();
+    }
 };
 
 // -*----------------------------------------------------------------*-
