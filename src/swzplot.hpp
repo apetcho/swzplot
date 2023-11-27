@@ -1408,7 +1408,7 @@ public:
     bool m_errorbarFlag;
 
     void clear();
-    void set_color(float r, float g, float b);
+    void color(float r, float g, float b);
 
     // -*-
     unsigned int m_maxCapacity;
@@ -1419,6 +1419,7 @@ public:
     Vector<double> m_xerrdata;  // XPData
     Vector<double> m_yerrdata;  // YMData
     std::string m_color;
+    Color m_rgbcolor;
     std::string m_lineStyle;  // "-" | "--" | ":" | "-." "none"
     float m_lineWidth;
     // marker: "none" | "." | "+" | "x" | "d" | "^" | "v" | "o" | "*" | "s"

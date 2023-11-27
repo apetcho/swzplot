@@ -21,6 +21,7 @@ LineBase::LineBase(const Axes axes)
 , m_markerEdgeColor("k")
 , m_markerFaceColor("w")
 , m_visible(true)
+, m_rgbcolor(Color("blue"))
 {}
 
 // -*-
@@ -38,6 +39,11 @@ void LineBase::clear(){
     this->m_yerrdata.clear();
 }
 
+// -*-
+void LineBase::color(float r, float g, float b){
+    this->m_color = "";
+    this->m_rgbcolor = Color(r, g, b);
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
