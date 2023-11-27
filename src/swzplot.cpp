@@ -1354,6 +1354,17 @@ Text FigureBase::text(double x, double y, const std::string message){
     return this->gca()->add<TextBase>()->text(x, y, message);
 }
 
+// -*-
+FigureBase::FigureBase(std::string name, bool visible)
+: m_window_name(name), m_visible(visible){
+    // -
+    this->keyboard_callack = nullptr;
+    this->m_xyPassive = Position(100, 0);
+    this->m_window_num = 0;
+    this->m_windowBBox = BBox(0, 0, 500, 500);
+}
+
+
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-

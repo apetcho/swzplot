@@ -1080,6 +1080,7 @@ public:
     std::string m_window_name;    // figname
     int m_window_num;
     BBox<int> m_windowBBox;   // position[4]
+    bool m_visible;
     Canvas m_current_canvas;  // cl
     Canvas m_selected_canvas;
 
