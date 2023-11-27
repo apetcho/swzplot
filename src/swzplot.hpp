@@ -1700,10 +1700,8 @@ public:
         const Matrix<double>& zmat
     );
     Surface contour(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
-        const Matrix<double>& zmat,
-        unsigned int n
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Matrix<double>& zmat, unsigned int n
     );
     Surface contour(
         const Vector<double>& xvec,
