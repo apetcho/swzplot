@@ -253,6 +253,28 @@ void LineBase::draw(){
     }
 }
 
+// -*-
+std::pair<double, double> LineBase::minmax(const Vector<double>& data, Scale scale){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    auto vmin = std::numeric_limits<double>::max();
+    auto vmax = -vmin;
+    std::pair<double, double> result(vmin, vmax);
+    if(scale==Scale::Linear){
+        for(auto item=data.begin(); item != data.end(); ++item){
+            if(result.first > *item){ result.first = *item; }
+            if(result.second < *item){ result.second = *item; }
+        }
+    }else{
+        for(auto item = data.begin(); item != data.end(); ++item){
+            if(result.first > *item && *item > 0){ result.first = *item; }
+            if(result.second < *item){ result = *item; }
+        }
+    }
+
+    return result;
+}
+
+
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
 // -*----------------------------------------------------------------*-
