@@ -1780,7 +1780,7 @@ public:
     TextBase(const Axes axes): DrawableBase(axes){}
     Text text(double x, double y, const std::string message);
     void clear();
-    void config();
+    void config(){}
 
 private:
     Text share(){
