@@ -479,6 +479,22 @@ Line LineBase::errorbar(
     return this->share();
 }
 
+// -*-
+Line LineBase::errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& y1vec, const Vector<double>& y2vec
+){
+    for(auto i=0; i < xvec.size(); ++i){
+        auto x = xvec[i];
+        auto y = yvec[i];
+        auto y1 = y1vec[i];
+        auto y2 = y2vec[i];
+        this->vertex(x, y, y1, y2);
+    }
+    this->m_errorbarFlag = true;
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

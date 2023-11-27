@@ -1462,10 +1462,8 @@ public:
         const Vector<double>& evec
     );
     Line errorbar(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
-        const Vector<double>& exvec,
-        const Vector<double>& eyvec
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Vector<double>& y1vec, const Vector<double>& y2vec
     );
 
     // -
