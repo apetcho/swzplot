@@ -1560,7 +1560,8 @@ void FigureBase::savefig(const std::string filename){
 // -*- swzplot::TextBase                                            -*-
 // -*----------------------------------------------------------------*-
 Text TextBase::text(double x, double y, const std::string message){
-    this->m_position = Position(x, y);
+    this->m_position.x = x;
+    this->m_position.y = y;
     this->m_message = message;
     return this->share();
 }
