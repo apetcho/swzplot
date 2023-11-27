@@ -319,7 +319,7 @@ void AxesBase::draw2d(){
             }
         }
         if(this->m_ygrid){
-            for(size_t i=0; i < this->m_xticks.size(); ++i){
+            for(size_t i=0; i < this->m_yticks.size(); ++i){
                 if(gridlinestyle==1){   // -
                     glDisable(GL_LINE_STIPPLE);
                     gl2psDisable(GL2PS_LINE_STIPPLE);
@@ -337,8 +337,8 @@ void AxesBase::draw2d(){
                     gl2psEnable(GL2PS_LINE_STIPPLE);
                 }
                 glBegin(GL_LINE_STRIP);
-                    glVertex2d(left, this->coord2D_to_xaxis(this->m_yticks[i]));
-                    glVertex2d(left+width, this->coord2D_to_xaxis(this->m_yticks[i]));
+                    glVertex2d(left, this->coord2D_to_yaxis(this->m_yticks[i]));
+                    glVertex2d(left+width, this->coord2D_to_yaxis(this->m_yticks[i]));
                 glEnd();
             }
         }
@@ -544,7 +544,7 @@ void AxesBase::draw3d(){
             for(size_t i=0; i < this->m_zticks.size(); ++i){
                 stream << std::setw(4) << std::setprecision(1);
                 stream << this->m_zticks[i];
-                double z = this->coord3D_to_xaxis(this->m_zticks[i]);
+                double z = this->coord3D_to_zaxis(this->m_zticks[i]);
                 this->ptext3c(ysign*r2, -xsign, z, stream.str());
                 stream.clear();
             }
@@ -656,7 +656,7 @@ double AxesBase::coord2D_to_xaxis(double x){
     }else{
         auto x1 = this->m_xlim.minval;
         auto x2 = this->m_xlim.maxval;
-        double t = 0.0;
+        double t = 1.0;
         try{
             t = (std::log10(x) - std::log10(x1))/(std::log10(x2) - std::log10(x1));
         }catch(...){}
