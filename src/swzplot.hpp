@@ -1085,7 +1085,10 @@ public:
     Canvas m_selected_canvas;
 
     FigureBase(std::string name="plot", bool visible=true);
-    ~FigureBase() = default;
+    ~FigureBase(){
+        glutDestroyWindow(m_window_num);
+        this->m_canvasDict.clear();
+    };
 
     // -
     //! @note: ??? set_figure_name()
