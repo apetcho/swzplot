@@ -379,6 +379,11 @@ Line LineBase::plot(const Vector<double>& yvec){
     return this->line(xvec, yvec);
 }
 
+// -*-
+Line LineBase::plot(const Vector<double>& xvec, const Vector<double>& yvec){
+    return this->line(xvec, yvec);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
