@@ -1471,7 +1471,7 @@ public:
     // -
     Line vertex(double x, double y, double z);
     Line set(float linewidth);
-    Line set(std::string key); // set property
+    Line set(std::string val); // set property
     Line set(std::string key, std::string val);
     Line set(std::string key, float val);
 

@@ -559,7 +559,7 @@ Line LineBase::set(std::string key, std::string val){
         this->m_mc = Color(val);
         this->m_fc = Color(val);
     }else if(key == "marker"){ this->m_marker = val; }
-    else if(key == "linestyle"){ this->m_lineStyle = val; }
+    else if(key == "linestyle" || key == "ls"){ this->m_lineStyle = val; }
     else if(key == "markeredgecolor" || key == "mc"){
         this->m_markerEdgeColor = val;
         this->m_mc = Color(val);
@@ -580,6 +580,87 @@ Line LineBase::set(std::string key, float val){
     return this->share();
 }
 
+// -*-
+Line LineBase::set(std::string val){
+    if(val=="k"){ this->set("color", "k"); }
+    else if(val=="r"){ this->set("color", "r"); }
+    else if(val=="b"){ this->set("color", "b"); }
+    else if(val=="g"){ this->set("color", "g"); }
+    else if(val=="c"){ this->set("color", "c"); }
+    else if(val=="m"){ this->set("color", "m"); }
+    else if(val=="w"){ this->set("color", "w"); }
+    else if(val=="dr"){ this->set("color", "dr"); }
+    else if(val=="db"){ this->set("color", "db"); }
+    else if(val=="dg"){ this->set("color", "dg"); }
+    else if(val=="dc"){ this->set("color", "dc"); }
+    else if(val=="dm"){ this->set("color", "dm"); }
+    else if(val=="dy"){ this->set("color", "dy"); }
+    else if(val=="lr"){ this->set("color", "lr"); }
+    else if(val=="lb"){ this->set("color", "lb"); }
+    else if(val=="lg"){ this->set("color", "lg"); }
+    else if(val=="lc"){ this->set("color", "lc"); }
+    else if(val=="lm"){ this->set("color", "lm"); }
+    else if(val=="ly"){ this->set("color", "ly"); }
+    else if(val=="ur"){ this->set("color", "ur"); }
+    else if(val=="ub"){ this->set("color", "ub"); }
+    else if(val=="ug"){ this->set("color", "ug"); }
+    else if(val=="uy"){ this->set("color", "uy"); }
+    else if(val=="up"){ this->set("color", "up"); }
+    else if(val=="uo"){ this->set("color", "uo"); }
+    else if(val=="um"){ this->set("color", "um"); }
+    else if(val=="ubr"){ this->set("color", "ubr"); }
+    else if(val=="-"){
+        this->set("linestyle", "-");
+        this->set("marker", "none");
+    }else if(val=="- -" || val=="--"){
+        this->set("linestyle", "- -");
+        this->set("marker", "none");
+    }else if(val==":"){
+        this->set("linestyle", ":");
+        this->set("marker", "none");
+    }else if(val=="-."){
+        this->set("linestyle", "-.");
+        this->set("marker", "none");
+    }else if(val=="."){
+        this->set("marker", ".");
+        this->set("linestyle", "none");
+    }else if(val=="+"){
+        this->set("marker", "+");
+        this->set("linestyle", "none");
+    }else if(val=="x"){
+        this->set("marker", "x");
+        this->set("linestyle", "none");
+    }else if(val=="d"){
+        this->set("marker", "d");
+        this->set("linestyle", "none");
+    }else if(val=="^"){
+        this->set("marker", "^");
+        this->set("linestyle", "none");
+    }else if(val=="v"){
+        this->set("marker", "v");
+        this->set("linestyle", "none");
+    }else if(val=="o"){
+        this->set("marker", "o");
+        this->set("linestyle", "none");
+    }else if(val=="*"){
+        this->set("marker", "*");
+        this->set("linestyle", "none");
+    }else if(val==">"){
+        this->set("marker", ">");
+        this->set("linestyle", "none");
+    }else if(val=="<"){
+        this->set("marker", "<");
+        this->set("linestyle", "none");
+    }else if(val=="p"){
+        this->set("marker", "p");
+        this->set("linestyle", "none");
+    }else if(val=="h"){
+        this->set("marker", "h");
+        this->set("linestyle", "none");
+    }
+
+    return this->share();
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
