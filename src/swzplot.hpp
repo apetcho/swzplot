@@ -230,7 +230,34 @@ Vector<double> linspace(double minval, double maxval, size_t count=10){
 }
 
 // -*-
-Matrix<double> peaks(size_t num);
+Matrix<double> peaks(size_t num){
+    double x1 = 1.0;
+    double y1 = 0.0;
+    double x2 = -1.0;
+    double y2 = 1.0;
+    double x3 = -0.5;
+    double y3 = -1.0;
+    double sr1, sr2, sr3;
+    double sigma = 0.4;
+    double a1 = 1.0;
+    double a2 = 0.5;
+    double a3 = 0.3;
+    double x, y;
+
+    Matrix<double> result(num, Vector<double>(num));
+    for(auto i=0; i < num; ++i){
+        for(auto j=0; j < num; ++j){
+            x = -2.0 + 4.0*j/(num - 1);
+            y = -2.0 + 4.0*i/(num - 1);
+            sr1 = (x - x1)*(x-x1) + (y-y1)*(y-y1);
+            sr2 = (x - x2)*(x-x2) + (y-y2)*(y-y2);
+            sr1 = (x - x3)*(x-x3) + (y-y3)*(y-y3);
+            result[i][j] = a1/(1+sr1/sigma) + a2/(1+sr2/sigma) + a3/(1+sr3/sigma); 
+        }
+    }
+
+    return result;
+}
 
 // -*-
 // -*-
