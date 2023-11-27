@@ -661,7 +661,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& cmat
     );
     Surface surface(
         const Vector<double>& xvec,
@@ -679,7 +679,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& cmat
     );
     Surface surface(
         const Matrix<double>& xmat,
@@ -973,7 +973,7 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& cmat
     );
     Surface surface(
         const Vector<double>& xvec,
@@ -991,7 +991,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& cmat
     );
     Surface surface(
         const Matrix<double>& xmat,
@@ -1306,31 +1306,24 @@ public:
         const Vector<double>& xvec,
         const Vector<double>& yvec,
         const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& cmat
     );
     Surface surface(
-        const Vector<double>& xvec,
-        const Vector<double>& yvec,
-        const Matrix<double>& zmat,
-        const Colormap& cdata
+        const Vector<double>& xvec, const Vector<double>& yvec,
+        const Matrix<double>& zmat, const Colormap& cdata
     );
 
     Surface surface(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
         const Matrix<double>& zmat
     );
     Surface surface(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Matrix<float>& cmat
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Matrix<double>& cmat
     );
     Surface surface(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Colormap& cdata
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Colormap& cdata
     );
 
     Surface pcolor(const Matrix<double>& cmat);

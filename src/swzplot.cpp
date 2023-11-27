@@ -308,7 +308,7 @@ Surface AxesBase::surface(
 // -*-
 Surface AxesBase::surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
 }
@@ -333,7 +333,7 @@ Surface AxesBase::surface(
 // -*-
 Surface AxesBase::surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
 }
@@ -696,7 +696,7 @@ Surface CanvasBase::surface(
 // -*-
 Surface CanvasBase::surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
 }
@@ -720,7 +720,7 @@ Surface CanvasBase::surface(
 // -*-
 Surface CanvasBase::surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
 }
@@ -1145,7 +1145,7 @@ Surface FigureBase::surface(
 // -*-
 Surface FigureBase::surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
 }
@@ -1169,7 +1169,7 @@ Surface FigureBase::surface(
 // -*-
 Surface FigureBase::surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Matrix<float>& cmat
+    const Matrix<double>& zmat, const Matrix<double>& cmat
 ){
     return this->gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
 }
