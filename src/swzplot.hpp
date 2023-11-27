@@ -251,7 +251,7 @@ Matrix<double> peaks(size_t num){
             y = -2.0 + 4.0*i/(num - 1);
             sr1 = (x - x1)*(x-x1) + (y-y1)*(y-y1);
             sr2 = (x - x2)*(x-x2) + (y-y2)*(y-y2);
-            sr1 = (x - x3)*(x-x3) + (y-y3)*(y-y3);
+            sr3 = (x - x3)*(x-x3) + (y-y3)*(y-y3);
             result[i][j] = a1/(1+sr1/sigma) + a2/(1+sr2/sigma) + a3/(1+sr3/sigma); 
         }
     }
@@ -1773,14 +1773,19 @@ private:
 // -*----------------------------------------------------------------*-
 class TextBase: public DrawableBase, public std::enable_shared_from_this<TextBase>{
 public:
-    std::string message; // String
-    Position<float> position;
+    std::string m_message; // String
+    Position<float> m_position;
     void draw();
 
     TextBase(const Axes axes): DrawableBase(axes){}
     Text text(double x, double y, const std::string message);
     void clear();
     void config();
+
+private:
+    Text share(){
+        return shared_from_this();
+    }
 };
 
 // -*----------------------------------------------------------------*-
