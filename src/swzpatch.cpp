@@ -236,7 +236,23 @@ Patch PatchBase::patch(
     this->m_ydata = ymat;
     this->m_zdata = zmat;
     this->m_cdata = this->index_to_truecolor(cvec);
-    
+
+    return this->share();
+}
+
+// -*-
+Patch PatchBase::patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Matrix<float>& cdata
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_ca->m_axType = AxesType::Axes3D;
+    this->m_axType = AxesType::Axes3D;
+    this->m_xdata = xmat;
+    this->m_ydata = ymat;
+    this->m_zdata = zmat;
+    this->m_cdata = cdata;
+
     return this->share();
 }
 

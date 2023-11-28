@@ -1597,10 +1597,8 @@ public:
         const Matrix<double>& zmat, const Vector<double>& cvec
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Colormap& cten
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Matrix<float>& cdata
     );
 
     Patch set(std::string key, std::string val);
@@ -2122,7 +2120,7 @@ Patch patch(
 
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cdata
+    const Matrix<double>& zmat, const Matrix<float>& cdata
 ){
     return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
