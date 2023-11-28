@@ -1593,10 +1593,8 @@ public:
         const Matrix<double>& zmat
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Vector<double>& cvec
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Vector<double>& cvec
     );
     Patch patch(
         const Matrix<double>& xmat,
