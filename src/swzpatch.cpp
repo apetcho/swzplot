@@ -178,6 +178,21 @@ Patch PatchBase::patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
     return this->share();
 }
 
+// -*-
+Patch PatchBase::patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Vector<double>& cvec
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata = xmat;
+    this->m_ydata = ymat;
+    this->m_zdata.clear();
+    this->m_cdata = this->index_to_truecolor(cvec);
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

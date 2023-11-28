@@ -1581,9 +1581,8 @@ public:
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Vector<double>& cvec // Matrix<double>???
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Vector<double>& cvec
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -1611,7 +1610,7 @@ public:
     Patch set(std::string key, std::string val);
     Patch set(std::string key, float val);
 
-    Colormap index_to_trucolor(const Vector<double> indexcolor);
+    Matrix<float> index_to_truecolor(const Vector<double> indexcolor);
     void config();
 
 private:
