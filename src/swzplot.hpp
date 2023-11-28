@@ -1585,9 +1585,8 @@ public:
         const Vector<double>& cvec
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Colormap& cten
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<float>& cdata
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -2105,7 +2104,7 @@ Patch patch(
 
 Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Colormap& cdata
+    const Matrix<float>& cdata
 ){
     return gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
 }

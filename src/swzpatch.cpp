@@ -193,6 +193,21 @@ Patch PatchBase::patch(
     return this->share();
 }
 
+// -*-
+Patch PatchBase::patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<float>& cdata
+){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata = xmat;
+    this->m_ydata = ymat;
+    this->m_zdata.clear();
+    this->m_cdata = cdata;
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
