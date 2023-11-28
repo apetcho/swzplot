@@ -1589,8 +1589,7 @@ public:
         const Matrix<float>& cdata
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
         const Matrix<double>& zmat
     );
     Patch patch(
