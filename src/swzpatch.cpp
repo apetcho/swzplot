@@ -84,6 +84,52 @@ void PatchBase::draw2d(){
     }
 }
 
+// -*-
+void PatchBase::draw3d(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+
+    auto nf = this->m_xdata.size();
+    Vector<float> rgb;
+    for(auto i=0; i < nf; ++i){
+        auto nv = this->m_xdata[i].size();
+        // - edge
+        if(this->m_edgeColor!="none"){
+            glLineWidth(this->m_lineWidth);
+            gl2psLineWidth(this->m_lineWidth);
+            auto color = Color(this->m_edgeColor);
+            rgb = color.to_vector();
+            glColor3f(rgb[0], rgb[1], rgb[2]);
+            glBegin(GL_LINE_LOOP);
+            for(auto iv=0; iv < nv; ++iv){
+                auto _x = this->coord3D_to_xaxis(this->m_xdata[i][iv]);
+                auto _y = this->coord3D_to_yaxis(this->m_ydata[i][iv]);
+                auto _z = this->coord3D_to_zaxis(this->m_zdata[i][iv]);
+                glVertex3d(_x, _y, _z);
+            }
+            glEnd();
+        }
+
+        // - face
+        if(this->m_faceColor != "none"){
+            auto color = Color(this->m_faceColor);
+            rgb = color.to_vector();
+            glColor3f(rgb[0], rgb[1], rgb[2]);
+            if(this->m_cdata.size()){
+                rgb = this->m_cdata[i];
+                glColor3d(rgb[0], rgb[1], rgb[2]);
+            }
+            glBegin(GL_POLYGON);
+            for(auto iv=0; iv < nv; ++iv){
+                auto _x = this->coord3D_to_xaxis(this->m_xdata[i][iv]);
+                auto _y = this->coord3D_to_yaxis(this->m_ydata[i][iv]);
+                auto _z = this->coord3D_to_zaxis(this->m_zdata[i][iv]);
+                glVertex3d(_x, _y, _z);
+            }
+            glEnd();
+        }
+    }
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
