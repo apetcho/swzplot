@@ -130,6 +130,15 @@ void PatchBase::draw3d(){
     }
 }
 
+// -*-
+Patch PatchBase::bar(const Vector<double>& yvec, float width){
+    Vector<double> xvec(yvec.size());
+    for(auto i=0; i < yvec.size(); ++i){
+        xvec[i] = static_cast<double>(i+1);
+    }
+    return this->bar(xvec, yvec, width);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
