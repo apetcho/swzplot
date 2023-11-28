@@ -256,6 +256,23 @@ Patch PatchBase::patch(
     return this->share();
 }
 
+// -*-
+void PatchBase::config(){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    double vmin, vmax;
+    vmax = std::max(max(this->m_xdata), this->m_ca->m_xdatalim.maxval);
+    vmin = std::min(min(this->m_xdata), this->m_ca->m_xdatalim.minval);
+    this->m_ca->m_xdatalim = DataLim(vmin, vmax);
+
+    vmax = std::max(max(this->m_ydata), this->m_ca->m_ydatalim.maxval);
+    vmin = std::min(min(this->m_ydata), this->m_ca->m_ydatalim.minval);
+    this->m_ca->m_ydatalim = DataLim(vmin, vmax);
+
+    vmax = std::max(max(this->m_zdata), this->m_ca->m_zdatalim.maxval);
+    vmin = std::min(min(this->m_zdata), this->m_ca->m_zdatalim.minval);
+    this->m_ca->m_zdatalim = DataLim(vmin, vmax);
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
