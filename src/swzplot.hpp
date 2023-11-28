@@ -1548,28 +1548,28 @@ private:
 // -*----------------------------------------------------------------*-
 class PatchBase: public DrawableBase, public std::enable_shared_from_this<PatchBase>{
 public:
-    AxesType axesType;
-    Matrix<int> faces;
-    Matrix<double> vertices;
-    Matrix<double> xdata;
-    Matrix<double> ydata;
-    Matrix<double> zdata;
-    Colormap cdata;
+    AxesType m_axType;
+    Matrix<int> m_faces;
+    Matrix<double> m_vertices;
+    Matrix<double> m_xdata;
+    Matrix<double> m_ydata;
+    Matrix<double> m_zdata;
+    Colormap m_cdata;
 
     // shading value: <colorspec> | "none" | "flat" | "interp"
-    std::string edgeColor;
-    std::string faceColor;
-    std::string lineStyle; // "-" | "--" | ":" | "-." | "none"
-    float lineWidth;
+    std::string m_edgeColor;
+    std::string m_faceColor;
+    std::string m_lineStyle; // "-" | "--" | ":" | "-." | "none"
+    float m_lineWidth;
 
     // -
     PatchBase(const Axes axes)
     : DrawableBase(axes)
-    , axesType(AxesType::Axes2D)
-    , edgeColor("k")
-    , faceColor("r")
-    , lineStyle("-")
-    , lineWidth(1.f)
+    , m_axType(AxesType::Axes2D)
+    , m_edgeColor("k")
+    , m_faceColor("r")
+    , m_lineStyle("-")
+    , m_lineWidth(1.f)
     {}
 
     // -
