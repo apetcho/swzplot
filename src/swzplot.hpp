@@ -1619,6 +1619,9 @@ private:
     void draw3d();
     std::mutex m_data_mtx;
 
+    Patch share(){
+        return shared_from_this();
+    }
 };
 
 // -*----------------------------------------------------------------*-
