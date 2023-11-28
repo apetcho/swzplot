@@ -1554,7 +1554,7 @@ public:
     Matrix<double> m_xdata;
     Matrix<double> m_ydata;
     Matrix<double> m_zdata;
-    Colormap m_cdata;
+    Matrix<float> m_cdata;
 
     // shading value: <colorspec> | "none" | "flat" | "interp"
     std::string m_edgeColor;
