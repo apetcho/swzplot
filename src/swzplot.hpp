@@ -1604,7 +1604,7 @@ public:
     Patch set(std::string key, std::string val);
     Patch set(std::string key, float val);
 
-    Matrix<float> index_to_truecolor(const Vector<double> indexcolor);
+    Matrix<float> index_to_truecolor(const Vector<double> colorVec);
     void config();
 
 private:

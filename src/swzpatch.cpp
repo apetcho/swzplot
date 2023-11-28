@@ -291,6 +291,22 @@ Patch PatchBase::set(std::string key, float val){
     return this->share();
 }
 
+// -*-
+Matrix<float> PatchBase::index_to_truecolor(const Vector<double> colorVec){
+    auto vmin = this->m_ca->m_clim.minval;
+    auto vmax = this->m_ca->m_clim.maxval;
+    if(vmin==vmax){
+        this->m_ca->m_clim.minval = min(colorVec);
+        this->m_ca->m_clim.maxval = max(colorVec);
+    }
+    Matrix<float> result;
+    for(auto i=0; i < colorVec.size(); ++i){
+        auto rgb = this->m_ca->map_to_color(colorVec[i]);
+        result.push_back(rgb);
+    }
+
+    return result;
+}
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
