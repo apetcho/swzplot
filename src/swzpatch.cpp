@@ -139,6 +139,33 @@ Patch PatchBase::bar(const Vector<double>& yvec, float width){
     return this->bar(xvec, yvec, width);
 }
 
+// -*-
+Patch PatchBase::bar(const Vector<double>& xvec, const Vector<double>& yvec, float width){
+    std::unique_lock<std::mutex> lock(this->m_data_mtx);
+    this->m_axType = AxesType::Axes2D;
+    this->m_xdata.clear();
+    this->m_ydata.clear();
+    this->m_zdata.clear();
+    double w = width*(max(xvec) - min(xvec))/xvec.size();
+
+    Vector<double> xdata(4);
+    Vector<double> ydata(4);
+    for(auto i=0; i < xvec.size(); ++i){
+        xdata[0] = xvec[i] - w/2.0;
+        ydata[0] = 0.0;
+        xdata[1] = xvec[i] + w/2.0;
+        ydata[1] = 0.0;
+        xdata[2] = xvec[i] + w/2.0;
+        ydata[2] = yvec[i];
+        xdata[3] = xvec[i] - w/2.0;
+        ydata[3] = yvec[i];
+        this->m_xdata.push_back(xdata);
+        this->m_ydata.push_back(ydata);
+    }
+
+    return this->share();
+}
+
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-
