@@ -1,3 +1,5 @@
+// #define GL_SILENCE_DEPRECATION
+
 #include "swzplot.hpp"
 #include<cctype>
 
@@ -129,6 +131,17 @@ std::string Color::colorspec(){
     stream << " " << this->m_rgb.b;
     stream << ")";
     return stream.str(); 
+}
+
+// -*-
+std::vector<float> Color::to_vector(){
+    float r, g, b;
+    this->rgb(r, g, b);
+    std::vector<float> result(3);
+    result[0] = r;
+    result[1] = g;
+    result[2] = b;
+    return result;
 }
 
 // -*-
@@ -473,7 +486,7 @@ Patch AxesBase::patch(
 Patch AxesBase::patch(
     const Matrix<double>& xmat,
     const Matrix<double>& ymat,
-    const Colormap& cdata
+    const Matrix<float>& cdata
 ){
     return this->add<PatchBase>()->patch(xmat, ymat, cdata);
 }
@@ -498,7 +511,7 @@ Patch AxesBase::patch(
 // -*-
 Patch AxesBase::patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cdata
+    const Matrix<double>& zmat, const Matrix<float>& cdata
 ){
     return this->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
@@ -851,7 +864,7 @@ Patch CanvasBase::patch(
 // -*-
 Patch CanvasBase::patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Colormap& cdata
+    const Matrix<float>& cdata
 ){
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
 }
@@ -875,7 +888,7 @@ Patch CanvasBase::patch(
 // -*-
 Patch CanvasBase::patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cdata
+    const Matrix<double>& zmat, const Matrix<float>& cdata
 ){
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
@@ -1300,7 +1313,7 @@ Patch FigureBase::patch(
 // -*-
 Patch FigureBase::patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Colormap& cdata
+    const Matrix<float>& cdata
 ){
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
 }
@@ -1324,7 +1337,7 @@ Patch FigureBase::patch(
 // -*-
 Patch FigureBase::patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
-    const Matrix<double>& zmat, const Colormap& cdata
+    const Matrix<double>& zmat, const Matrix<float>& cdata
 ){
     return this->gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
 }
@@ -1588,15 +1601,16 @@ void TextBase::draw(){
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-
-FigureDict figureDict;
-Figure currentFigure;
+static FigureDict figureDict;
+static Figure currentFigure;
+
 using NamedFigureDict = std::map<std::string, Figure>;
-NamedFigureDict namedFigureDict;
+static NamedFigureDict namedFigureDict;
 
-std::mutex figure_mtx;
-std::mutex namedFigure_mtx;
+static std::mutex figure_mtx;
+static std::mutex namedFigure_mtx;
 
-int maxFigureNum = 0;
+static int maxFigureNum = 0;
 
 Figure figure(const std::string name){
     std::unique_lock<std::mutex> lock(namedFigure_mtx);
@@ -1633,6 +1647,406 @@ Figure figure(int num){
     }
     return currentFigure;
 }
+
+// -
+Figure gcf(){
+    return currentFigure ? currentFigure : figure(0);
+}
+
+Axes subplot(unsigned int m, unsigned int n, unsigned int k){
+    return gcf()->get_current_canvas()->subplot(m, n, k);
+}
+
+//! @todo: legend(...)
+Canvas canvas(std::string name, bool visible){
+    return gcf()->canvas(name, visible);
+}
+
+Axes gca(){ return gcf()->get_current_canvas()->gca(); }
+
+// -*-
+void set(const std::string key){ gca()->gco<LineBase>()->set(key); }
+
+// -*-
+void set(float key){ gca()->gco<LineBase>()->set(key); }
+
+
+// -*-
+void set(std::string key, std::string val){
+    gca()->gco<LineBase>()->set(key, val);
+}
+
+// -*-
+void set(std::string key, float val){
+    gca()->gco<LineBase>()->set(key, val);
+}
+
+// - set axis limit (2D & 3D)
+void axis(double xmin, double xmax, double ymin, double ymax){
+    gca()->axis(xmin, xmax, ymin, ymax);
+}
+
+void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
+    gca()->axis(xmin, xmax, ymin, ymax, zmin, zmax);
+}
+
+// - toggle axis visibility: "on" | "off" | true | false
+void axis(std::string onoff){ gca()->axis(onoff); }
+
+void axis(bool onoff){gca()->axis(onoff); }
+
+// - toggle grid visibility: "on" | "off" | true | false
+void grid(std::string onoff){ gca()->grid(onoff); }
+
+void grid(bool onoff){ gca()->grid(onoff); }
+// - toggle ticklabel visibility: true | false
+void ticklabel(bool onoff){ gca()->ticklabel(onoff); }
+// - title
+void title(std::string label){ gca()->title(label); }
+// - [x|y|z]label
+void xlabel(std::string label){ gca()->xlabel(label); }
+
+void ylabel(std::string label){ gca()->ylabel(label); }
+
+//! @todo: Axes zlabel(std::string label);
+// - Capture mouse events
+void capture_mouse(bool flag){ gca()->capture_mouse(flag); }
+
+// - draw vertex
+void vertex(double x, double y){ gca()->gco<LineBase>()->vertex(x, y); }
+
+void vertex(double x, double y, double z){
+    gca()->gco<LineBase>()->vertex(x, y, z);
+}
+
+// - plot data
+Line plot(const Vector<double>& yvec){
+    return gca()->add<LineBase>()->plot(yvec);
+}
+
+Line plot(const Vector<double>& xvec, const Vector<double>& yvec){
+    return gca()->add<LineBase>()->plot(xvec, yvec);
+}
+
+Line plot(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& zvec
+){
+    return gca()->add<LineBase>()->plot(xvec, yvec, zvec);
+}
+
+// - log-scale plot
+Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return gca()->add<LineBase>()->semilogx(xvec, yvec);
+}
+
+Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return gca()->add<LineBase>()->semilogy(xvec, yvec);
+}
+
+Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec){
+    return gca()->add<LineBase>()->loglog(xvec, yvec);
+}
+
+// - vertex
+void vertex(double x, double y, double dx, double dy){
+    gca()->gco<LineBase>()->vertex(x, y, dx, dy);
+}
+
+void errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec
+){
+    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
+}
+
+void errorbar(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Vector<double>& dxvec, const Vector<double>& dyvec
+){
+    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
+}
+
+// ----
+// - Surface & contour
+Surface surface(const Matrix<double>& zmat){
+    return gca()->add<SurfaceBase>()->surface(zmat);
+}
+
+// -*-
+Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat){
+    return gca()->add<SurfaceBase>()->surface(zmat, cmat);
+}
+
+// -*-
+Surface surface(const Matrix<double>& zmat, const Colormap& cdata){
+    return gca()->add<SurfaceBase>()->surface(zmat, cdata);
+}
+
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat);
+}
+
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Matrix<double>& cmat
+){
+    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
+}
+
+Surface surface(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cdata);
+}
+
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+){
+    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat);
+}
+
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Matrix<double>& cmat
+){
+    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
+}
+
+Surface surface(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cdata);
+}
+
+Surface pcolor(const Matrix<double>& cmat){
+    return gca()->add<SurfaceBase>()->pcolor(cmat);
+}
+
+Surface pcolor(const Colormap& cdata){
+    return gca()->add<SurfaceBase>()->pcolor(cdata);
+}
+
+Surface pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& cvec
+){
+    return gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
+}
+
+Surface pcolor(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cdata);
+}
+
+Surface pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& cmat
+){
+    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
+}
+
+Surface pcolor(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Colormap& cdata
+){
+    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
+}
+
+// -*-
+Surface contour(const Matrix<double>& zmat){
+    return gca()->add<SurfaceBase>()->contour(zmat);
+}
+
+Surface contour(const Matrix<double>& zmat, unsigned int n){
+    return gca()->add<SurfaceBase>()->contour(zmat, n);
+}
+
+Surface contour(const Matrix<double>& zmat, const Vector<double>& values){
+    return gca()->add<SurfaceBase>()->contour(zmat, values);
+}
+
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat);
+}
+
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, unsigned int n
+){
+    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, n);
+}
+
+Surface contour(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat, const Vector<double>& values
+){
+    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, values);
+}
+
+Surface mesh(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return gca()->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
+}
+
+Surface surf(
+    const Vector<double>& xvec, const Vector<double>& yvec,
+    const Matrix<double>& zmat
+){
+    return gca()->add<SurfaceBase>()->surf(xvec, yvec, zmat);
+}
+
+// - shading:
+void shading(std::string arg){
+    gca()->gco<SurfaceBase>()->shading(arg);
+}
+
+// -
+Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
+    return gca()->add<PatchBase>()->patch(xmat, ymat);
+}
+
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Vector<double>& cvec
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, cvec);
+}
+
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<float>& cdata
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
+}
+
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat);
+}
+
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Vector<double>& cvec
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cvec);
+}
+
+Patch patch(
+    const Matrix<double>& xmat, const Matrix<double>& ymat,
+    const Matrix<double>& zmat, const Matrix<float>& cdata
+){
+    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
+}
+
+Patch bar(const Vector<double>& ydata){
+    return gca()->add<PatchBase>()->bar(ydata);
+}
+
+Patch bar(const Vector<double>& ydata, float width){
+    return gca()->add<PatchBase>()->bar(ydata, width);
+}
+
+Patch bar(const Vector<double>& xdata, const Vector<double>& ydata){
+    return gca()->add<PatchBase>()->bar(xdata, ydata);
+}
+
+Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width){
+    return gca()->add<PatchBase>()->bar(xdata, ydata, width);
+}
+
+//! @todo: add font information
+Text text(double x, double y, const std::string message){
+    return gca()->add<TextBase>()->text(x, y, message);
+}
+
+Axes colorbar(){
+    return gca()->colorbar();
+}
+
+void gray(){ gca()->gray(); }
+void jet(){ gca()->jet(); }
+void hsv(){ gca()->hsv(); }
+void hot(){ gca()->hot(); }
+void cool(){ gca()->cool(); }
+void spring(){ gca()->spring(); }
+void summer(){ gca()->summer(); }
+void autumn(){ gca()->autumn(); }
+void winter(){ gca()->winter(); }
+
+// -*-
+void print(std::string filename){
+    if(currentFigure){
+        currentFigure->print(filename);
+    }
+}
+
+void savefig(std::string filename){
+    print(filename);
+}
+
+void append(Line line, std::pair<double, double> point2d){
+    line->vertex(point2d.first, point2d.second);
+}
+
+void append(Axes axes, std::pair<double, double> point2d){
+    axes->gco<LineBase>()->vertex(point2d.first, point2d.second);
+}
+
+void append(Canvas canvas, std::pair<double, double> point2d){
+    canvas->gca()->gco<LineBase>()->vertex(point2d.first, point2d.second);
+}
+
+void append(Figure fig, std::pair<double, double> point2d){
+    fig->gca()->gco<LineBase>()->vertex(point2d.first, point2d.second);
+}
+
+// void append(Line line, double x, double y){
+//     line->vertex(x, y);
+// }
+
+// void append(Axes axes, double x, double y){
+//     axes->gco<LineBase>()->vertex(x, y);
+// }
+
+// void append(Canvas canvas, double x, double y){
+//     canvas->gca()->gco<LineBase>()->vertex(x, y);
+// }
+
+// void append(Figure fig, double x, double y){
+//     fig->gca()->gco<LineBase>()->vertex(x, y);
+// }
+
+// void append(Line line, Position<double> point2d){
+//     line->vertex(point2d.x, point2d.y);
+// }
+
+// void append(Axes axes, Position<double> point2d){
+//     axes->gco<LineBase>()->vertex(point2d.x, point2d.y);
+// }
+
+// void append(Canvas canvas, Position<double> point2d){
+//     canvas->gca()->gco<LineBase>()->vertex(point2d.x, point2d.y);
+// }
+
+// void append(Figure fig, Position<double> point2d){
+//     fig->gca()->gco<LineBase>()->vertex(point2d.x, point2d.y);
+// }
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

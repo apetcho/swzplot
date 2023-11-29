@@ -20,7 +20,7 @@ AxesBase::AxesBase(Canvas canvas): m_canvas(canvas){
     this->m_axType = AxesType::Axes2D;
     this->m_boxed = true;
     this->m_gridLineStyle = ":";
-    this->m_linewidth = 1;
+    this->m_linewidth = 1.2f;
     this->m_tickDir = "in";
     this->m_visible = true;
     this->m_xgrid = false;
@@ -360,16 +360,19 @@ void AxesBase::draw2d(){
         if(this->m_ticklabelFlag){
             std::ostringstream stream;
             float x, y;
+            char buf[64];
             for(size_t i=0; i < this->m_xticks.size(); ++i){
-                stream << std::setw(4) << std::setprecision(1);
-                stream << this->m_xticks[i];
+                // stream << std::setw(4) << std::setprecision(1);
+                auto val = this->m_xticks[i];
+                std::snprintf(buf, sizeof(buf), "%4.1lf", val);
                 x = (
                     this->coord2D_to_xaxis(this->m_xticks[i]) -
                     static_cast<float>(_numchar*_charw)/this->window_width()/2.0f
                 );
                 y = bottom - _offset - 1.0f*_charh/this->window_height();
-                this->ptext(x, y, stream.str());
-                stream.clear();
+                this->ptext(x, y, buf);
+                // stream.flush();
+                // stream.clear();
             }
         }
         // y-tick
@@ -383,13 +386,15 @@ void AxesBase::draw2d(){
         if(this->m_ticklabelFlag){
             std::ostringstream stream;
             float x, y;
+            char buf[64];
             for(size_t i=0; i < this->m_yticks.size(); ++i){
-                stream << std::setw(4) << std::setprecision(1);
-                stream << this->m_yticks[i];
+                // stream << std::setw(4) << std::setprecision(1);
+                auto val = this->m_yticks[i];
+                std::snprintf(buf, sizeof(buf), "%4.1lf", val);
                 x = left - static_cast<float>(_numchar*_charw)/this->window_width() - _offset;
                 y = this->coord2D_to_yaxis(this->m_yticks[i]) - 0.5*_charh/this->window_height();
-                this->ptext(x, y, stream.str());
-                stream.clear();
+                this->ptext(x, y, buf);
+                // stream.clear();
             }
         }
     }

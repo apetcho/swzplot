@@ -7,6 +7,9 @@
 #ifndef SWZPLOT_H
 #define SWZPLOT_H
 
+// GL_SILENCE_DEPRECATION
+#define GL_SILENCE_DEPRECATION 1
+
 #include<type_traits>
 #include<functional>
 #include<algorithm>
@@ -32,9 +35,12 @@
 #include<list>
 #include<map>
 
-#include "GL/freeglut.h"
-#include "gl2ps.h"
+#include<OpenGL/gl.h>
+#include<GLUT/glut.h>
+//#include<GL/freeglut.h>
+#include<gl2ps.h>
 
+#define SWZAPI  extern
 // -*----------------------------------------------------------------*-
 // -*- namespace::swzplot                                           -*-
 // -*----------------------------------------------------------------*-
@@ -137,25 +143,25 @@ enum AxesLimMode{
  * @return T 
  */
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
-T max(const std::vector<T>& vec){
+inline T max(const std::vector<T>& vec){
     return *std::max_element(vec.begin(), vec.end());
 }
 
-double max(const std::vector<double>& vec){
+inline double max(const std::vector<double>& vec){
     return *std::max_element(vec.begin(), vec.end());
 }
 
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
-T min(const std::vector<T>& vec){
+inline T min(const std::vector<T>& vec){
     return *std::min_element(vec.begin(), vec.end());
 }
 
-double min(const std::vector<double>& vec){
+inline double min(const std::vector<double>& vec){
     return *std::min_element(vec.begin(), vec.end());
 }
 
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
-T max(const std::vector<std::vector<T>>& mat){
+inline T max(const std::vector<std::vector<T>>& mat){
     auto result = std::numeric_limits<double>::min();
     for(auto vec: mat){
         result = std::max(result, max(vec));
@@ -164,7 +170,7 @@ T max(const std::vector<std::vector<T>>& mat){
     return static_cast<T>(result);
 }
 
-double max(const std::vector<std::vector<double>>& mat){
+inline double max(const std::vector<std::vector<double>>& mat){
     auto result = std::numeric_limits<double>::min();
     for(auto vec: mat){
         result = std::max(result, max(vec));
@@ -175,7 +181,7 @@ double max(const std::vector<std::vector<double>>& mat){
 
 // -*-
 template<typename T, std::enable_if<std::is_arithmetic_v<T>>>
-T min(const std::vector<std::vector<T>>& mat){
+inline T min(const std::vector<std::vector<T>>& mat){
     auto result = std::numeric_limits<double>::max();
     for(auto vec: mat){
         result = std::min(result, min(vec));
@@ -183,7 +189,7 @@ T min(const std::vector<std::vector<T>>& mat){
     return static_cast<T>(result);
 }
 
-double min(const std::vector<std::vector<double>>& mat){
+inline double min(const std::vector<std::vector<double>>& mat){
     auto result = std::numeric_limits<double>::max();
     for(auto vec: mat){
         result = std::min(result, min(vec));
@@ -203,7 +209,7 @@ using Matrix = Vector<std::vector<T>>;
 using Colormap = Matrix<std::vector<float>>;
 
 template<typename T, std::enable_if<std::is_floating_point_v<T>>>
-Vector<T> linspace(T minval, T maxval, size_t count=10){
+inline Vector<T> linspace(T minval, T maxval, size_t count=10){
     if(count==0){ return Vector<T>{}; }
     if(count==1){ return Vector<T>{minval}; }
     if(count==2){ return Vector<T>{minval, maxval}; }
@@ -216,7 +222,7 @@ Vector<T> linspace(T minval, T maxval, size_t count=10){
     return result;
 }
 
-Vector<double> linspace(double minval, double maxval, size_t count=10){
+inline Vector<double> linspace(double minval, double maxval, size_t count=10){
     if(count==0){ return Vector<double>{}; }
     if(count==1){ return Vector<double>{minval}; }
     if(count==2){ return Vector<double>{minval, maxval}; }
@@ -230,7 +236,7 @@ Vector<double> linspace(double minval, double maxval, size_t count=10){
 }
 
 // -*-
-Matrix<double> peaks(size_t num){
+inline Matrix<double> peaks(size_t num){
     double x1 = 1.0;
     double y1 = 0.0;
     double x2 = -1.0;
@@ -784,7 +790,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Colormap& cdata
+        const Matrix<float>& cdata
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -801,7 +807,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Colormap& cdata
+        const Matrix<float>& cdata
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -1089,31 +1095,24 @@ public:
     // -
     Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
         const Vector<double>& cvec
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Colormap& cdata
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<float>& cdata
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
         const Matrix<double>& zmat
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Vector<double>& cvec
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Vector<double>& cvec
     );
     Patch patch(
-        const Matrix<double>& xmat,
-        const Matrix<double>& ymat,
-        const Matrix<double>& zmat,
-        const Colormap& cdata
+        const Matrix<double>& xmat, const Matrix<double>& ymat,
+        const Matrix<double>& zmat, const Matrix<float>&  cdata
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -1422,7 +1421,7 @@ public:
     Patch patch(
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
-        const Colormap& cdata
+        const Matrix<float>& cdata
     );
     Patch patch(
         const Matrix<double>& xmat,
@@ -1439,7 +1438,7 @@ public:
         const Matrix<double>& xmat,
         const Matrix<double>& ymat,
         const Matrix<double>& zmat,
-        const Colormap& cdata
+        const Matrix<float>& cdata
     );
 
     Patch bar(const Vector<double>& ydata);
@@ -1791,44 +1790,43 @@ namespace glut{
     void initilalize(int &argc, char **argv);
     void register_figure(const Figure fig);
     void set_window_title(int window, std::string name);
+    void show();
 }
 
 // -*----------------------------------------------------------------*-
 // -*- SWZPLOT PUBLIC FUNCTIONAL API                                -*-
 // -*----------------------------------------------------------------*-
-extern Figure currentFigure;
-Figure figure();
-Figure figure(int id);
-Figure figure(std::string name);
-
-Figure gcf(){
-    return currentFigure ? currentFigure : figure(0);
+inline void show(){
+    glut::show();
 }
+//extern Figure currentFigure;
+SWZAPI Figure figure();
+SWZAPI Figure figure(int id);
+SWZAPI Figure figure(std::string name);
 
-Axes subplot(unsigned int m, unsigned int n, unsigned int k){
-    return gcf()->get_current_canvas()->subplot(m, n, k);
-}
+SWZAPI Figure gcf();
+
+SWZAPI Axes subplot(unsigned int m, unsigned int n, unsigned int k);
 
 //! @todo: legend(...)
-Canvas canvas(std::string name="plot", bool visible=true){
-    return gcf()->canvas(name, visible);
-}
+SWZAPI Canvas canvas(std::string name="plot", bool visible=true);
 
-Axes gca(){ return gcf()->get_current_canvas()->gca(); }
+SWZAPI Axes gca();
 
 // -*-
 template<typename T>
 void set(const std::string key){ gca()->gco<T>()->set(key); }
 
+
 // -*-
-void set(const std::string key){ gca()->gco<LineBase>()->set(key); }
+SWZAPI void set(const std::string key);
 
 // -*-
 template<typename T>
 void set(float key){ gca()->gco<T>()->set(key); }
 
 // -*-
-void set(float key){ gca()->gco<LineBase>()->set(key); }
+SWZAPI void set(float key);
 
 // -*-
 template<typename T>
@@ -1837,10 +1835,9 @@ void set(std::string key, std::string val){
 }
 
 // -*-
-void set(std::string key, std::string val){
-    gca()->gco<LineBase>()->set(key, val);
-}
+SWZAPI void set(std::string key, std::string val);
 
+// -*-
 // -*-
 template<typename T>
 void set(std::string key, float val){
@@ -1848,374 +1845,246 @@ void set(std::string key, float val){
 }
 
 // -*-
-void set(std::string key, float val){
-    gca()->gco<LineBase>()->set(key, val);
-}
+SWZAPI void set(std::string key, float val);
 
 // - set axis limit (2D & 3D)
-void axis(double xmin, double xmax, double ymin, double ymax){
-    gca()->axis(xmin, xmax, ymin, ymax);
-}
+SWZAPI void axis(double xmin, double xmax, double ymin, double ymax);
 
-void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax){
-    gca()->axis(xmin, xmax, ymin, ymax, zmin, zmax);
-}
+SWZAPI void axis(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
 
 // - toggle axis visibility: "on" | "off" | true | false
-void axis(std::string onoff){ gca()->axis(onoff); }
+SWZAPI void axis(std::string onoff);
 
-void axis(bool onoff){gca()->axis(onoff); }
+SWZAPI void axis(bool onoff);
 
 // - toggle grid visibility: "on" | "off" | true | false
-void grid(std::string onoff){ gca()->grid(onoff); }
+SWZAPI void grid(std::string onoff);
 
-void grid(bool onoff){ gca()->grid(onoff); }
+SWZAPI void grid(bool onoff);
 // - toggle ticklabel visibility: true | false
-void ticklabel(bool onoff){ gca()->ticklabel(onoff); }
+SWZAPI void ticklabel(bool onoff);
 // - title
-void title(std::string label){ gca()->title(label); }
+SWZAPI void title(std::string label);
 // - [x|y|z]label
-void xlabel(std::string label){ gca()->xlabel(label); }
+SWZAPI void xlabel(std::string label);
 
-void ylabel(std::string label){ gca()->ylabel(label); }
+SWZAPI void ylabel(std::string label);
 
 //! @todo: Axes zlabel(std::string label);
 // - Capture mouse events
-void capture_mouse(bool flag){ gca()->capture_mouse(flag); }
+SWZAPI void capture_mouse(bool flag);
 
 // - draw vertex
-void vertex(double x, double y){ gca()->gco<LineBase>()->vertex(x, y); }
+SWZAPI void vertex(double x, double y);
 
-void vertex(double x, double y, double z){
-    gca()->gco<LineBase>()->vertex(x, y, z);
-}
+SWZAPI void vertex(double x, double y, double z);
 
 // - plot data
-Line plot(const Vector<double>& yvec){
-    return gca()->add<LineBase>()->plot(yvec);
-}
+SWZAPI Line plot(const Vector<double>& yvec);
 
-Line plot(const Vector<double>& xvec, const Vector<double>& yvec){
-    return gca()->add<LineBase>()->plot(xvec, yvec);
-}
+SWZAPI Line plot(const Vector<double>& xvec, const Vector<double>& yvec);
 
-Line plot(
+SWZAPI Line plot(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& zvec
-){
-    return gca()->add<LineBase>()->plot(xvec, yvec, zvec);
-}
+);
 
 // - log-scale plot
-Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec){
-    return gca()->add<LineBase>()->semilogx(xvec, yvec);
-}
+SWZAPI Line semilogx(const Vector<double>& xvec, const Vector<double>&  yvec);
 
-Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec){
-    return gca()->add<LineBase>()->semilogy(xvec, yvec);
-}
+SWZAPI Line semilogy(const Vector<double>& xvec, const Vector<double>&  yvec);
 
-Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec){
-    return gca()->add<LineBase>()->loglog(xvec, yvec);
-}
+SWZAPI Line loglog(const Vector<double>& xvec, const Vector<double>&  yvec);
 
 // - vertex
-void vertex(double x, double y, double dx, double dy){
-    gca()->gco<LineBase>()->vertex(x, y, dx, dy);
-}
+SWZAPI void vertex(double x, double y, double dx, double dy);
 
-void errorbar(
+SWZAPI void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec
-){
-    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec);
-}
+);
 
-void errorbar(
+SWZAPI void errorbar(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Vector<double>& dxvec, const Vector<double>& dyvec
-){
-    gca()->gco<LineBase>()->errorbar(xvec, yvec, dxvec, dyvec);
-}
+);
 
 // ----
 // - Surface & contour
-Surface surface(const Matrix<double>& zmat){
-    return gca()->add<SurfaceBase>()->surface(zmat);
-}
+SWZAPI Surface surface(const Matrix<double>& zmat);
 
 // -*-
-Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat){
-    return gca()->add<SurfaceBase>()->surface(zmat, cmat);
-}
+SWZAPI Surface surface(const Matrix<double>& zmat, const Matrix<double>& cmat);
 
 // -*-
-Surface surface(const Matrix<double>& zmat, const Colormap& cdata){
-    return gca()->add<SurfaceBase>()->surface(zmat, cdata);
-}
+SWZAPI Surface surface(const Matrix<double>& zmat, const Colormap& cdata);
 
-Surface surface(
+SWZAPI Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-){
-    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat);
-}
+);
 
-Surface surface(
+SWZAPI Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, const Matrix<double>& cmat
-){
-    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cmat);
-}
+);
 
-Surface surface(
+SWZAPI Surface surface(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, const Colormap& cdata
-){
-    return gca()->add<SurfaceBase>()->surface(xvec, yvec, zmat, cdata);
-}
+);
 
-Surface surface(
+SWZAPI Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat
-){
-    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat);
-}
+);
 
-Surface surface(
+SWZAPI Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Matrix<double>& cmat
-){
-    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cmat);
-}
+);
 
-Surface surface(
+SWZAPI Surface surface(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Colormap& cdata
-){
-    return gca()->add<SurfaceBase>()->surface(xmat, ymat, zmat, cdata);
-}
+);
 
-Surface pcolor(const Matrix<double>& cmat){
-    return gca()->add<SurfaceBase>()->pcolor(cmat);
-}
+SWZAPI Surface pcolor(const Matrix<double>& cmat);
 
-Surface pcolor(const Colormap& cdata){
-    return gca()->add<SurfaceBase>()->pcolor(cdata);
-}
+SWZAPI Surface pcolor(const Colormap& cdata);
 
-Surface pcolor(
+SWZAPI Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& cvec
-){
-    return gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cvec);
-}
+);
 
-Surface pcolor(
+SWZAPI Surface pcolor(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Colormap& cdata
-){
-    return gca()->add<SurfaceBase>()->pcolor(xvec, yvec, cdata);
-}
+);
 
-Surface pcolor(
+SWZAPI Surface pcolor(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& cmat
-){
-    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cmat);
-}
+);
 
-Surface pcolor(
+SWZAPI Surface pcolor(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Colormap& cdata
-){
-    return gca()->add<SurfaceBase>()->pcolor(xmat, ymat, cdata);
-}
+);
 
 // -*-
-Surface contour(const Matrix<double>& zmat){
-    return gca()->add<SurfaceBase>()->contour(zmat);
-}
+SWZAPI Surface contour(const Matrix<double>& zmat);
 
-Surface contour(const Matrix<double>& zmat, unsigned int n){
-    return gca()->add<SurfaceBase>()->contour(zmat, n);
-}
+SWZAPI Surface contour(const Matrix<double>& zmat, unsigned int n);
 
-Surface contour(const Matrix<double>& zmat, const Vector<double>& values){
-    return gca()->add<SurfaceBase>()->contour(zmat, values);
-}
+SWZAPI Surface contour(const Matrix<double>& zmat, const Vector<double>& values);
 
-Surface contour(
+SWZAPI Surface contour(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-){
-    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat);
-}
+);
 
-Surface contour(
+SWZAPI Surface contour(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, unsigned int n
-){
-    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, n);
-}
+);
 
-Surface contour(
+SWZAPI Surface contour(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat, const Vector<double>& values
-){
-    return gca()->add<SurfaceBase>()->contour(xvec, yvec, zmat, values);
-}
+);
 
-Surface mesh(
+SWZAPI Surface mesh(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-){
-    return gca()->add<SurfaceBase>()->mesh(xvec, yvec, zmat);
-}
+);
 
-Surface surf(
+SWZAPI Surface surf(
     const Vector<double>& xvec, const Vector<double>& yvec,
     const Matrix<double>& zmat
-){
-    return gca()->add<SurfaceBase>()->surf(xvec, yvec, zmat);
-}
+);
 
 // - shading:
-void shading(std::string arg){
-    gca()->gco<SurfaceBase>()->shading(arg);
-}
+SWZAPI void shading(std::string arg);
 
 // -
-Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat){
-    return gca()->add<PatchBase>()->patch(xmat, ymat);
-}
+SWZAPI Patch patch(const Matrix<double>& xmat, const Matrix<double>& ymat);
 
-Patch patch(
+SWZAPI Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Vector<double>& cvec
-){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, cvec);
-}
+);
 
-Patch patch(
+SWZAPI Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<float>& cdata
-){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, cdata);
-}
+);
 
-Patch patch(
+SWZAPI Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat
-){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat);
-}
+);
 
-Patch patch(
+SWZAPI Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Vector<double>& cvec
-){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cvec);
-}
+);
 
-Patch patch(
+SWZAPI Patch patch(
     const Matrix<double>& xmat, const Matrix<double>& ymat,
     const Matrix<double>& zmat, const Matrix<float>& cdata
-){
-    return gca()->add<PatchBase>()->patch(xmat, ymat, zmat, cdata);
-}
+);
 
-Patch bar(const Vector<double>& ydata){
-    return gca()->add<PatchBase>()->bar(ydata);
-}
+SWZAPI Patch bar(const Vector<double>& ydata);
 
-Patch bar(const Vector<double>& ydata, float width){
-    return gca()->add<PatchBase>()->bar(ydata, width);
-}
+SWZAPI Patch bar(const Vector<double>& ydata, float width);
 
-Patch bar(const Vector<double>& xdata, const Vector<double>& ydata){
-    return gca()->add<PatchBase>()->bar(xdata, ydata);
-}
+SWZAPI Patch bar(const Vector<double>& xdata, const Vector<double>& ydata);
 
-Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width){
-    return gca()->add<PatchBase>()->bar(xdata, ydata, width);
-}
+SWZAPI Patch bar(const Vector<double>& xdata, const Vector<double>& ydata, float width);
 
 //! @todo: add font information
-Text text(double x, double y, const std::string message){
-    return gca()->add<TextBase>()->text(x, y, message);
-}
+SWZAPI Text text(double x, double y, const std::string message);
 
-Axes colorbar(){
-    return gca()->colorbar();
-}
+SWZAPI Axes colorbar();
 
-void gray(){ gca()->gray(); }
-void jet(){ gca()->jet(); }
-void hsv(){ gca()->hsv(); }
-void hot(){ gca()->hot(); }
-void cool(){ gca()->cool(); }
-void spring(){ gca()->spring(); }
-void summer(){ gca()->summer(); }
-void autumn(){ gca()->autumn(); }
-void winter(){ gca()->winter(); }
+SWZAPI void gray();
+SWZAPI void jet();
+SWZAPI void hsv();
+SWZAPI void hot();
+SWZAPI void cool();
+SWZAPI void spring();
+SWZAPI void summer();
+SWZAPI void autumn();
+SWZAPI void winter();
 
-void print(std::string filename="out.eps"){
-    if(currentFigure){
-        currentFigure->print(filename);
-    }
-}
-void savefig(std::string filename="out.eps"){
-    print(filename);
-}
+SWZAPI void print(std::string filename="out.eps");
+SWZAPI void savefig(std::string filename="out.eps");
 
-void append(Line line, std::pair<double, double> point2d){
-    line->vertex(point2d.first, point2d.second);
-}
+SWZAPI void append(Line line, std::pair<double, double> point2d);
 
-void append(Axes axes, std::pair<double, double> point2d){
-    axes->gco<LineBase>()->vertex(point2d.first, point2d.second);
-}
+SWZAPI void append(Axes axes, std::pair<double, double> point2d);
 
-void append(Canvas canvas, std::pair<double, double> point2d){
-    canvas->gca()->gco<LineBase>()->vertex(point2d.first, point2d.second);
-}
+SWZAPI void append(Canvas canvas, std::pair<double, double> point2d);
 
-void append(Figure fig, std::pair<double, double> point2d){
-    fig->gca()->gco<LineBase>()->vertex(point2d.first, point2d.second);
-}
+SWZAPI void append(Figure fig, std::pair<double, double> point2d);
 
-void append(Line line, double x, double y){
-    line->vertex(x, y);
-}
+// SWZAPI void append(Line line, double x, double y);
 
-void append(Axes axes, double x, double y){
-    axes->gco<LineBase>()->vertex(x, y);
-}
+// SWZAPI void append(Axes axes, double x, double y);
 
-void append(Canvas canvas, double x, double y){
-    canvas->gca()->gco<LineBase>()->vertex(x, y);
-}
+// SWZAPI void append(Canvas canvas, double x, double y);
 
-void append(Figure fig, double x, double y){
-    fig->gca()->gco<LineBase>()->vertex(x, y);
-}
+// SWZAPI void append(Figure fig, double x, double y);
 
-void append(Line line, Position<double> point2d){
-    line->vertex(point2d.x, point2d.y);
-}
+// SWZAPI void append(Line line, Position<double> point2d);
 
-void append(Axes axes, Position<double> point2d){
-    axes->gco<LineBase>()->vertex(point2d.x, point2d.y);
-}
+// SWZAPI void append(Axes axes, Position<double> point2d);
 
-void append(Canvas canvas, Position<double> point2d){
-    canvas->gca()->gco<LineBase>()->vertex(point2d.x, point2d.y);
-}
+// SWZAPI void append(Canvas canvas, Position<double> point2d);
 
-void append(Figure fig, Position<double> point2d){
-    fig->gca()->gco<LineBase>()->vertex(point2d.x, point2d.y);
-}
+// SWZAPI void append(Figure fig, Position<double> point2d);
 
 // -*----------------------------------------------------------------*-
 }//-*- end::namespace::swzplot                                      -*-

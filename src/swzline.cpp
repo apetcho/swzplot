@@ -247,7 +247,7 @@ void LineBase::draw(){
         glBegin(GL_LINE_STRIP);
         for(auto i=0; i < this->m_xdata.size(); ++i){
             auto x = this->coord3D_to_xaxis(this->m_xdata[i]);
-            auto y = this->coord3D_to_xaxis(this->m_ydata[i]);
+            auto y = this->coord3D_to_yaxis(this->m_ydata[i]);
             auto z = this->coord3D_to_zaxis(this->m_zdata[i]);
             glVertex3d(x, y, z);
         }

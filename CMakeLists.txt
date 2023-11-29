@@ -9,17 +9,17 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
-FetchContent_Declare(
-    gl2ps
-    GIT_REPOSITORY https://github.com/Open-Cascade-SAS/gl2ps.git
-)
-FetchContent_MakeAvailable(gl2ps)
+# FetchContent_Declare(
+#     gl2ps
+#     GIT_REPOSITORY https://github.com/Open-Cascade-SAS/gl2ps.git
+# )
+# FetchContent_MakeAvailable(gl2ps)
 
-FetchContent_Declare(
-    freeglut
-    GIT_REPOSITORY https://github.com/apetcho/freeglut.git
-)
-FetchContent_MakeAvailable(freeglut)
+# FetchContent_Declare(
+#     freeglut
+#     GIT_REPOSITORY https://github.com/apetcho/freeglut.git
+# )
+# FetchContent_MakeAvailable(freeglut)
 
 # -*-
 add_subdirectory(src)

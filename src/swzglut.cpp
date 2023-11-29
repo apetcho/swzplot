@@ -77,12 +77,17 @@ void run(int& argc, char**argv){
     glutIdleFunc(tool);
     glutDisplayFunc(no_displayfn);
     glutHideWindow();
+    // glutMainLoop();
+}
+
+void show(){
     glutMainLoop();
 }
 
 // -*-
 void initilalize(int &argc, char **argv){
-    windowThread = std::thread(std::bind(run, argc, argv));
+    //windowThread = std::thread(std::bind(run, argc, argv));
+    run(argc, argv);
 }
 
 // -*-
